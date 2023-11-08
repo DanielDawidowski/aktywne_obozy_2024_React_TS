@@ -34,13 +34,13 @@ const Menu: FC<IMenu> = (props): ReactElement => {
         </Link>
       </li>
       <li>
-        <Link to="/about">
-          <h3>About</h3>
+        <Link to="/events">
+          <h3>Wyjazdy</h3>
         </Link>
       </li>
       <li>
-        <Link to="/login">
-          <h3>Login</h3>
+        <Link to="/contact">
+          <h3>Kontact</h3>
         </Link>
       </li>
       <li>
@@ -54,7 +54,7 @@ const Menu: FC<IMenu> = (props): ReactElement => {
               <h3>Admin</h3>
             </Link>
           </li>
-          <li style={{ cursor: "pointer" }} onClick={() => console.log("Logout")}>
+          <li style={{ cursor: "pointer" }}>
             <h3 onClick={logout}>Logout</h3>
           </li>
         </>

@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
 import { ILayout } from "./Layout.interface";
 
-export const LayoutStyles = styled(motion.div)<ILayout>`
+export const LayoutStyles = styled.div<ILayout>`
   position: relative;
   header {
     margin-top: 0;
