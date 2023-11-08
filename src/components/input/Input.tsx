@@ -1,5 +1,6 @@
 import React, { ReactElement, forwardRef, ChangeEvent, Ref } from "react";
 import type { FC } from "react";
+import propTypes from "prop-types";
 import { IInput } from "./Input.interface";
 
 const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
@@ -48,6 +49,22 @@ const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
     );
   }
 );
+
+Input.propTypes = {
+  id: propTypes.string,
+  name: propTypes.string.isRequired,
+  type: propTypes.string.isRequired,
+  labelText: propTypes.string,
+  value: propTypes.string,
+  className: propTypes.string,
+  placeholder: propTypes.string,
+  handleChange: propTypes.func,
+  onClick: propTypes.func,
+  onFocus: propTypes.func,
+  onBlur: propTypes.func,
+  style: propTypes.object,
+  checked: propTypes.bool
+};
 
 Input.displayName = "Input";
 

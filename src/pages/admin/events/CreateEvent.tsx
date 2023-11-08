@@ -10,6 +10,8 @@ import Input from "../../../components/input/Input";
 import { eventService } from "../../../services/api/events/events.service";
 import { IEvent } from "../../../interfaces/event/event.interface";
 import { EventUtils } from "../../../utils/event-utils.service";
+import { Utils } from "../../../utils/utils.service";
+import { INotificationType } from "../../../interfaces/notification/notification.interface";
 
 const initialState: IEvent = {
   name: "",
@@ -56,13 +58,13 @@ const CreateEvent: FC = (): ReactElement => {
       setValues(initialState);
       setAttraction([]);
       setExtraAttraction([]);
-      //   Utils.dispatchNotification(response.data.message, "success", dispatch);
+      Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
       return response.data;
     } catch (error: any) {
       setLoading(false);
       setHasError(true);
       setErrorMessage(error?.response?.data.message);
-      //   Utils.dispatchNotification(error?.response?.data.message, "error", dispatch);
+      Utils.dispatchNotification(error?.response?.data.message, INotificationType.ERROR, dispatch);
     }
   };
 

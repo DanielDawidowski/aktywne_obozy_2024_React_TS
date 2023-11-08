@@ -8,8 +8,9 @@ export interface IEvent {
   image?: string;
   address: IAddress;
   energyland: boolean;
-  attractions: string[]; // You might want to replace `any` with a specific type if you have a predefined structure for attractions
-  extraAttractions: string[]; // Same as above, replace `any` with a specific type if applicable
+  attractions: string[];
+  extraAttractions: string[];
+  message?: string;
 }
 
 export interface IAddress {
