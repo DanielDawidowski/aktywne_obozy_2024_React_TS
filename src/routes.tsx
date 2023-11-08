@@ -7,6 +7,7 @@ import { AuthTabs } from "./pages/auth";
 import ProtectedRoute from "./pages/admin/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateEvent from "./pages/admin/events/CreateEvent";
+import AdminEvents from "./pages/admin/events/AdminEvents";
 
 export const AppRouter: FC = () => {
   const elements: RouteObject[] = [
@@ -33,7 +34,7 @@ export const AppRouter: FC = () => {
         {
           path: "event/create",
           element: <CreateEvent />
-        }
+        },
         // {
         //   path: "clients",
         //   element: <AdminClients />
@@ -42,10 +43,10 @@ export const AppRouter: FC = () => {
         //   path: "client/:clientId",
         //   element: <EditClient />
         // },
-        // {
-        //   path: "events/list",
-        //   element: <AdminEvents />
-        // },
+        {
+          path: "events/list",
+          element: <AdminEvents />
+        }
         // {
         //   path: "events/update/:eventId",
         //   element: <EditEvent />

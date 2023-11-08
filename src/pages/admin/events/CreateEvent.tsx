@@ -4,7 +4,6 @@ import { AxiosResponse } from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
 import { AiFillDelete } from "react-icons/ai";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import { eventService } from "../../../services/api/events/events.service";
@@ -12,6 +11,7 @@ import { IEvent } from "../../../interfaces/event/event.interface";
 import { EventUtils } from "../../../utils/event-utils.service";
 import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
+import { useAppDispatch } from "../../../redux-toolkit/hooks";
 
 const initialState: IEvent = {
   name: "",
@@ -41,7 +41,7 @@ const CreateEvent: FC = (): ReactElement => {
   const [extraAttraction, setExtraAttraction] = useState<string[]>([]);
   const [extraAttractionValue, setExtraAttractionValue] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const dispatch: Dispatch = useDispatch();
+  const dispatch: Dispatch = useAppDispatch();
 
   const { name, eventType, price, discountPrice, startDate, endDate, image, address, energyland = false } = values;
   const { hotel, street, web } = address;
