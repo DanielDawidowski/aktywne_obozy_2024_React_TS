@@ -1,70 +1,50 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import ILayout from "./Layout.interface";
+import { ILayout, CurrentThemes, CurrentTheme } from "./Layout.interface";
 import { LayoutStyles } from "./LayoutStyles";
-import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../redux-toolkit/hooks";
-import { userService } from "../../services/api/user/user.service";
-import { clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
+import Header from "../navs/header/Header";
+import Navigation from "../navs/navigation/Navigation";
+import StyledThemeProvider from "./StyledThemeProvider";
+import { TypographyStyles } from "../globalStyles/typographyStyles";
+import { GlobalStyles } from "../globalStyles/globalStyles";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
-  const { profile } = useAppSelector((state) => state.user);
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const [theme, setTheme] = useState<CurrentThemes>(CurrentTheme.LIGHT);
+  const themeStorage = useLocalStorage<CurrentThemes | null>("theme");
 
-  const deleteUser = useLocalStorage<string>("user");
-  const deleteToken = useLocalStorage<string>("token");
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const logout = async (): Promise<void> => {
-    await userService.logoutUser();
-    dispatch(clearUser());
-    deleteUser.delete();
-    deleteToken.delete();
-    navigate("/");
+  const toggleTheme = (): void => {
+    setTheme((prevTheme): CurrentThemes => {
+      return prevTheme === CurrentTheme.DARK ? CurrentTheme.LIGHT : CurrentTheme.DARK;
+    });
+    themeStorage.set(theme);
   };
 
+  useEffect(() => {
+    const getTheme: CurrentThemes | null = themeStorage.get();
+    console.log(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <LayoutStyles>
-      {/* {(profile?.role !== "admin" || chat) && (
+    <StyledThemeProvider theme={theme}>
+      <LayoutStyles>
+        <GlobalStyles />
+        <TypographyStyles />
+        {/* {(profile?.role !== "admin" || chat) && (
         <div className="chat">
           <ChatBox isOpenChat={isOpenChat} />
         </div>
       )} */}
-      <header>
-        <ul>
-          <li>
-            <h3>
-              <Link to="/">Home</Link>
-            </h3>
-          </li>
-          <li>
-            <h3>
-              <Link to="/about">About</Link>
-            </h3>
-          </li>
-          <li>
-            <h3>
-              <Link to="/login">Login</Link>
-            </h3>
-          </li>
-          {profile?.role === "admin" && (
-            <>
-              <li>
-                <h3>
-                  <Link to="/admin">Admin</Link>
-                </h3>
-              </li>
-              <li style={{ cursor: "pointer" }} onClick={() => console.log("Logout")}>
-                <h3 onClick={logout}>Logout</h3>
-              </li>
-            </>
-          )}
-        </ul>
-      </header>
-      <main>{children}</main>
-    </LayoutStyles>
+        <Header toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} toggleTheme={toggleTheme} />
+        <Navigation toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
+        <main>{children}</main>
+      </LayoutStyles>
+    </StyledThemeProvider>
   );
 };
 

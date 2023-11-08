@@ -14,8 +14,8 @@ const Login: FC = (): ReactElement => {
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<ISignUpData | null>();
   const [hasError, setHasError] = useState<boolean>(false);
-  const userStorage = useLocalStorage("user");
-  const setToken = useLocalStorage<string>("token") as any;
+  const userStorage = useLocalStorage<ISignUpData>("user");
+  const setToken = useLocalStorage<string>("token");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
