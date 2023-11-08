@@ -8,6 +8,7 @@ import ProtectedRoute from "./pages/admin/ProtectedRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateEvent from "./pages/admin/events/CreateEvent";
 import AdminEvents from "./pages/admin/events/AdminEvents";
+import EditEvent from "./pages/admin/events/EditEvent";
 
 export const AppRouter: FC = () => {
   const elements: RouteObject[] = [
@@ -46,11 +47,11 @@ export const AppRouter: FC = () => {
         {
           path: "events/list",
           element: <AdminEvents />
+        },
+        {
+          path: "events/update/:eventId",
+          element: <EditEvent />
         }
-        // {
-        //   path: "events/update/:eventId",
-        //   element: <EditEvent />
-        // }
       ]
     }
   ];
