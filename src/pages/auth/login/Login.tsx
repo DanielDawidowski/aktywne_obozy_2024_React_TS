@@ -7,6 +7,8 @@ import { authService } from "../../../services/api/auth/auth.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { ISignUpData } from "../../../interfaces/auth/auth.interface";
 import { socketService } from "../../../services/socket/socket.service";
+import { Dispatch } from "@reduxjs/toolkit";
+import transition from "../../../utils/transition";
 
 const Login: FC = (): ReactElement => {
   const [username, setUsername] = useState<string>("marcin");
@@ -18,7 +20,7 @@ const Login: FC = (): ReactElement => {
   const setToken = useLocalStorage<string>("token");
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: Dispatch = useDispatch();
 
   const loginUser = async (event: FormEvent): Promise<void> => {
     setLoading(true);
@@ -91,4 +93,4 @@ const Login: FC = (): ReactElement => {
   );
 };
 
-export default Login;
+export default transition(Login);

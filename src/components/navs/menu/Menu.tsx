@@ -7,6 +7,7 @@ import { userService } from "../../../services/api/user/user.service";
 import { clearUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IMenu } from "./Menu.interface";
 import { MenuStyles } from "./MenuStyles";
+import Dropdown from "../../dropdown/Dropdown";
 
 const Menu: FC<IMenu> = (props): ReactElement => {
   const { toggleTheme } = props;
@@ -50,10 +51,16 @@ const Menu: FC<IMenu> = (props): ReactElement => {
       {profile?.role === "admin" && (
         <>
           <li>
-            <Link to="/admin">
-              <h3>Admin</h3>
-            </Link>
+            <Dropdown Label="Admin">
+              <h5>
+                <Link to="/admin/event/create">stwórz wyjazd</Link>
+              </h5>
+              <h5>
+                <Link to="/admin/events/list">lista wyjazdów</Link>
+              </h5>
+            </Dropdown>
           </li>
+
           <li style={{ cursor: "pointer" }}>
             <h3 onClick={logout}>Logout</h3>
           </li>

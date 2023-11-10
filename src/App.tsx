@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from "react";
 import type { FC } from "react";
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AppRouter } from "./routes";
 import { socketService } from "./services/socket/socket.service";
 import { useAppSelector } from "./redux-toolkit/hooks";
@@ -20,9 +20,9 @@ const App: FC = (): ReactElement => {
       {notifications && notifications.length > 0 && (
         <Toast position={IToastPosition.TOP_RIGHT} toastList={notifications} autoDelete={false} />
       )}
-      <BrowserRouter>
+      <Router>
         <AppRouter />
-      </BrowserRouter>
+      </Router>
     </>
   );
 };

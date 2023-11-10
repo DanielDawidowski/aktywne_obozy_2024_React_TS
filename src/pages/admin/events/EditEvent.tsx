@@ -1,9 +1,8 @@
 import React, { useState, useCallback, useRef, ReactElement } from "react";
 import type { ChangeEvent, FC, FormEvent } from "react";
-import { useParams } from "react-router-dom";
+import { NavigateProps, useNavigate, useParams } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
-
 import { IEvent } from "../../../interfaces/event/event.interface";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -15,14 +14,15 @@ import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
 import { eventService } from "../../../services/api/events/events.service";
 import { AxiosResponse } from "axios";
+import Layout from "../../../components/layout/Layout";
 
 const initialState: IEvent = {
   name: "",
   eventType: "",
   price: "",
   discountPrice: "",
-  startDate: "",
-  endDate: "",
+  startDate: new Date(),
+  endDate: new Date(),
   image: "",
   address: {
     hotel: "",
@@ -31,12 +31,13 @@ const initialState: IEvent = {
   },
   energyland: false,
   attractions: [],
-  extraAttractions: []
+  extraAttractions: [],
+  status: "active"
 };
 
 const EditEvent: FC = (): ReactElement => {
   const [values, setValues] = useState<IEvent>(initialState);
-  const [showEvent, setShowEvent] = useState<IEvent>({} as IEvent);
+  const [event, setEvent] = useState<IEvent>({} as IEvent);
   const [loading, setLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -46,16 +47,17 @@ const EditEvent: FC = (): ReactElement => {
   const [extraAttractionValue, setExtraAttractionValue] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch: Dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { eventId } = useParams();
 
-  const { name, eventType, price, discountPrice, startDate, endDate, address, energyland = false } = values;
+  const { name, eventType, price, discountPrice, startDate, endDate, address, energyland, image, status } = values;
   const { hotel, street, web } = address;
 
   const getEvent = useCallback(async () => {
     try {
       const response = await eventService.getEvent(eventId as string);
-      setShowEvent(response.data.event);
+      setEvent(response.data.event);
     } catch (error) {
       console.log("error", error);
     }
@@ -73,6 +75,7 @@ const EditEvent: FC = (): ReactElement => {
       setAttraction([]);
       setExtraAttraction([]);
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
+      navigate("/admin/events/list");
     } catch (error: any) {
       setLoading(false);
       setHasError(true);
@@ -90,10 +93,10 @@ const EditEvent: FC = (): ReactElement => {
     if (e.target.name === "hotel" || e.target.name === "street" || e.target.name === "web") {
       setValues({ ...values, address: { ...values.address, [e.target.name]: e.target.value } });
     }
-    if (e.target.name === "attraction") {
-      setAttraction([e.target.value]);
+    if (e.target.name === "energyland") {
+      setValues({ ...values, energyland: !energyland });
     }
-    // console.log(e.target.name, " ---- ", e.target.value);
+    console.log("e.target.value", e);
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -136,11 +139,17 @@ const EditEvent: FC = (): ReactElement => {
   };
 
   return (
-    <>
-      {showEvent.name}
+    <Layout>
+      {event.name}
       <div style={{ marginTop: "20px" }}>
-        {hasError && errorMessage && <h4>{errorMessage}</h4>}
+        <div style={{ marginTop: "20px" }}>
+          {!image && event.image && <img src={event.image} alt="event" style={{ width: "100px", height: "100px" }} />}
+        </div>
+        <div style={{ marginTop: "20px" }}>
+          {image && <img src={image} alt="event" style={{ width: "100px", height: "100px" }} />}
+        </div>
 
+        {hasError && errorMessage && <h4>{errorMessage}</h4>}
         <form>
           <Input
             name="image"
@@ -188,7 +197,7 @@ const EditEvent: FC = (): ReactElement => {
             id="startDate"
             name="startDate"
             type="date"
-            value={startDate}
+            value={startDate.toISOString().substr(0, 10)}
             labelText="Data rozpoczęcia"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -198,7 +207,7 @@ const EditEvent: FC = (): ReactElement => {
             id="endDate"
             name="endDate"
             type="date"
-            value={endDate}
+            value={endDate.toISOString().substr(0, 10)}
             labelText="Data zakonczenia"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -247,7 +256,7 @@ const EditEvent: FC = (): ReactElement => {
               placeholder="---"
               style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
               handleChange={handleChange}
-              checked={false}
+              checked={energyland}
             />
           </div>
 
@@ -311,6 +320,17 @@ const EditEvent: FC = (): ReactElement => {
           )}
 
           <div style={{ marginTop: "20px" }}>
+            <label>Status</label>
+            <select name="status" className="form-control" onChange={handleChange} value={status} required>
+              <option defaultChecked value="">
+                Wybierz
+              </option>
+              <option value="active">Aktywny</option>
+              <option value="inactive">Nieaktywny</option>
+            </select>
+          </div>
+
+          <div style={{ marginTop: "20px" }}>
             <label>Kategoria</label>
             <select name="eventType" className="form-control" onChange={handleChange} value={eventType} required>
               <option defaultChecked value="">
@@ -333,7 +353,7 @@ const EditEvent: FC = (): ReactElement => {
           </div>
         </form>
       </div>
-    </>
+    </Layout>
   );
 };
 

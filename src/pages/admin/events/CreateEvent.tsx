@@ -12,14 +12,15 @@ import { EventUtils } from "../../../utils/event-utils.service";
 import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
+import Layout from "../../../components/layout/Layout";
 
 const initialState: IEvent = {
   name: "",
   eventType: "",
   price: "",
   discountPrice: "",
-  startDate: "",
-  endDate: "",
+  startDate: new Date(),
+  endDate: new Date(),
   image: "",
   address: {
     hotel: "",
@@ -43,7 +44,7 @@ const CreateEvent: FC = (): ReactElement => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch: Dispatch = useAppDispatch();
 
-  const { name, eventType, price, discountPrice, startDate, endDate, image, address, energyland = false } = values;
+  const { name, eventType, price, discountPrice, startDate, endDate, image, address, energyland } = values;
   const { hotel, street, web } = address;
 
   const createEvent = async (e: FormEvent): Promise<IEvent | undefined> => {
@@ -51,8 +52,7 @@ const CreateEvent: FC = (): ReactElement => {
     values.attractions = attraction;
     values.extraAttractions = extraAttraction;
     try {
-      const response: AxiosResponse<IEvent> =
-        image === "" ? await eventService.createEvent(values) : await eventService.createEventWithImage(values);
+      const response: AxiosResponse<IEvent> = await eventService.createEvent(values);
       setLoading(false);
       setHasError(false);
       setValues(initialState);
@@ -73,7 +73,9 @@ const CreateEvent: FC = (): ReactElement => {
     if (e.target.name === "hotel" || e.target.name === "street" || e.target.name === "web") {
       setValues({ ...values, address: { ...values.address, [e.target.name]: e.target.value } });
     }
-    // console.log(e.target.name, " ---- ", e.target.value);
+    if (e.target.name === "energyland") {
+      setValues({ ...values, energyland: !energyland });
+    }
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -116,7 +118,7 @@ const CreateEvent: FC = (): ReactElement => {
   };
 
   return (
-    <>
+    <Layout>
       {hasError && errorMessage && <h4>{errorMessage}</h4>}
       <form>
         <Input
@@ -129,6 +131,7 @@ const CreateEvent: FC = (): ReactElement => {
               fileInputRef.current.value = "";
             }
           }}
+          value={image}
           handleChange={handleFileChange}
         />
         <Input
@@ -165,7 +168,7 @@ const CreateEvent: FC = (): ReactElement => {
           id="startDate"
           name="startDate"
           type="date"
-          value={startDate}
+          value={startDate.toISOString().substr(0, 10)}
           labelText="Data rozpoczęcia"
           placeholder="---"
           style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -175,7 +178,7 @@ const CreateEvent: FC = (): ReactElement => {
           id="endDate"
           name="endDate"
           type="date"
-          value={endDate}
+          value={endDate.toISOString().substr(0, 10)}
           labelText="Data zakonczenia"
           placeholder="---"
           style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -222,7 +225,7 @@ const CreateEvent: FC = (): ReactElement => {
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
             handleChange={handleChange}
-            checked={false}
+            checked={energyland}
           />
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
@@ -309,7 +312,7 @@ const CreateEvent: FC = (): ReactElement => {
           </Button>
         </div>
       </form>
-    </>
+    </Layout>
   );
 };
 

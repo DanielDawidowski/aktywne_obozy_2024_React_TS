@@ -8,11 +8,6 @@ class EventService {
     return response;
   }
 
-  async createEventWithImage(body: IEvent): Promise<AxiosResponse> {
-    const response = await axios.post("/event/image/event", body);
-    return response;
-  }
-
   async getAllEvents(page: number): Promise<AxiosResponse> {
     const response = await axios.get(`/event/all/${page}`);
     return response;

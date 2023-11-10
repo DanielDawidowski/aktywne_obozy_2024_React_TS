@@ -66,6 +66,7 @@ export const ToastNotification = styled.div<{ backgroundColor: string }>`
   color: ${(props) => props.theme.white};
   opacity: 0.9;
   box-shadow: 0 0 10px ${(props) => props.theme.dark};
+  margin-bottom: 12px;
 
   .toast-notification-image {
     margin: 10px;

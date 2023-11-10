@@ -11,6 +11,7 @@ import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
 import { IEvent } from "../../../interfaces/event/event.interface";
 import { AdminEventListItemStyles, AdminEventListStyles, ButtonActionStyles } from "../AdminStyles";
+import Layout from "../../../components/layout/Layout";
 
 const AdminEvents: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -50,19 +51,21 @@ const AdminEvents: FC = (): ReactElement => {
   }, [events]);
 
   return (
-    <AdminEventListStyles>
-      {sortedList.map((event, index) => (
-        <AdminEventListItemStyles key={index}>
-          <h2>{event.name}</h2>
-          <ButtonActionStyles>
-            <Link to={`/admin/events/update/${event._id}`}>
-              <AiOutlineEdit />
-            </Link>
-            <MdDeleteForever style={{ fill: "red" }} onClick={() => deleteEvent(event._id as string)} />
-          </ButtonActionStyles>
-        </AdminEventListItemStyles>
-      ))}
-    </AdminEventListStyles>
+    <Layout>
+      <AdminEventListStyles>
+        {sortedList.map((event, index) => (
+          <AdminEventListItemStyles key={index}>
+            <h2>{event.name}</h2>
+            <ButtonActionStyles>
+              <Link to={`/admin/events/update/${event._id}`}>
+                <AiOutlineEdit />
+              </Link>
+              <MdDeleteForever style={{ fill: "red" }} onClick={() => deleteEvent(event._id as string)} />
+            </ButtonActionStyles>
+          </AdminEventListItemStyles>
+        ))}
+      </AdminEventListStyles>
+    </Layout>
   );
 };
 

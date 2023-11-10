@@ -2,6 +2,7 @@ import React, { useState, ReactElement } from "react";
 import type { FC } from "react";
 import { Login, Register } from "..";
 import Layout from "../../../components/layout/Layout";
+import transition from "../../../utils/transition";
 
 const AuthTabs: FC = (): ReactElement => {
   const [type, setType] = useState<string>("Sign In");
@@ -36,4 +37,4 @@ const AuthTabs: FC = (): ReactElement => {
   );
 };
 
-export default AuthTabs;
+export default transition(AuthTabs);

@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import { authService } from "../../../services/api/auth/auth.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IRegisterData } from "../../../interfaces/auth/auth.interface";
+import transition from "../../../utils/transition";
 
 const Register: FC = (): ReactElement => {
   const [username, setUsername] = useState<string>("marcin");
@@ -82,4 +83,4 @@ const Register: FC = (): ReactElement => {
   );
 };
 
-export default Register;
+export default transition(Register);

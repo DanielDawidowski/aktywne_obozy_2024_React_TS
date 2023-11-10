@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import { AdminDashboardStyles, AdminNavStyles, AdminMainStyles } from "./AdminStyles";
+import transition from "../../utils/transition";
 
 const AdminDashboard: FC = (): ReactElement => {
   return (
@@ -31,4 +32,4 @@ const AdminDashboard: FC = (): ReactElement => {
   );
 };
 
-export default AdminDashboard;
+export default transition(AdminDashboard);

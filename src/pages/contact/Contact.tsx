@@ -2,8 +2,8 @@ import React, { ReactElement } from "react";
 import type { FC } from "react";
 import Layout from "../../components/layout/Layout";
 
-const About: FC = (): ReactElement => {
-  return <Layout>About</Layout>;
+const Contact: FC = (): ReactElement => {
+  return <Layout>Contact</Layout>;
 };
 
-export default About;
+export default Contact;

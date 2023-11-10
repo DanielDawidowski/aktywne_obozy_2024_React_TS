@@ -13,6 +13,11 @@ class UserService {
     return response;
   }
 
+  async checkCurrentUserAdmin(): Promise<AxiosResponse> {
+    const response = await axios.get("/currentuser/admin");
+    return response;
+  }
+
   async getUserProfileByUserId(userId: string): Promise<AxiosResponse<ISignUpData>> {
     const response = await axios.get(`/user/profile/${userId}`);
     return response;
