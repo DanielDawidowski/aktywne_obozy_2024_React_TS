@@ -6,6 +6,8 @@ import { authService } from "../../../services/api/auth/auth.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IRegisterData } from "../../../interfaces/auth/auth.interface";
 import transition from "../../../utils/transition";
+import Input from "../../../components/input/Input";
+import Button from "../../../components/button/Button";
 
 const Register: FC = (): ReactElement => {
   const [username, setUsername] = useState<string>("marcin");
@@ -47,37 +49,37 @@ const Register: FC = (): ReactElement => {
     <div className="auth-inner">
       <form className="auth-form" onSubmit={registerUser}>
         <div className="form-input-container">
-          <input
+          <Input
             id="username"
             name="username"
             type="text"
             value={username}
             placeholder="Enter Username"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
           />
-          <input
+          <Input
             id="email"
             name="email"
             type="text"
             value={email}
             placeholder="Enter Email"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
           />
-          <input
+          <Input
             id="password"
             name="password"
             type="password"
             value={password}
             placeholder="Enter Password"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
           />
         </div>
-        <button className="auth-button button" disabled={!username || !email || !password}>
+        <Button className="auth-button button" disabled={!username || !email || !password}>
           {loading ? "Loading..." : "Sign Up"}
-        </button>
+        </Button>
       </form>
     </div>
   );

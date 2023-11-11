@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import propTypes from "prop-types";
 import { CheckboxProps } from "./Checkbox.interface";
-import { CheckboxContainer, CheckboxInput, CheckboxLabel } from "./CheckboxStyles";
+import { CheckboxContainer, CheckboxInput, CheckboxLabel } from "./Checkbox.styles";
 
 const Checkbox: React.FC<CheckboxProps> = ({ label, onChange }) => {
   const [isChecked, setChecked] = useState(false);

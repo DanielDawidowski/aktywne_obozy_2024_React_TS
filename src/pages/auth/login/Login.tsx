@@ -9,6 +9,8 @@ import { ISignUpData } from "../../../interfaces/auth/auth.interface";
 import { socketService } from "../../../services/socket/socket.service";
 import { Dispatch } from "@reduxjs/toolkit";
 import transition from "../../../utils/transition";
+import Input from "../../../components/input/Input";
+import Button from "../../../components/button/Button";
 
 const Login: FC = (): ReactElement => {
   const [username, setUsername] = useState<string>("marcin");
@@ -66,28 +68,28 @@ const Login: FC = (): ReactElement => {
     <div className="auth-inner" style={{ display: "grid", placeItems: "center" }}>
       <form className="auth-form" onSubmit={loginUser}>
         <div className="form-input-container">
-          <input
+          <Input
             id="username"
             name="username"
             type="text"
             value={username}
             placeholder="Enter Username"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
           />
-          <input
+          <Input
             id="password"
             name="password"
             type="password"
             value={password}
             placeholder="Enter Password"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
+            handleChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
           />
         </div>
-        <button className="auth-button button" disabled={!username || !password}>
+        <Button className="auth-button button" disabled={!username || !password}>
           {loading ? "Loading..." : "Sign Up"}
-        </button>
+        </Button>
       </form>
     </div>
   );

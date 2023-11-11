@@ -2,7 +2,7 @@ import React, { ReactElement, forwardRef, ChangeEvent, Ref } from "react";
 import type { FC } from "react";
 import propTypes from "prop-types";
 import { IInput } from "./Input.interface";
-import { InputContainer, InputField } from "./InputStyles";
+import { InputContainer, InputField } from "./Input.styles";
 
 const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
   (

@@ -1,12 +1,12 @@
 import React, { FC, ReactElement } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { HeaderStyles } from "./HeaderStyles";
+import { HeaderStyles } from "./Header.styles";
 import Hamburger from "../hamburger/Hamburger";
 import IHeader from "./Header.interface";
 
 import Logo from "../../logo/Logo";
-import { Container, Flex, DisplayMedia } from "../../globalStyles/globalStyles";
+import { Container, Flex, DisplayMedia } from "../../globalStyles/global.styles";
 import Menu from "../menu/Menu";
 
 const Header: FC<IHeader> = (props): ReactElement => {

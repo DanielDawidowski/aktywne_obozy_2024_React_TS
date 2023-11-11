@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import propTypes from "prop-types";
 import { SelectProps } from "./Select.interface";
-import { SelectButton, SelectContainer, SelectLabel, SelectMenu, SelectOption } from "./SelectStyles";
+import { SelectButton, SelectContainer, SelectLabel, SelectMenu, SelectOption } from "./Select.styles";
 
 const Select: React.FC<SelectProps> = ({ options, onSelect, label }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -16,6 +16,7 @@ import { eventService } from "../../../services/api/events/events.service";
 import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
+import Select from "../../../components/select/Select";
 
 const initialState: IEvent = {
   name: "",
@@ -97,7 +98,6 @@ const EditEvent: FC = (): ReactElement => {
     if (e.target.name === "energyland") {
       setValues({ ...values, energyland: !energyland });
     }
-    console.log("e.target.value", e);
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -320,28 +320,20 @@ const EditEvent: FC = (): ReactElement => {
             </div>
           )}
 
-          <div style={{ marginTop: "20px" }}>
-            <label>Status</label>
-            <select name="status" className="form-control" onChange={handleChange} value={status} required>
-              <option defaultChecked value="">
-                Wybierz
-              </option>
-              <option value="active">Aktywny</option>
-              <option value="inactive">Nieaktywny</option>
-            </select>
+          <div style={{ margin: "20px 0" }}>
+            <Select
+              label="Status"
+              options={["Aktywny", "Nieaktywny"]}
+              onSelect={(option: string) => setValues({ ...values, status: option })}
+            />
           </div>
 
-          <div style={{ marginTop: "20px" }}>
-            <label>Kategoria</label>
-            <select name="eventType" className="form-control" onChange={handleChange} value={eventType} required>
-              <option defaultChecked value="">
-                Wybierz
-              </option>
-              <option value="Góry">Góry</option>
-              <option value="Spływy">Spływy</option>
-              <option value="Morze">Morze</option>
-              <option value="Półkolonie">Półkolonie</option>
-            </select>
+          <div style={{ margin: "20px 0" }}>
+            <Select
+              label="Kategoria"
+              options={["Góry", "Spływy", "Morze", "Półkolonie"]}
+              onSelect={(option: string) => setValues({ ...values, eventType: option })}
+            />
           </div>
           <div style={{ margin: "40px 0px" }}>
             <Button

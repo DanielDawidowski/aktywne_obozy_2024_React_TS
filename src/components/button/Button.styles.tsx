@@ -5,7 +5,7 @@ import IButton from "./Button.interface";
 const COLOR = {
   PRIMARY: css`
     color: ${(props) => props.theme.black};
-    background: ${(props) => props.theme.green_light};
+    background: ${(props) => props.theme.green};
   `,
   SECONDARY: css`
     color: ${(props) => props.theme.black};

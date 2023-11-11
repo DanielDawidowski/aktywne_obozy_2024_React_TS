@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import PropTypes from "prop-types";
 import IHeader from "../header/Header.interface";
-import { HamburgerMenu, CloseMenu } from "./HamburgerStyles";
+import { HamburgerMenu, CloseMenu } from "./Hamburger.styles";
 
 const Hamburger: FC<IHeader> = (props): ReactElement => {
   const { toggleMenu, setToggleMenu, close = false } = props;

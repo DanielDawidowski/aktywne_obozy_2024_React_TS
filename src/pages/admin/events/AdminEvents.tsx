@@ -10,7 +10,7 @@ import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
 import { IEvent } from "../../../interfaces/event/event.interface";
-import { AdminEventListItemStyles, AdminEventListStyles, ButtonActionStyles } from "../AdminStyles";
+import { AdminEventListItemStyles, AdminEventListStyles, ButtonActionStyles } from "../Admin.styles";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
 

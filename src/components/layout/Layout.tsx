@@ -5,8 +5,8 @@ import { LayoutStyles } from "./LayoutStyles";
 import Header from "../navs/header/Header";
 import Navigation from "../navs/navigation/Navigation";
 import StyledThemeProvider from "./StyledThemeProvider";
-import { TypographyStyles } from "../globalStyles/typographyStyles";
-import { GlobalStyles } from "../globalStyles/globalStyles";
+import { TypographyStyles } from "../globalStyles/typography.syles";
+import { GlobalStyles } from "../globalStyles/global.styles";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
@@ -23,7 +23,6 @@ const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
 
   useEffect(() => {
     const getTheme: CurrentThemes | null = themeStorage.get();
-    console.log(getTheme);
     if (getTheme) {
       setTheme(getTheme);
     }

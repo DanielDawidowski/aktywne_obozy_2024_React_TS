@@ -1,13 +1,10 @@
 import React, { FC } from "react";
-import type { RouteObject } from "react-router";
 import { useLocation, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/home/Home";
 import { AuthTabs } from "./pages/auth";
-import ProtectedRoute from "./pages/admin/ProtectedRoute";
 import AdminRoute from "./pages/admin/AdminRoute";
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateEvent from "./pages/admin/events/CreateEvent";
 import AdminEvents from "./pages/admin/events/AdminEvents";
 import EditEvent from "./pages/admin/events/EditEvent";

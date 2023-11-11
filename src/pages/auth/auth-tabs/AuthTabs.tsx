@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { Login, Register } from "..";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
+import Button from "../../../components/button/Button";
 
 const AuthTabs: FC = (): ReactElement => {
   const [type, setType] = useState<string>("Sign In");
@@ -12,10 +13,10 @@ const AuthTabs: FC = (): ReactElement => {
       <div className="login" style={{ display: "grid", placeItems: "center" }}>
         <ul className="tab-group">
           <li className={`tab ${type === "Sign In" ? "active" : ""}`} onClick={() => setType("Sign In")}>
-            <button className="login">Sign In</button>
+            <Button className="login">Sign In</Button>
           </li>
           <li className={`tab ${type === "Sign Up" ? "active" : ""}`} onClick={() => setType("Sign Up")}>
-            <button className="signup">Sign Up</button>
+            <Button className="signup">Sign Up</Button>
           </li>
         </ul>
         {type === "Sign In" && (

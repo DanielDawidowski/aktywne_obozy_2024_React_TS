@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import PropTypes from "prop-types";
 import IButton, { ButtonColor } from "./Button.interface";
-import { ButtonStyles } from "./ButtonStyles";
+import { ButtonStyles } from "./Button.styles";
 
 const Button: FC<IButton> = (props): ReactElement => {
   const { onClick, children, color = ButtonColor.primary, disabled } = props;

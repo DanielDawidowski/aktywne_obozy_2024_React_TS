@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import type { FC } from "react";
 import LogoImg from "../../assets/Images/Logo.png";
-import { LogoStyles } from "./LogoStyles";
+import { LogoStyles } from "./Logo.styles";
 
 const Logo: FC = (): ReactElement => {
   return (

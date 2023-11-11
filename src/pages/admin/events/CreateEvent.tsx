@@ -15,6 +15,10 @@ import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import Layout from "../../../components/layout/Layout";
 import Checkbox from "../../../components/checkbox/Checkbox";
 import Select from "../../../components/select/Select";
+import transition from "../../../utils/transition";
+import TextArea from "../../../components/textarea/Textarea";
+import Spinner from "../../../components/spinner/Spinner";
+import { ButtonColor } from "../../../components/button/Button.interface";
 
 const initialState: IEvent = {
   name: "",
@@ -46,11 +50,12 @@ const CreateEvent: FC = (): ReactElement => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch: Dispatch = useAppDispatch();
 
-  const { name, eventType, price, discountPrice, startDate, endDate, address, energyland } = values;
+  const { name, eventType, price, discountPrice, startDate, endDate, address } = values;
   const { hotel, street, web } = address;
 
   const createEvent = async (e: FormEvent): Promise<IEvent | undefined> => {
     e.preventDefault();
+    setLoading(true);
     values.attractions = attraction;
     values.extraAttractions = extraAttraction;
     try {
@@ -60,6 +65,7 @@ const CreateEvent: FC = (): ReactElement => {
       setValues(initialState);
       setAttraction([]);
       setExtraAttraction([]);
+      setValues(initialState);
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
       return response.data;
     } catch (error: any) {
@@ -75,9 +81,6 @@ const CreateEvent: FC = (): ReactElement => {
     if (e.target.name === "hotel" || e.target.name === "street" || e.target.name === "web") {
       setValues({ ...values, address: { ...values.address, [e.target.name]: e.target.value } });
     }
-    if (e.target.name === "energyland") {
-      setValues({ ...values, energyland: !energyland });
-    }
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -88,7 +91,7 @@ const CreateEvent: FC = (): ReactElement => {
         setValues({ ...values, image: fileValue });
       } catch (error) {
         // Handle or log the error if necessary
-        console.error("Error reading file as base64:", error);
+        Utils.dispatchNotification("Error reading file as base64:", INotificationType.ERROR, dispatch);
       }
     }
   };
@@ -240,9 +243,9 @@ const CreateEvent: FC = (): ReactElement => {
         {attraction.length > 0 && (
           <div className="create__event--attractions">
             <h6>Max 8 atrakcjii</h6>
-            <ul style={{ width: "100%" }}>
+            <ul>
               {attraction.map((attr, i) => (
-                <li key={i} style={{ display: "flex", width: "100%" }}>
+                <li key={i}>
                   <h4>{attr}</h4>
                   <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i)} />
                 </li>
@@ -251,7 +254,7 @@ const CreateEvent: FC = (): ReactElement => {
           </div>
         )}
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Input
             id="extraAttraction"
             name="extraAttraction"
@@ -279,6 +282,8 @@ const CreateEvent: FC = (): ReactElement => {
           </div>
         )}
 
+        <TextArea label="Type something..." rows={10} />
+
         <div style={{ margin: "20px 0" }}>
           <Select
             label="Kategoria"
@@ -288,11 +293,11 @@ const CreateEvent: FC = (): ReactElement => {
         </div>
         <div style={{ margin: "20px 0" }}>
           <Button
-            className="auth-button button"
+            color={ButtonColor.primary}
             disabled={!name || !eventType || !price || !startDate || !endDate}
             onClick={createEvent}
           >
-            {loading ? "Wysyłanie..." : "Utwórz"}
+            {loading ? <Spinner size={20} /> : "Utwórz"}
           </Button>
         </div>
       </form>
@@ -300,4 +305,4 @@ const CreateEvent: FC = (): ReactElement => {
   );
 };
 
-export default CreateEvent;
+export default transition(CreateEvent);

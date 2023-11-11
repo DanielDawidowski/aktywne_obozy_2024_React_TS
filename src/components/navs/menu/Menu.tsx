@@ -6,7 +6,7 @@ import useLocalStorage from "../../../hooks/useLocalStorage";
 import { userService } from "../../../services/api/user/user.service";
 import { clearUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IMenu } from "./Menu.interface";
-import { MenuStyles } from "./MenuStyles";
+import { MenuStyles } from "./Menu.styles";
 import Dropdown from "../../dropdown/Dropdown";
 
 const Menu: FC<IMenu> = (props): ReactElement => {

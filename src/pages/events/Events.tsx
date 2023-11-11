@@ -9,7 +9,7 @@ import { IEvent } from "../../interfaces/event/event.interface";
 import { eventService } from "../../services/api/events/events.service";
 import Layout from "../../components/layout/Layout";
 import { timeAgo } from "../../utils/timeago.utils";
-import { Container } from "../../components/globalStyles/globalStyles";
+import { Container } from "../../components/globalStyles/global.styles";
 import transition from "../../utils/transition";
 
 const Events: FC = (): ReactElement => {

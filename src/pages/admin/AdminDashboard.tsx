@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import type { FC } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
-import { AdminDashboardStyles, AdminNavStyles, AdminMainStyles } from "./AdminStyles";
+import { AdminDashboardStyles, AdminNavStyles, AdminMainStyles } from "./Admin.styles";
 import transition from "../../utils/transition";
 
 const AdminDashboard: FC = (): ReactElement => {

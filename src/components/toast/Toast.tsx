@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { cloneDeep } from "lodash";
 import { IToast, IToastListItem, IToastPosition } from "../../interfaces/notification/notification.interface";
 import { Utils } from "../../utils/utils.service";
-import { CancelButton, ToastContainer, ToastNotification } from "./ToastStyles";
+import { CancelButton, ToastContainer, ToastNotification } from "./Toast.styles";
 
 const Toast: FC<IToast> = (props): ReactElement => {
   const { toastList, position, autoDelete, autoDeleteTime = 2000 } = props;

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { AnimatePresence } from "framer-motion";
-import { DropdownButton, DropdownContainer, DropdownContent } from "./DropdownStyles";
+import { DropdownButton, DropdownContainer, DropdownContent } from "./Dropdown.styles";
 import { DropdownProps } from "./Dropdown.interface";
 import useDetectOutsideClick from "../../hooks/useDetectOutsideClick";
 

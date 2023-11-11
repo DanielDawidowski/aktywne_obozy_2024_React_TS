@@ -2,12 +2,12 @@ import React, { ReactElement } from "react";
 import type { FC } from "react";
 import { AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
-import { NavBody, NavHeader, NavStyles } from "./NavigationStyles";
+import { NavBody, NavHeader, NavStyles } from "./Navigation.styles";
 import IHeader from "../header/Header.interface";
 import Menu from "../menu/Menu";
 import Logo from "../../logo/Logo";
 import Hamburger from "../hamburger/Hamburger";
-import { DisplayMedia, Flex } from "../../globalStyles/globalStyles";
+import { DisplayMedia, Flex } from "../../globalStyles/global.styles";
 
 const Navigation: FC<IHeader> = (props): ReactElement => {
   const { toggleMenu, setToggleMenu, toggleTheme } = props;
