@@ -22,14 +22,6 @@ export const AppRouter: FC = () => {
         <Route path="/events" element={<Events />} />
         <Route path="/login" element={<AuthTabs />} />
         <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-        <Route
           path="/admin/event/create"
           element={
             <AdminRoute>

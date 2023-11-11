@@ -59,7 +59,7 @@ const Login: FC = (): ReactElement => {
 
   useEffect(() => {
     if (loading && !user) return;
-    if (user) navigate("/admin");
+    if (user) navigate("/");
   }, [loading, user, navigate]);
 
   return (

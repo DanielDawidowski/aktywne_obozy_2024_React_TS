@@ -2,6 +2,7 @@ import React, { ReactElement, forwardRef, ChangeEvent, Ref } from "react";
 import type { FC } from "react";
 import propTypes from "prop-types";
 import { IInput } from "./Input.interface";
+import { InputContainer, InputField } from "./InputStyles";
 
 const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
   (
@@ -23,13 +24,13 @@ const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
     ref: Ref<HTMLInputElement>
   ): ReactElement => {
     return (
-      <div className="form-row">
+      <InputContainer>
         {labelText && (
           <label htmlFor={name} className="form-label">
             {labelText}
           </label>
         )}
-        <input
+        <InputField
           id={id}
           name={name}
           type={type}
@@ -45,7 +46,7 @@ const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
           autoComplete="false"
           checked={checked}
         />
-      </div>
+      </InputContainer>
     );
   }
 );

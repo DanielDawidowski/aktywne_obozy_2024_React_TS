@@ -12,6 +12,7 @@ import { INotificationType } from "../../../interfaces/notification/notification
 import { IEvent } from "../../../interfaces/event/event.interface";
 import { AdminEventListItemStyles, AdminEventListStyles, ButtonActionStyles } from "../AdminStyles";
 import Layout from "../../../components/layout/Layout";
+import transition from "../../../utils/transition";
 
 const AdminEvents: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([]);
@@ -69,4 +70,4 @@ const AdminEvents: FC = (): ReactElement => {
   );
 };
 
-export default AdminEvents;
+export default transition(AdminEvents);

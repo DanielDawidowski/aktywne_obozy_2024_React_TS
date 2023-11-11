@@ -13,6 +13,8 @@ import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import Layout from "../../../components/layout/Layout";
+import Checkbox from "../../../components/checkbox/Checkbox";
+import Select from "../../../components/select/Select";
 
 const initialState: IEvent = {
   name: "",
@@ -44,7 +46,7 @@ const CreateEvent: FC = (): ReactElement => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch: Dispatch = useAppDispatch();
 
-  const { name, eventType, price, discountPrice, startDate, endDate, image, address, energyland } = values;
+  const { name, eventType, price, discountPrice, startDate, endDate, address, energyland } = values;
   const { hotel, street, web } = address;
 
   const createEvent = async (e: FormEvent): Promise<IEvent | undefined> => {
@@ -117,6 +119,10 @@ const CreateEvent: FC = (): ReactElement => {
     setExtraAttraction(updatedExtraAttractions);
   };
 
+  const handleCheckboxChange = (isChecked: boolean): void => {
+    setValues({ ...values, energyland: isChecked });
+  };
+
   return (
     <Layout>
       {hasError && errorMessage && <h4>{errorMessage}</h4>}
@@ -131,7 +137,6 @@ const CreateEvent: FC = (): ReactElement => {
               fileInputRef.current.value = "";
             }
           }}
-          value={image}
           handleChange={handleFileChange}
         />
         <Input
@@ -168,7 +173,7 @@ const CreateEvent: FC = (): ReactElement => {
           id="startDate"
           name="startDate"
           type="date"
-          value={startDate.toISOString().substr(0, 10)}
+          value={startDate.toString()}
           labelText="Data rozpoczęcia"
           placeholder="---"
           style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -178,7 +183,7 @@ const CreateEvent: FC = (): ReactElement => {
           id="endDate"
           name="endDate"
           type="date"
-          value={endDate.toISOString().substr(0, 10)}
+          value={endDate.toString()}
           labelText="Data zakonczenia"
           placeholder="---"
           style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -216,17 +221,7 @@ const CreateEvent: FC = (): ReactElement => {
           handleChange={handleChange}
         />
         <div className="event__form--checkbox">
-          <Input
-            id="energyland"
-            name="energyland"
-            type="checkbox"
-            value={energyland ? "true" : "false"}
-            labelText="Energylandia"
-            placeholder="---"
-            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-            handleChange={handleChange}
-            checked={energyland}
-          />
+          <Checkbox label="Energylandia" onChange={handleCheckboxChange} />
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
           <Input
@@ -285,22 +280,11 @@ const CreateEvent: FC = (): ReactElement => {
         )}
 
         <div style={{ margin: "20px 0" }}>
-          <label>Kategoria</label>
-          <select
-            name="eventType"
-            className="form-control"
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => handleChange(e)}
-            defaultValue={eventType}
-            required
-          >
-            <option defaultChecked value="">
-              Wybierz
-            </option>
-            <option value="Góry">Góry</option>
-            <option value="Spływy">Spływy</option>
-            <option value="Morze">Morze</option>
-            <option value="Półkolonie">Półkolonie</option>
-          </select>
+          <Select
+            label="Kategoria"
+            options={["Góry", "Spływy", "Morze", "Półkolonie"]}
+            onSelect={(option: string) => setValues({ ...values, eventType: option })}
+          />
         </div>
         <div style={{ margin: "20px 0" }}>
           <Button

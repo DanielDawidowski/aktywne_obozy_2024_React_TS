@@ -45,15 +45,15 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const Flex = styled.div<{ justify?: string; align?: string }>`
+export const Flex = styled.div<{ $justify?: string; $align?: string }>`
   display: flex;
-  justify-content: ${(props) => props.justify};
-  align-items: ${(props) => props.align};
+  justify-content: ${(props) => props.$justify || "flex-start"};
+  align-items: ${(props) => props.$align || "flex-start"};
 `;
 
-export const DisplayMedia = styled.div<{ media?: boolean }>`
-  ${({ media }) =>
-    media
+export const DisplayMedia = styled.div<{ $media?: boolean }>`
+  ${({ $media }) =>
+    $media
       ? css`
           display: none;
           @media (min-width: ${(props) => props.theme.breakpoint_small}) {

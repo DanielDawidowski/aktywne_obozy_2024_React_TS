@@ -15,13 +15,13 @@ const Header: FC<IHeader> = (props): ReactElement => {
   return (
     <HeaderStyles>
       <Container>
-        <Flex justify="space-between" align="center">
+        <Flex $justify="space-between" $align="center">
           <div>
             <Link to="/">
               <Logo />
             </Link>
           </div>
-          <DisplayMedia media>
+          <DisplayMedia $media>
             <Menu toggleTheme={toggleTheme} />
           </DisplayMedia>
           <DisplayMedia>

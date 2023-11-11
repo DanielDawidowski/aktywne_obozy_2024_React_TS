@@ -15,6 +15,7 @@ import { INotificationType } from "../../../interfaces/notification/notification
 import { eventService } from "../../../services/api/events/events.service";
 import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
+import transition from "../../../utils/transition";
 
 const initialState: IEvent = {
   name: "",
@@ -197,7 +198,7 @@ const EditEvent: FC = (): ReactElement => {
             id="startDate"
             name="startDate"
             type="date"
-            value={startDate.toISOString().substr(0, 10)}
+            value={startDate.toString()}
             labelText="Data rozpoczęcia"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -207,7 +208,7 @@ const EditEvent: FC = (): ReactElement => {
             id="endDate"
             name="endDate"
             type="date"
-            value={endDate.toISOString().substr(0, 10)}
+            value={endDate.toString()}
             labelText="Data zakonczenia"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -357,4 +358,4 @@ const EditEvent: FC = (): ReactElement => {
   );
 };
 
-export default EditEvent;
+export default transition(EditEvent);

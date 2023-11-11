@@ -25,7 +25,7 @@ const Navigation: FC<IHeader> = (props): ReactElement => {
             exit={{ x: "-100%" }}
           >
             <NavHeader>
-              <Flex justify="space-between" align="center">
+              <Flex $justify="space-between" $align="center">
                 <Logo />
                 <Hamburger setToggleMenu={setToggleMenu} toggleMenu={toggleMenu} />
               </Flex>
