@@ -18,7 +18,7 @@ class EventService {
     return response;
   }
 
-  async updateEvent(eventId: string, body: IEvent): Promise<AxiosResponse> {
+  async updateEvent(eventId: string, body: IEvent): Promise<AxiosResponse<IEvent>> {
     const response = await axios.put(`/event/${eventId}`, body);
     return response;
   }

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, ReactElement } from "react";
 import type { ChangeEvent, FC, FormEvent } from "react";
-import { NavigateProps, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AiFillDelete } from "react-icons/ai";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
 import { IEvent } from "../../../interfaces/event/event.interface";
@@ -17,24 +17,27 @@ import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
 import Select from "../../../components/select/Select";
+import Checkbox from "../../../components/checkbox/Checkbox";
+import Spinner from "../../../components/spinner/Spinner";
+import { Flex } from "../../../components/globalStyles/global.styles";
 
 const initialState: IEvent = {
-  name: "",
+  name: "zakopane",
   eventType: "",
-  price: "",
-  discountPrice: "",
+  price: "1400",
+  discountPrice: "900",
   startDate: new Date(),
   endDate: new Date(),
   image: "",
   address: {
-    hotel: "",
-    street: "",
-    web: ""
+    hotel: "galicowka",
+    street: "male ciche",
+    web: "www.wp.pl"
   },
   energyland: false,
   attractions: [],
   extraAttractions: [],
-  status: "active"
+  status: ""
 };
 
 const EditEvent: FC = (): ReactElement => {
@@ -43,9 +46,9 @@ const EditEvent: FC = (): ReactElement => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [attraction, setAttraction] = useState<string[]>([]);
+  const [attractions, setAttractions] = useState<string[]>([]);
   const [attractionValue, setAttractionValue] = useState<string>("");
-  const [extraAttraction, setExtraAttraction] = useState<string[]>([]);
+  const [extraAttractions, setExtraAttractions] = useState<string[]>([]);
   const [extraAttractionValue, setExtraAttractionValue] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch: Dispatch = useAppDispatch();
@@ -53,7 +56,7 @@ const EditEvent: FC = (): ReactElement => {
 
   const { eventId } = useParams();
 
-  const { name, eventType, price, discountPrice, startDate, endDate, address, energyland, image, status } = values;
+  const { name, eventType, price, discountPrice, startDate, endDate, address, image } = values;
   const { hotel, street, web } = address;
 
   const getEvent = useCallback(async () => {
@@ -67,15 +70,16 @@ const EditEvent: FC = (): ReactElement => {
 
   const updateEvent = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
-    values.attractions = attraction;
-    values.extraAttractions = extraAttraction;
+    setLoading(true);
+    values.attractions = attractions;
+    values.extraAttractions = extraAttractions;
     try {
       const response: AxiosResponse<IEvent> = await eventService.updateEvent(eventId as string, values);
       setLoading(false);
       setHasError(false);
       setValues(initialState);
-      setAttraction([]);
-      setExtraAttraction([]);
+      setAttractions([]);
+      setExtraAttractions([]);
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
       navigate("/admin/events/list");
     } catch (error: any) {
@@ -95,9 +99,6 @@ const EditEvent: FC = (): ReactElement => {
     if (e.target.name === "hotel" || e.target.name === "street" || e.target.name === "web") {
       setValues({ ...values, address: { ...values.address, [e.target.name]: e.target.value } });
     }
-    if (e.target.name === "energyland") {
-      setValues({ ...values, energyland: !energyland });
-    }
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
@@ -113,30 +114,27 @@ const EditEvent: FC = (): ReactElement => {
     }
   };
 
-  const handleAttraction = (): void => {
-    if (attractionValue.trim() !== "") {
-      setAttraction([...attraction, attractionValue]);
-      setAttractionValue("");
+  const handleAttraction = (attractionType: string): void => {
+    const currentValue = attractionType === "attractions" ? attractionValue : extraAttractionValue;
+    const setter = attractionType === "attractions" ? setAttractions : setExtraAttractions;
+
+    if (currentValue.trim() !== "") {
+      setter((prevAttractions) => [...prevAttractions, currentValue]);
+      attractionType === "attractions" ? setAttractionValue("") : setExtraAttractionValue("");
     }
   };
 
-  const deleteAttraction = (index: number): void => {
-    const updatedAttractions = [...attraction];
+  const deleteAttraction = (index: number, attractionType: string): void => {
+    const attractionsArray = attractionType === "attractions" ? attractions : extraAttractions;
+    const setAttractionsArray = attractionType === "attractions" ? setAttractions : setExtraAttractions;
+
+    const updatedAttractions = [...attractionsArray];
     updatedAttractions.splice(index, 1);
-    setAttraction(updatedAttractions);
+    setAttractionsArray(updatedAttractions);
   };
 
-  const handleExtraAttraction = (): void => {
-    if (extraAttractionValue.trim() !== "") {
-      setExtraAttraction([...extraAttraction, extraAttractionValue]);
-      setExtraAttractionValue("");
-    }
-  };
-
-  const deleteExtraAttraction = (index: number): void => {
-    const updatedExtraAttractions = [...extraAttraction];
-    updatedExtraAttractions.splice(index, 1);
-    setExtraAttraction(updatedExtraAttractions);
+  const handleCheckboxChange = (isChecked: boolean): void => {
+    setValues({ ...values, energyland: isChecked });
   };
 
   return (
@@ -248,26 +246,13 @@ const EditEvent: FC = (): ReactElement => {
           />
 
           <div className="event__form--checkbox">
-            <Input
-              id="energyland"
-              name="energyland"
-              type="checkbox"
-              value={energyland ? "true" : "false"}
-              labelText="Energylandia"
-              placeholder="---"
-              style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-              handleChange={handleChange}
-              checked={energyland}
-            />
+            <Checkbox label="Energylandia" onChange={handleCheckboxChange} />
           </div>
 
-          <div
-            style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}
-            onClick={handleAttraction}
-          >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
             <Input
-              id="attraction"
-              name="attraction"
+              id="attractions"
+              name="attractions"
               type="text"
               value={attractionValue}
               labelText="Atrakcje"
@@ -276,16 +261,19 @@ const EditEvent: FC = (): ReactElement => {
               handleChange={(e) => setAttractionValue(e.target.value)}
             />
 
-            <BsFillBookmarkPlusFill style={{ fill: "green", marginLeft: "30px" }} onClick={handleAttraction} />
+            <BsFillBookmarkPlusFill
+              style={{ fill: "green", marginLeft: "30px" }}
+              onClick={() => handleAttraction("attractions")}
+            />
           </div>
-          {attraction.length > 0 && (
+          {attractions.length > 0 && (
             <div className="create__event--attractions">
               <h6>Max 8 atrakcjii</h6>
               <ul style={{ width: "100%" }}>
-                {attraction.map((attr, i) => (
+                {attractions.map((attr, i) => (
                   <li key={i} style={{ display: "flex", width: "100%" }}>
                     <h4>{attr}</h4>
-                    <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i)} />
+                    <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i, "attractions")} />
                   </li>
                 ))}
               </ul>
@@ -304,16 +292,19 @@ const EditEvent: FC = (): ReactElement => {
               handleChange={(e) => setExtraAttractionValue(e.target.value)}
             />
 
-            <BsFillBookmarkPlusFill style={{ fill: "green", marginLeft: "30px" }} onClick={handleExtraAttraction} />
+            <BsFillBookmarkPlusFill
+              style={{ fill: "green", marginLeft: "30px" }}
+              onClick={() => handleAttraction("extraAttractions")}
+            />
           </div>
-          {extraAttraction.length > 0 && (
+          {extraAttractions.length > 0 && (
             <div className="create__event--attractions">
               <h6>Max 8 atrakcjii</h6>
               <ul style={{ width: "100%" }}>
-                {extraAttraction.map((attr, i) => (
+                {extraAttractions.map((attr, i) => (
                   <li key={i} style={{ display: "flex", width: "100%" }}>
                     <h4>{attr}</h4>
-                    <AiFillDelete style={{ fill: "red" }} onClick={() => deleteExtraAttraction(i)} />
+                    <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i, "extraAttractions")} />
                   </li>
                 ))}
               </ul>
@@ -341,7 +332,14 @@ const EditEvent: FC = (): ReactElement => {
               disabled={!name || !eventType || !price || !startDate || !endDate}
               onClick={updateEvent}
             >
-              {loading ? "Wysyłanie..." : "Utwórz"}
+              {loading ? (
+                <Flex $align="center" $justify="space-between">
+                  <Spinner size={20} />
+                  Wysyłanie...{" "}
+                </Flex>
+              ) : (
+                "Utwórz"
+              )}
             </Button>
           </div>
         </form>

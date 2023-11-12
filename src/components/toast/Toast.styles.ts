@@ -56,12 +56,12 @@ export const ToastContainer = styled.div<Partial<IToast>>`
   }
 `;
 
-export const ToastNotification = styled.div<{ backgroundColor: string }>`
+export const ToastNotification = styled.div<{ $backgroundColor: string }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: ${(props) => props.theme.size3};
-  background: ${({ backgroundColor }) => backgroundColor};
+  background: ${({ $backgroundColor }) => $backgroundColor};
   border-radius: 5px;
   color: ${(props) => props.theme.white};
   opacity: 0.9;

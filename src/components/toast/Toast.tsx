@@ -41,7 +41,7 @@ const Toast: FC<IToast> = (props): ReactElement => {
   return (
     <ToastContainer className={`toast-notification-container ${position}`} position={position}>
       {list.map((toast, index) => (
-        <ToastNotification key={index} backgroundColor={toast.backgroundColor}>
+        <ToastNotification key={index} $backgroundColor={toast.backgroundColor}>
           <div className="toast-notification-image">
             <img src={toast.icon} alt="" />
           </div>

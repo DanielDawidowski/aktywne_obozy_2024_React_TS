@@ -19,7 +19,7 @@ const AdminEvents: FC = (): ReactElement => {
   const [currentPage] = useState(1);
   const dispatch: Dispatch = useAppDispatch();
 
-  const getAllEvents = useCallback(async () => {
+  const getAllEvents = useCallback(async (): Promise<void> => {
     try {
       const response = await eventService.getAllEvents(currentPage);
       setEvents(response.data.events);
