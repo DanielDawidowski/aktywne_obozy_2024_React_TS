@@ -153,6 +153,7 @@ const EditEvent: FC = (): ReactElement => {
           <Input
             name="image"
             type="file"
+            className="file-input"
             ref={fileInputRef}
             onClick={() => {
               if (fileInputRef.current) {
