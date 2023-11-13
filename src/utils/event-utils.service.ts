@@ -1,4 +1,4 @@
-import React from "react";
+import type { Dispatch, SetStateAction } from "react";
 import BagSVG from "../assets/SVG/bag.svg";
 import KayakSVG from "../assets/SVG/kayak.svg";
 import MountainSVG from "../assets/SVG/mountains.svg";
@@ -91,4 +91,53 @@ export class EventUtils {
     }
     return obj[0];
   }
+
+  static handleAttraction(
+    attractionType: string,
+    attractionValue: string,
+    extraAttractionValue: string,
+    setAttractions: Dispatch<SetStateAction<string[]>>,
+    setExtraAttractions: Dispatch<SetStateAction<string[]>>,
+    setAttractionValue: Dispatch<SetStateAction<string>>,
+    setExtraAttractionValue: Dispatch<SetStateAction<string>>
+  ): void {
+    const currentValue = attractionType === "attractions" ? attractionValue : extraAttractionValue;
+
+    // Use SetStateAction<string[]> for the setter function's argument type
+    const setter: Dispatch<SetStateAction<string[]>> =
+      attractionType === "attractions" ? setAttractions : setExtraAttractions;
+
+    if (currentValue.trim() !== "") {
+      setter((prevAttractions) => [...prevAttractions, currentValue]);
+      attractionType === "attractions" ? setAttractionValue("") : setExtraAttractionValue("");
+    }
+  }
+
+  static deleteAttraction(
+    index: number,
+    attractionType: string,
+    setAttractions: Dispatch<SetStateAction<string[]>>,
+    setExtraAttractions: Dispatch<SetStateAction<string[]>>,
+    attractions: string[],
+    extraAttractions: string[]
+  ): void {
+    const attractionsArray = attractionType === "attractions" ? attractions : extraAttractions;
+    const setAttractionsArray = attractionType === "attractions" ? setAttractions : setExtraAttractions;
+
+    const updatedAttractions = [...attractionsArray];
+    updatedAttractions.splice(index, 1);
+    setAttractionsArray(updatedAttractions);
+  }
+
+  // static deleteAttraction(
+  //   attractionType: "attractions" | "extraAttractions",
+  //   setAttractions: Dispatch<SetStateAction<string[]>>,
+  //   setExtraAttractions: Dispatch<SetStateAction<string[]>>,
+  //   attraction: string
+  // ): void {
+  //   const setter: Dispatch<SetStateAction<string[]>> =
+  //     attractionType === "attractions" ? setAttractions : setExtraAttractions;
+
+  //   setter((prevAttractions) => prevAttractions.filter((item) => item !== attraction));
+  // }
 }
