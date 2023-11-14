@@ -7,7 +7,7 @@ export const NavStyles = styled(motion.section)`
   left: 0;
   width: 100%;
   height: 100%;
-  background: red;
+  background: ${(props) => props.theme.green};
   z-index: 999;
 `;
 

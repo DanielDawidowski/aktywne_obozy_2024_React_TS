@@ -10,6 +10,9 @@ import { IMenu } from "./Menu.interface";
 import { MenuStyles } from "./Menu.styles";
 import Dropdown from "../../dropdown/Dropdown";
 import { DropdownElementStyles } from "../../dropdown/Dropdown.styles";
+import { DisplayMedia, Flex } from "../../globalStyles/global.styles";
+import Accordion from "../../accordion/Accordion";
+import { AnimatePresence } from "framer-motion";
 
 const Menu: FC<IMenu> = (props): ReactElement => {
   const { toggleTheme } = props;
@@ -31,47 +34,68 @@ const Menu: FC<IMenu> = (props): ReactElement => {
 
   return (
     <MenuStyles>
-      <li>
-        <Link to="/">
-          <h3>Home</h3>
-        </Link>
-      </li>
-      <li>
-        <Link to="/events">
-          <h3>Wyjazdy</h3>
-        </Link>
-      </li>
-      <li>
-        <Link to="/contact">
-          <h3>Kontact</h3>
-        </Link>
-      </li>
-      <li>
-        <h3 onClick={toggleTheme}>THEME</h3>
-      </li>
+      <AnimatePresence>
+        <li>
+          <Link to="/">
+            <h3>Home</h3>
+          </Link>
+        </li>
+        <li>
+          <Link to="/events">
+            <h3>Wyjazdy</h3>
+          </Link>
+        </li>
+        <li>
+          <Link to="/contact">
+            <h3>Kontact</h3>
+          </Link>
+        </li>
+        <li>
+          <h3 onClick={toggleTheme}>THEME</h3>
+        </li>
 
-      {profile?.role === "admin" && (
-        <>
-          <li>
-            <Dropdown Label="Admin">
-              <DropdownElementStyles>
-                <Link to="/admin/event/create">
-                  <h2>stwórz wyjazd</h2>
-                </Link>
-              </DropdownElementStyles>
-              <DropdownElementStyles>
-                <Link to="/admin/events/list">
-                  <h2>lista wyjazdów</h2>
-                </Link>
-              </DropdownElementStyles>
-            </Dropdown>
-          </li>
-
-          <li style={{ cursor: "pointer" }}>
-            <IoMdLogOut className="logout" onClick={logout} />
-          </li>
-        </>
-      )}
+        {profile?.role === "admin" && (
+          <>
+            <Flex $align="center" $justify="center" $direction="row-reverse">
+              <li style={{ cursor: "pointer" }}>
+                <IoMdLogOut className="logout" onClick={logout} />
+              </li>
+              <DisplayMedia $media>
+                <li>
+                  <Dropdown Label="Admin">
+                    <DropdownElementStyles>
+                      <Link to="/admin/event/create">
+                        <h2>stwórz wyjazd</h2>
+                      </Link>
+                    </DropdownElementStyles>
+                    <DropdownElementStyles>
+                      <Link to="/admin/events/list">
+                        <h2>lista wyjazdów</h2>
+                      </Link>
+                    </DropdownElementStyles>
+                  </Dropdown>
+                </li>
+              </DisplayMedia>
+            </Flex>
+            <DisplayMedia>
+              <li>
+                <Accordion title="Admin">
+                  <DropdownElementStyles>
+                    <Link to="/admin/event/create">
+                      <h2>stwórz wyjazd</h2>
+                    </Link>
+                  </DropdownElementStyles>
+                  <DropdownElementStyles>
+                    <Link to="/admin/events/list">
+                      <h2>lista wyjazdów</h2>
+                    </Link>
+                  </DropdownElementStyles>
+                </Accordion>
+              </li>
+            </DisplayMedia>
+          </>
+        )}
+      </AnimatePresence>
     </MenuStyles>
   );
 };

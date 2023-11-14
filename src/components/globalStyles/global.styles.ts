@@ -45,10 +45,11 @@ export const Container = styled.div`
   width: 100%;
 `;
 
-export const Flex = styled.div<{ $justify?: string; $align?: string }>`
+export const Flex = styled.div<{ $justify?: string; $align?: string; $direction?: string }>`
   display: flex;
   justify-content: ${(props) => props.$justify || "flex-start"};
   align-items: ${(props) => props.$align || "flex-start"};
+  flex-direction: ${(props) => props.$direction || ""};
 `;
 
 export const DisplayMedia = styled.div<{ $media?: boolean }>`
