@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import type { FC } from "react";
+import { IoMdLogOut } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux-toolkit/hooks";
 import useLocalStorage from "../../../hooks/useLocalStorage";
@@ -8,6 +9,7 @@ import { clearUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IMenu } from "./Menu.interface";
 import { MenuStyles } from "./Menu.styles";
 import Dropdown from "../../dropdown/Dropdown";
+import { DropdownElementStyles } from "../../dropdown/Dropdown.styles";
 
 const Menu: FC<IMenu> = (props): ReactElement => {
   const { toggleTheme } = props;
@@ -52,17 +54,21 @@ const Menu: FC<IMenu> = (props): ReactElement => {
         <>
           <li>
             <Dropdown Label="Admin">
-              <h5>
-                <Link to="/admin/event/create">stwórz wyjazd</Link>
-              </h5>
-              <h5>
-                <Link to="/admin/events/list">lista wyjazdów</Link>
-              </h5>
+              <DropdownElementStyles>
+                <Link to="/admin/event/create">
+                  <h2>stwórz wyjazd</h2>
+                </Link>
+              </DropdownElementStyles>
+              <DropdownElementStyles>
+                <Link to="/admin/events/list">
+                  <h2>lista wyjazdów</h2>
+                </Link>
+              </DropdownElementStyles>
             </Dropdown>
           </li>
 
           <li style={{ cursor: "pointer" }}>
-            <h3 onClick={logout}>Logout</h3>
+            <IoMdLogOut className="logout" onClick={logout} />
           </li>
         </>
       )}

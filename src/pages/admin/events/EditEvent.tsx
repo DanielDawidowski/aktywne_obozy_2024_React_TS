@@ -1,7 +1,7 @@
 import React, { useState, useCallback, ReactElement } from "react";
-import type { ChangeEvent, FC, FormEvent } from "react";
+import type { FC, FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IEvent } from "../../../interfaces/event/event.interface";
+import { EventType, IEvent } from "../../../interfaces/event/event.interface";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import { Dispatch } from "@reduxjs/toolkit";
 import useEffectOnce from "../../../hooks/useEffectOnce";
@@ -11,13 +11,11 @@ import { eventService } from "../../../services/api/events/events.service";
 import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
-
 import EventForm from "../../../components/form/EventForm";
-import { EventUtils } from "../../../utils/event-utils.service";
 
 const initialState: IEvent = {
   name: "zakopane",
-  eventType: "",
+  eventType: EventType.mountains,
   price: "1400",
   discountPrice: "900",
   startDate: new Date(),
@@ -84,13 +82,6 @@ const EditEvent: FC = (): ReactElement => {
     getEvent();
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    if (e.target.name === "hotel" || e.target.name === "street" || e.target.name === "web") {
-      setValues({ ...values, address: { ...values.address, [e.target.name]: e.target.value } });
-    }
-  };
-
   return (
     <Layout>
       {event.name}
@@ -99,7 +90,6 @@ const EditEvent: FC = (): ReactElement => {
         values={values}
         dispatch={dispatch}
         setValues={setValues}
-        handleChange={handleChange}
         eventAction={updateEvent}
         attractions={attractions}
         setAttractions={setAttractions}

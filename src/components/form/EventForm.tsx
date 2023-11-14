@@ -5,7 +5,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
 import propTypes from "prop-types";
 import Input from "../input/Input";
-import { IEvent } from "../../interfaces/event/event.interface";
+import { EventType, EventTypes, IEvent } from "../../interfaces/event/event.interface";
 
 import Spinner from "../spinner/Spinner";
 import Button from "../button/Button";
@@ -15,12 +15,14 @@ import { ButtonColor } from "../button/Button.interface";
 import { EventUtils } from "../../utils/event-utils.service";
 import { Utils } from "../../utils/utils.service";
 import { INotificationType } from "../../interfaces/notification/notification.interface";
+import { validateForm } from "./Form.validation";
+import { FormAttractionStyles, FormImageStyles, FormItemStyles, FormStyles } from "./Form.styles";
+import { Flex } from "../globalStyles/global.styles";
 
 interface CreateEventFormProps {
   values: IEvent;
   dispatch: DispatchRedux;
   setValues: (values: IEvent) => void;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   eventAction: (e: FormEvent) => Promise<void | undefined>;
   attractions: string[];
   setAttractions: DispatchReact<SetStateAction<string[]>>;
@@ -41,7 +43,6 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
     dispatch,
     setValues,
     loading,
-    handleChange,
     eventAction,
     hasError,
     attractions,
@@ -54,9 +55,16 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
     setExtraAttractionValue,
     event
   } = props;
-  const { name, eventType, price, discountPrice, startDate, endDate, address, image } = values;
+  const { name, price, discountPrice, startDate, endDate, address, image } = values;
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    if (e.target.name === "hotel" || e.target.name === "street" || e.target.name === "web") {
+      setValues({ ...values, address: { ...values.address, [e.target.name]: e.target.value } });
+    }
+  };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
     const file = e.target.files?.[0];
@@ -98,143 +106,205 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
     );
   };
 
+  const showAttractionsLeft = (attractionType: string): number => {
+    const total = 8;
+    if (attractionType === "attractions") {
+      return total - attractions.length;
+    } else {
+      return total - extraAttractions.length;
+    }
+  };
+
   return (
     <>
-      <div style={{ marginTop: "20px" }}>
-        {!image && event?.image && <img src={event.image} alt="event" style={{ width: "100px", height: "100px" }} />}
-      </div>
-      <div style={{ marginTop: "20px" }}>
-        {image && <img src={image} alt="event" style={{ width: "100px", height: "100px" }} />}
-      </div>
+      {!image && event?.image ? (
+        <FormImageStyles>
+          <img src={event.image} alt="event" />
+        </FormImageStyles>
+      ) : null}
+      {image && (
+        <FormImageStyles>
+          <img src={image} alt="event" />
+        </FormImageStyles>
+      )}
 
-      <form>
-        <Input
-          name="image"
-          type="file"
-          ref={fileInputRef}
-          onClick={() => {
-            if (fileInputRef.current) {
-              fileInputRef.current.value = "";
-            }
-          }}
-          handleChange={handleFileChange}
-        />
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          value={name}
-          labelText="Nazwa wyjazdu"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <Input
-          id="price"
-          name="price"
-          type="text"
-          value={price}
-          labelText="Cena"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <Input
-          id="discountPrice"
-          name="discountPrice"
-          type="text"
-          value={discountPrice}
-          labelText="Cena KRUS"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <Input
-          id="startDate"
-          name="startDate"
-          type="date"
-          value={startDate.toString()}
-          labelText="Data rozpoczęcia"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <Input
-          id="endDate"
-          name="endDate"
-          type="date"
-          value={endDate.toString()}
-          labelText="Data zakonczenia"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <h5>Dane Hotelu</h5>
-        <Input
-          id="hotel"
-          name="hotel"
-          type="text"
-          value={address.hotel}
-          labelText="Nazwa Hotelu"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <Input
-          id="street"
-          name="street"
-          type="text"
-          value={address.street}
-          labelText="Ulica Hotelu"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <Input
-          id="web"
-          name="web"
-          type="text"
-          value={address.web}
-          labelText="Strona www Hotelu"
-          placeholder="---"
-          style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
-          handleChange={handleChange}
-        />
-        <div className="event__form--checkbox">
+      <FormStyles>
+        <FormItemStyles>
+          <Input
+            name="image"
+            type="file"
+            ref={fileInputRef}
+            onClick={() => {
+              if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+              }
+            }}
+            handleChange={handleFileChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            value={name}
+            labelText="Nazwa wyjazdu"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="price"
+            name="price"
+            type="text"
+            value={price}
+            labelText="Cena"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="discountPrice"
+            name="discountPrice"
+            type="text"
+            value={discountPrice}
+            labelText="Cena KRUS"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="startDate"
+            name="startDate"
+            type="date"
+            value={startDate.toString()}
+            labelText="Data rozpoczęcia"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="endDate"
+            name="endDate"
+            type="date"
+            value={endDate.toString()}
+            labelText="Data zakonczenia"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <h2>Dane Hotelu</h2>
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="hotel"
+            name="hotel"
+            type="text"
+            value={address.hotel}
+            labelText="Nazwa Hotelu"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="street"
+            name="street"
+            type="text"
+            value={address.street}
+            labelText="Ulica Hotelu"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
+          <Input
+            id="web"
+            name="web"
+            type="text"
+            value={address.web}
+            labelText="Strona www Hotelu"
+            placeholder="---"
+            style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
+            handleChange={handleChange}
+          />
+        </FormItemStyles>
+
+        {event && (
+          <FormItemStyles>
+            <Select
+              label="Status"
+              options={["Aktywny", "Nieaktywny"]}
+              onSelect={(option: string) => setValues({ ...values, status: option })}
+            />
+          </FormItemStyles>
+        )}
+
+        <FormItemStyles>
+          <Select
+            label="Kategoria"
+            options={[EventType.mountains, EventType.kayaking, EventType.summerCamp, EventType.sea]}
+            onSelect={(option: string) => setValues({ ...values, eventType: option as EventTypes })}
+          />
+        </FormItemStyles>
+
+        <FormItemStyles>
           <Checkbox label="Energylandia" onChange={handleCheckboxChange} />
-        </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+        </FormItemStyles>
+
+        <FormItemStyles $attracion>
           <Input
             id="attraction"
             name="attraction"
             type="text"
             value={attractionValue}
-            labelText="Atrakcje"
+            labelText="Zapewnione atrakcje"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
             handleChange={(e: ChangeEvent<HTMLInputElement>) => setAttractionValue(e.target.value)}
           />
 
-          <BsFillBookmarkPlusFill
-            style={{ fill: "green", marginLeft: "30px" }}
-            onClick={() => handleAttraction("attractions")}
-          />
-        </div>
+          <BsFillBookmarkPlusFill style={{ fill: "green" }} onClick={() => handleAttraction("attractions")} />
+        </FormItemStyles>
+
         {attractions.length > 0 && (
-          <div className="create__event--attractions">
-            <h6>Max 8 atrakcjii</h6>
+          <FormItemStyles>
+            <h4>Pozostałych atrakcji (max: {showAttractionsLeft("attractions")} )</h4>
             <ul>
               {attractions.map((attr: string, i: number) => (
-                <li key={i}>
-                  <h4>{attr}</h4>
-                  <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i, "attractions")} />
-                </li>
+                <FormAttractionStyles key={i}>
+                  <Flex $align="center" $justify="space-between">
+                    <h4>{attr}</h4>
+                    <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i, "attractions")} />
+                  </Flex>
+                </FormAttractionStyles>
               ))}
             </ul>
-          </div>
+          </FormItemStyles>
         )}
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <FormItemStyles $attracion>
           <Input
             id="extraAttraction"
             name="extraAttraction"
@@ -246,61 +316,45 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
             handleChange={(e: ChangeEvent<HTMLInputElement>) => setExtraAttractionValue(e.target.value)}
           />
 
-          <BsFillBookmarkPlusFill
-            style={{ fill: "green", marginLeft: "30px" }}
-            onClick={() => handleAttraction("extrAttractions")}
-          />
-        </div>
+          <BsFillBookmarkPlusFill style={{ fill: "green" }} onClick={() => handleAttraction("extrAttractions")} />
+        </FormItemStyles>
+
         {extraAttractions.length > 0 && (
-          <div className="create__event--attractions">
-            <h6>Max 8 atrakcjii</h6>
-            <ul style={{ width: "100%" }}>
+          <FormItemStyles>
+            <h4>Pozostałych atrakcji (max: {showAttractionsLeft("extraAttraction")} )</h4>
+            <ul>
               {extraAttractions.map((attr: string, i: number) => (
-                <li key={i} style={{ display: "flex", width: "100%" }}>
-                  <h4>{attr}</h4>
-                  <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i, "extraAttraction")} />
-                </li>
+                <FormAttractionStyles key={i}>
+                  <Flex $align="center" $justify="space-between">
+                    <h4>{attr}</h4>
+                    <AiFillDelete style={{ fill: "red" }} onClick={() => deleteAttraction(i, "extraAttraction")} />
+                  </Flex>
+                </FormAttractionStyles>
               ))}
             </ul>
-          </div>
+          </FormItemStyles>
         )}
 
-        {event && (
-          <div style={{ margin: "20px 0" }}>
-            <Select
-              label="Status"
-              options={["Aktywny", "Nieaktywny"]}
-              onSelect={(option: string) => setValues({ ...values, status: option })}
-            />
-          </div>
-        )}
-
-        <div style={{ margin: "20px 0" }}>
-          <Select
-            label="Kategoria"
-            options={["Góry", "Spływy", "Morze", "Półkolonie"]}
-            onSelect={(option: string) => setValues({ ...values, eventType: option })}
-          />
-        </div>
-        <div style={{ margin: "20px 0" }}>
-          <Button
-            color={ButtonColor.primary}
-            disabled={!name || !eventType || !price || !startDate || !endDate}
-            onClick={eventAction}
-          >
-            {loading ? <Spinner size={20} /> : "Utwórz"}
+        <FormItemStyles>
+          <Button color={ButtonColor.primary} disabled={!validateForm(values)} onClick={eventAction}>
+            {loading ? (
+              <Flex>
+                <Spinner size={20} />
+                Wysyłanie...
+              </Flex>
+            ) : (
+              "Utwórz"
+            )}
           </Button>
-        </div>
-      </form>
+        </FormItemStyles>
+      </FormStyles>
     </>
   );
 };
 
-// Define propTypes for the CreateEventForm component
 EventForm.propTypes = {
   setValues: propTypes.func.isRequired,
   loading: propTypes.bool.isRequired,
-  handleChange: propTypes.func.isRequired,
   eventAction: propTypes.func.isRequired,
   hasError: propTypes.bool.isRequired,
   attractions: propTypes.array.isRequired,

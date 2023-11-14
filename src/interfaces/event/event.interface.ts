@@ -1,7 +1,7 @@
 export interface IEvent {
   _id?: string;
   name: string;
-  eventType: string;
+  eventType: EventTypes;
   price: string;
   discountPrice: string;
   startDate: Date;
@@ -26,3 +26,12 @@ export interface IEventSlide {
   title?: string;
   image: string;
 }
+
+export enum EventType {
+  mountains = "Góry",
+  kayaking = "Spływy",
+  summerCamp = "Półkolonie",
+  sea = "Morze"
+}
+
+export type EventTypes = EventType.mountains | EventType.kayaking | EventType.summerCamp | EventType.sea;

@@ -5,7 +5,6 @@ import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import { authService } from "../../../services/api/auth/auth.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IRegisterData } from "../../../interfaces/auth/auth.interface";
-import transition from "../../../utils/transition";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
 
@@ -85,4 +84,4 @@ const Register: FC = (): ReactElement => {
   );
 };
 
-export default transition(Register);
+export default Register;

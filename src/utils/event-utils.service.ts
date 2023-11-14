@@ -6,7 +6,7 @@ import CrabSVG from "../assets/SVG/crab.svg";
 import Events1 from "../assets/Images/morskie_2023.jpg";
 import Events2 from "../assets/Images/krakow_2023.jpg";
 import Events3 from "../assets/Images/gory_2023.jpg";
-import { IEventSlide } from "../interfaces/event/event.interface";
+import { EventType, EventTypes, IEventSlide } from "../interfaces/event/event.interface";
 
 export const eventSlides: IEventSlide[] = [
   {
@@ -28,25 +28,25 @@ export const Icons: { id: number; name: string; icon: string; color: string }[] 
     id: 0,
     name: "Góry",
     icon: MountainSVG,
-    color: "#90be6d"
+    color: "#03C988"
   },
   {
     id: 1,
     name: "Spływy",
     icon: KayakSVG,
-    color: "#50b5ff"
+    color: "#4477CE"
   },
   {
     id: 2,
     name: "Półkolonie",
     icon: BagSVG,
-    color: "#f7b124"
+    color: "#F39F5A"
   },
   {
     id: 3,
     name: "Morze",
     icon: CrabSVG,
-    color: "#277da1"
+    color: "#50b5ff"
   }
 ];
 
@@ -72,15 +72,20 @@ export class EventUtils {
     return fileValue;
   }
 
-  static showEventIcon(type: string): string {
-    const obj: string[] = [];
-    for (let i = 0; i < Icons.length; i++) {
-      if (Icons[i].name === type) {
-        obj.push(Icons[i].icon);
-      }
+  static emitEventIcon = (name: EventTypes): string => {
+    switch (name) {
+      case EventType.mountains:
+        return MountainSVG;
+      case EventType.kayaking:
+        return KayakSVG;
+      case EventType.summerCamp:
+        return BagSVG;
+      case EventType.sea:
+        return CrabSVG;
+      default:
+        return MountainSVG;
     }
-    return obj[0];
-  }
+  };
 
   static showEventColor(type: string): string {
     const obj: string[] = [];

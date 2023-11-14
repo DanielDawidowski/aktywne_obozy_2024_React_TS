@@ -55,7 +55,7 @@ const Events: FC = (): ReactElement => {
                   <motion.div className="events__list--item--inner">
                     {toggle !== event.name && (
                       <motion.div onClick={() => handleToggle(event.name)} className="events__list--item--header">
-                        <img src={EventUtils.showEventIcon(event.eventType)} alt={event.name} />
+                        <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
                         <div className="center">
                           <h2>{event.name}</h2>
                           <h3>
@@ -99,7 +99,7 @@ const Events: FC = (): ReactElement => {
                   </motion.div>
                   {toggle === event.name && (
                     <motion.div className="events__list--item--footer">
-                      <img src={EventUtils.showEventIcon(event.eventType)} alt={event.name} />
+                      <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
                       <Link to={`/event/${event._id}`}>Zobacz</Link>
                     </motion.div>
                   )}

@@ -8,7 +8,6 @@ import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { ISignUpData } from "../../../interfaces/auth/auth.interface";
 import { socketService } from "../../../services/socket/socket.service";
 import { Dispatch } from "@reduxjs/toolkit";
-import transition from "../../../utils/transition";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
 
@@ -95,4 +94,4 @@ const Login: FC = (): ReactElement => {
   );
 };
 
-export default transition(Login);
+export default Login;

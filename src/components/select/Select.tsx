@@ -1,30 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import propTypes from "prop-types";
 import { SelectProps } from "./Select.interface";
 import { SelectButton, SelectContainer, SelectLabel, SelectMenu, SelectOption } from "./Select.styles";
+import useDetectOutsideClick from "../../hooks/useDetectOutsideClick";
 
 const Select: React.FC<SelectProps> = ({ options, onSelect, label }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const selectRef = useRef<HTMLDivElement>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [toggleSelect, setToggleSelect] = useDetectOutsideClick(selectRef, false);
 
   const handleToggle = (): void => {
-    setIsOpen(!isOpen);
+    setToggleSelect(!toggleSelect);
   };
 
   const handleSelect = (option: string): void => {
     setSelectedOption(option);
     onSelect(option);
-    setIsOpen(false);
+    setToggleSelect(false);
   };
 
   return (
-    <SelectContainer>
+    <SelectContainer ref={selectRef}>
       <SelectLabel>{label}</SelectLabel>
-      <SelectButton onClick={handleToggle}>{selectedOption || "Wybierz"}</SelectButton>
-      {isOpen && (
+      <SelectButton $red={selectedOption === "Nieaktywny"} onClick={handleToggle}>
+        {selectedOption || "Wybierz"}
+      </SelectButton>
+      {toggleSelect && (
         <SelectMenu initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
           {options.map((option) => (
-            <SelectOption key={option} onClick={() => handleSelect(option)}>
+            <SelectOption
+              whileHover={{ scale: 1.01 }}
+              $red={option === "Nieaktywny"}
+              key={option}
+              onClick={() => handleSelect(option)}
+            >
               {option}
             </SelectOption>
           ))}

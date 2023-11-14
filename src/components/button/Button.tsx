@@ -14,7 +14,7 @@ const Button: FC<IButton> = (props): ReactElement => {
 };
 
 Button.propTypes = {
-  color: PropTypes.oneOf([ButtonColor.primary, ButtonColor.secondary, ButtonColor.red]),
+  color: PropTypes.oneOf([ButtonColor.primary, ButtonColor.secondary, ButtonColor.auth]),
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
   disabled: PropTypes.bool

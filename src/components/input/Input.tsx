@@ -2,33 +2,19 @@ import React, { ReactElement, forwardRef, ChangeEvent, Ref } from "react";
 import type { FC } from "react";
 import propTypes from "prop-types";
 import { IInput } from "./Input.interface";
-import { InputContainer, InputField } from "./Input.styles";
+import { InputContainer, InputField, LableStyles } from "./Input.styles";
 
 const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
   (
-    {
-      id,
-      name,
-      type,
-      labelText,
-      value,
-      className,
-      placeholder,
-      handleChange,
-      onClick,
-      onFocus,
-      onBlur,
-      style,
-      checked
-    },
+    { id, name, type, labelText, value, placeholder, handleChange, onClick, onFocus, onBlur, style, checked },
     ref: Ref<HTMLInputElement>
   ): ReactElement => {
     return (
       <InputContainer>
         {labelText && (
-          <label htmlFor={name} className="form-label">
+          <LableStyles htmlFor={name} className="form-label">
             {labelText}
-          </label>
+          </LableStyles>
         )}
         <InputField
           id={id}
@@ -41,7 +27,6 @@ const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
           onClick={onClick}
           onFocus={onFocus}
           onBlur={onBlur}
-          className={`form-input ${className}`}
           style={style}
           autoComplete="false"
           checked={checked}
@@ -57,7 +42,6 @@ Input.propTypes = {
   type: propTypes.string.isRequired,
   labelText: propTypes.string,
   value: propTypes.string,
-  className: propTypes.string,
   placeholder: propTypes.string,
   handleChange: propTypes.func,
   onClick: propTypes.func,

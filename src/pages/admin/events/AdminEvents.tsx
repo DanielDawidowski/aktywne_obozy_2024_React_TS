@@ -16,7 +16,7 @@ import transition from "../../../utils/transition";
 
 const AdminEvents: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([]);
-  const [currentPage] = useState(1);
+  const [currentPage] = useState<number>(1);
   const dispatch: Dispatch = useAppDispatch();
 
   const getAllEvents = useCallback(async (): Promise<void> => {
