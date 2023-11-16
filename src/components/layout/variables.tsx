@@ -1,4 +1,4 @@
-import { Theme } from "./Layout.interface";
+import { DefaultTheme } from "styled-components";
 
 export const themeGlobal = {
   breakpoint_large: " 1920px",
@@ -30,14 +30,16 @@ export const themeGlobal = {
   size7: "72px"
 };
 
-export const lightTheme: Theme = {
+export const lightTheme: DefaultTheme = {
   body: themeGlobal.white,
   text: themeGlobal.dark,
-  primaryColor: themeGlobal.blue
+  primaryColor: themeGlobal.primary,
+  secondaryColor: themeGlobal.secondary
 };
 
-export const darkTheme: Theme = {
+export const darkTheme: DefaultTheme = {
   body: themeGlobal.dark,
   text: themeGlobal.white,
-  primaryColor: themeGlobal.red
+  primaryColor: themeGlobal.secondary,
+  secondaryColor: themeGlobal.primary
 };

@@ -7,8 +7,8 @@ export const NavStyles = styled(motion.section)`
   left: 0;
   width: 100%;
   height: 100%;
-  background: ${(props) => props.theme.green};
-  z-index: 999;
+  background: ${(props) => props.theme.secondaryColor};
+  z-index: 9999;
 `;
 
 export const NavHeader = styled.div`
@@ -19,5 +19,5 @@ export const NavBody = styled.div`
   width: 100%;
   height: 100%;
   padding: ${(props) => props.theme.size4};
-  background: ${(props) => props.theme.primary_light};
+  background: ${(props) => props.theme.body};
 `;

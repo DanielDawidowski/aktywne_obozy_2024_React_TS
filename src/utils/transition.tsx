@@ -11,6 +11,7 @@ const SlideIn = styled(motion.div)`
   height: 100vh;
   background-color: red;
   transform-origin: bottom;
+  z-index: 999999;
 `;
 
 const SlideOut = styled(motion.div)`
@@ -21,6 +22,7 @@ const SlideOut = styled(motion.div)`
   height: 100vh;
   background-color: blue;
   transform-origin: top;
+  z-index: 999999;
 `;
 
 const transition = (OgComponent: ComponentType): FC => {

@@ -4,13 +4,12 @@ import { Link } from "react-router-dom";
 import { HeaderStyles } from "./Header.styles";
 import Hamburger from "../hamburger/Hamburger";
 import IHeader from "./Header.interface";
-
 import Logo from "../../logo/Logo";
 import { Container, Flex, DisplayMedia } from "../../globalStyles/global.styles";
 import Menu from "../menu/Menu";
 
 const Header: FC<IHeader> = (props): ReactElement => {
-  const { toggleMenu, setToggleMenu, toggleTheme } = props;
+  const { toggleMenu, setToggleMenu } = props;
 
   return (
     <HeaderStyles>
@@ -22,7 +21,7 @@ const Header: FC<IHeader> = (props): ReactElement => {
             </Link>
           </div>
           <DisplayMedia $media>
-            <Menu toggleTheme={toggleTheme} />
+            <Menu />
           </DisplayMedia>
           <DisplayMedia>
             <Hamburger setToggleMenu={setToggleMenu} toggleMenu={toggleMenu} />
@@ -35,8 +34,7 @@ const Header: FC<IHeader> = (props): ReactElement => {
 
 Header.propTypes = {
   toggleMenu: PropTypes.bool.isRequired,
-  setToggleMenu: PropTypes.func.isRequired,
-  toggleTheme: PropTypes.func.isRequired
+  setToggleMenu: PropTypes.func.isRequired
 };
 
 export default Header;

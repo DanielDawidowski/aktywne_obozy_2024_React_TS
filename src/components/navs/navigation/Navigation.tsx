@@ -10,7 +10,7 @@ import Hamburger from "../hamburger/Hamburger";
 import { DisplayMedia, Flex } from "../../globalStyles/global.styles";
 
 const Navigation: FC<IHeader> = (props): ReactElement => {
-  const { toggleMenu, setToggleMenu, toggleTheme } = props;
+  const { toggleMenu, setToggleMenu } = props;
   return (
     <AnimatePresence>
       {toggleMenu && (
@@ -32,7 +32,7 @@ const Navigation: FC<IHeader> = (props): ReactElement => {
             </NavHeader>
             <NavBody>
               <DisplayMedia>
-                <Menu toggleTheme={toggleTheme} />
+                <Menu />
               </DisplayMedia>
             </NavBody>
           </NavStyles>

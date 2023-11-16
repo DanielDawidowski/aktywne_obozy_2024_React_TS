@@ -1,36 +1,18 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import PropTypes from "prop-types";
-import { ILayout, CurrentThemes, CurrentTheme } from "./Layout.interface";
+import { ILayout } from "./Layout.interface";
 import { LayoutStyles } from "./LayoutStyles";
 import Header from "../navs/header/Header";
 import Navigation from "../navs/navigation/Navigation";
 import StyledThemeProvider from "./StyledThemeProvider";
 import { TypographyStyles } from "../globalStyles/typography.syles";
 import { GlobalStyles } from "../globalStyles/global.styles";
-import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [theme, setTheme] = useState<CurrentThemes>(CurrentTheme.LIGHT);
-  const themeStorage = useLocalStorage<CurrentThemes | null>("theme");
-
-  const toggleTheme = (): void => {
-    setTheme((prevTheme): CurrentThemes => {
-      return prevTheme === CurrentTheme.DARK ? CurrentTheme.LIGHT : CurrentTheme.DARK;
-    });
-    themeStorage.set(theme);
-  };
-
-  useEffect(() => {
-    const getTheme: CurrentThemes | null = themeStorage.get();
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
-    <StyledThemeProvider theme={theme}>
+    <StyledThemeProvider>
       <LayoutStyles>
         <GlobalStyles />
         <TypographyStyles />
@@ -39,7 +21,7 @@ const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
           <ChatBox isOpenChat={isOpenChat} />
         </div>
       )} */}
-        <Header toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} toggleTheme={toggleTheme} />
+        <Header toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
         <Navigation toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
         <main>{children}</main>
       </LayoutStyles>

@@ -15,7 +15,7 @@ html {
 body {
     background: ${(props) => props.theme.body};
     color: ${(props) => props.theme.text};
-    font-family: "Manrope", sans-serif;
+     font-family: "Oswald", serif;
 }
 
 a {

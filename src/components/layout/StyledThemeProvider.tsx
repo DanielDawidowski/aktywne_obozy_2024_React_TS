@@ -1,10 +1,13 @@
-import { ThemeProvider } from "styled-components";
+import { DefaultTheme, ThemeProvider } from "styled-components";
 import React, { ReactElement } from "react";
 import { lightTheme, darkTheme, themeGlobal } from "./variables";
-import { CurrentTheme, Theme, ThemeProviderProps } from "./Layout.interface";
+import { CurrentTheme, ThemeProviderProps } from "../../interfaces/theme/theme.interface";
+import { useAppSelector } from "../../redux-toolkit/hooks";
 
-const StyledThemeProvider: React.FC<ThemeProviderProps> = ({ children, theme }): ReactElement => {
-  const selectedTheme: Theme = theme === CurrentTheme.LIGHT ? darkTheme : lightTheme;
+const StyledThemeProvider: React.FC<ThemeProviderProps> = ({ children }): ReactElement => {
+  const theme = useAppSelector((state) => state.theme.mode);
+
+  const selectedTheme: DefaultTheme = theme === CurrentTheme.LIGHT ? lightTheme : darkTheme;
 
   return (
     <ThemeProvider theme={themeGlobal}>
