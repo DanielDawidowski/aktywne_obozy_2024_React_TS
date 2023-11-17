@@ -7,8 +7,13 @@ import Navigation from "../navs/navigation/Navigation";
 import StyledThemeProvider from "./StyledThemeProvider";
 import { TypographyStyles } from "../globalStyles/typography.syles";
 import { GlobalStyles } from "../globalStyles/global.styles";
+import { useAppSelector } from "../../redux-toolkit/hooks";
+import ChatBox from "../chat/ChatBox";
 
 const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
+  const { isOpenChat } = useAppSelector((state) => state.chat);
+  const { profile } = useAppSelector((state) => state.user);
+
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
@@ -16,11 +21,11 @@ const Layout: FC<ILayout> = ({ children, chat = true }): ReactElement => {
       <LayoutStyles>
         <GlobalStyles />
         <TypographyStyles />
-        {/* {(profile?.role !== "admin" || chat) && (
-        <div className="chat">
-          <ChatBox isOpenChat={isOpenChat} />
-        </div>
-      )} */}
+        {(profile?.role !== "admin" || chat) && (
+          <div className="chat">
+            <ChatBox isOpenChat={isOpenChat} />
+          </div>
+        )}
         <Header toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
         <Navigation toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
         <main>{children}</main>

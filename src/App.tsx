@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from "react";
 import type { FC } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { AppRouter } from "./routes";
 import { socketService } from "./services/socket/socket.service";
 import { useAppSelector } from "./redux-toolkit/hooks";

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { ISignUpData, IUser } from "../../../interfaces/auth/auth.interface";
+import { ISignUpData } from "../../../interfaces/auth/auth.interface";
 import axios from "../../axios";
 
 class UserService {
@@ -23,7 +23,7 @@ class UserService {
     return response;
   }
 
-  async getAdmin(): Promise<AxiosResponse<IUser[]>> {
+  async getAdmin(): Promise<AxiosResponse> {
     const response = await axios.get("/admins");
     return response;
   }

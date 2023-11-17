@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { useAppDispatch, useAppSelector } from "../../redux-toolkit/hooks";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { userService } from "../../services/api/user/user.service";
-// import { getConversationList } from "../../redux-toolkit/api/chat";
+import { getConversationList } from "../../redux-toolkit/api/chat";
 import { addUser, clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
 import useEffectOnce from "../../hooks/useEffectOnce";
 import { ISignUpData } from "../../interfaces/auth/auth.interface";
@@ -25,7 +25,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
   const checkUser = useCallback(async () => {
     try {
       const response = await userService.checkCurrentUser();
-      // dispatch(getConversationList());
+      dispatch(getConversationList());
       setUserData(response.data.user);
       setTokenIsValid(true);
       dispatch(

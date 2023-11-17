@@ -11,6 +11,7 @@ import Layout from "../../components/layout/Layout";
 import { timeAgo } from "../../utils/timeago.utils";
 import { Container } from "../../components/globalStyles/global.styles";
 import transition from "../../utils/transition";
+import { AxiosResponse } from "axios";
 
 const Events: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([] as IEvent[]);
@@ -19,7 +20,7 @@ const Events: FC = (): ReactElement => {
 
   const getAllEvents = useCallback(async () => {
     try {
-      const response = await eventService.getAllEvents(currentPage);
+      const response: AxiosResponse = await eventService.getAllEvents(currentPage);
       setEvents(response.data.events);
       console.log("response", response.data.events);
     } catch (error) {

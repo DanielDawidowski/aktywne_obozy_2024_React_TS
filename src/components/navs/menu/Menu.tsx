@@ -41,8 +41,8 @@ const Menu: FC = (): ReactElement => {
   };
 
   return (
-    <MenuStyles>
-      <AnimatePresence>
+    <AnimatePresence>
+      <MenuStyles>
         <li className="first-element">
           {profile?.role === "admin" && (
             <LogoutStyles>
@@ -95,12 +95,17 @@ const Menu: FC = (): ReactElement => {
                   <Dropdown Label="Admin">
                     <DropdownElementStyles>
                       <Link to="/admin/event/create">
-                        <h2>stwórz wyjazd</h2>
+                        <h4>stwórz wyjazd</h4>
                       </Link>
                     </DropdownElementStyles>
                     <DropdownElementStyles>
                       <Link to="/admin/events/list">
-                        <h2>lista wyjazdów</h2>
+                        <h4>lista wyjazdów</h4>
+                      </Link>
+                    </DropdownElementStyles>
+                    <DropdownElementStyles>
+                      <Link to="/admin/chat">
+                        <h4>Chat</h4>
                       </Link>
                     </DropdownElementStyles>
                   </Dropdown>
@@ -112,12 +117,17 @@ const Menu: FC = (): ReactElement => {
                 <Accordion title="Admin">
                   <DropdownElementStyles>
                     <Link to="/admin/event/create">
-                      <h2>stwórz wyjazd</h2>
+                      <h4>stwórz wyjazd</h4>
                     </Link>
                   </DropdownElementStyles>
                   <DropdownElementStyles>
                     <Link to="/admin/events/list">
-                      <h2>lista wyjazdów</h2>
+                      <h4>lista wyjazdów</h4>
+                    </Link>
+                  </DropdownElementStyles>
+                  <DropdownElementStyles>
+                    <Link to="/admin/chat">
+                      <h4>Chat</h4>
                     </Link>
                   </DropdownElementStyles>
                 </Accordion>
@@ -125,8 +135,8 @@ const Menu: FC = (): ReactElement => {
             </DisplayMedia>
           </>
         )}
-      </AnimatePresence>
-    </MenuStyles>
+      </MenuStyles>
+    </AnimatePresence>
   );
 };
 

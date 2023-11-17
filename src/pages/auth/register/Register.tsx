@@ -18,9 +18,9 @@ const Register: FC = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const registerUser = async (event: FormEvent): Promise<void> => {
+  const registerUser = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     setLoading(true);
-    event.preventDefault();
+    e.preventDefault();
     try {
       const result = await authService.signUp({
         username,

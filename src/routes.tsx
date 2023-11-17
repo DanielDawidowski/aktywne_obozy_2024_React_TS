@@ -9,6 +9,7 @@ import CreateEvent from "./pages/admin/events/CreateEvent";
 import AdminEvents from "./pages/admin/events/AdminEvents";
 import EditEvent from "./pages/admin/events/EditEvent";
 import Events from "./pages/events/Events";
+import AdminChat from "./pages/admin/admin-chat/AdminChat";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
@@ -39,6 +40,14 @@ export const AppRouter: FC = () => {
           element={
             <AdminRoute>
               <EditEvent />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/chat"
+          element={
+            <AdminRoute>
+              <AdminChat />
             </AdminRoute>
           }
         />

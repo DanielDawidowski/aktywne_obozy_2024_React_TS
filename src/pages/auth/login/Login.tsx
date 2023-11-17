@@ -23,9 +23,9 @@ const Login: FC = (): ReactElement => {
   const navigate = useNavigate();
   const dispatch: Dispatch = useDispatch();
 
-  const loginUser = async (event: FormEvent): Promise<void> => {
+  const loginUser = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     setLoading(true);
-    event.preventDefault();
+    e.preventDefault();
     try {
       const result = await authService.signIn({
         username,

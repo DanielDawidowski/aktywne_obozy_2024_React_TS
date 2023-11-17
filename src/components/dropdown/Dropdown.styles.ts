@@ -23,6 +23,7 @@ export const DropdownContent = styled(motion.div)`
   flex-direction: column;
   align-items: center;
   border: 1px solid ${(props) => props.theme.primary};
+  z-index: 99999;
 `;
 
 export const DropdownElementStyles = styled.div`
@@ -32,7 +33,7 @@ export const DropdownElementStyles = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.primary};
   width: 100%;
   a {
-    h2 {
+    h4 {
       margin: ${(props) => props.theme.size2} 0;
     }
   }

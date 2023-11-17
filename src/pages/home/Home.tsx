@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import type { FC } from "react";
+import React from "react";
+import type { FC, ReactElement } from "react";
 import Layout from "../../components/layout/Layout";
 import transition from "../../utils/transition";
 import { HomeStyles } from "./Home.styles";
