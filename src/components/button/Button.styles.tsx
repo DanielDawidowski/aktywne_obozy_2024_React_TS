@@ -23,6 +23,13 @@ const COLOR = {
     border: 2px solid ${(props) => props.theme.secondary};
     box-shadow: 1px 2px 4px ${(props) => props.theme.orange};
     border-radius: 6px;
+  `,
+  CHAT: css`
+    color: ${(props) => props.theme.white};
+    background: ${(props) => props.theme.green};
+    border: 2px solid ${(props) => props.theme.white};
+    box-shadow: 0 0 1px ${(props) => props.theme.green};
+    border-radius: 8px;
   `
 };
 

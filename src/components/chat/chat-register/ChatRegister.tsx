@@ -8,6 +8,13 @@ import { authService } from "../../../services/api/auth/auth.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { IReceiver, ISender } from "../../../interfaces/chat/chat.interface";
 import { ChatUtils } from "../../../utils/chat-utils.service";
+import Input from "../../input/Input";
+import Button from "../../button/Button";
+import { ButtonColor } from "../../button/Button.interface";
+import Logo from "../../logo/Logo";
+import { Grid } from "../../globalStyles/global.styles";
+import Spinner from "../../spinner/Spinner";
+import { ChatRegisterStyles } from "../ChatBoxStyles";
 
 const ChatRegister: FC = (): ReactElement => {
   const { admin } = useAppSelector((state) => state.admin);
@@ -49,31 +56,42 @@ const ChatRegister: FC = (): ReactElement => {
   };
 
   return (
-    <div className="chat__body__wrapper__regiester">
-      {loading && <div className="chat__loading">Loading...</div>}
-      {errorMessage && <div className="chat__body__wrapper__regiester__error">{errorMessage}</div>}
-      <form onSubmit={registerTempUser}>
-        <input
-          id="username"
-          name="username"
-          type="text"
-          value={username}
-          placeholder="Enter Username"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
-        />
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={email}
-          placeholder="Enter Email"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
-        />
-        <button className="auth-button button" disabled={!username || !email} onClick={() => registerTempUser}>
-          wyslij
-        </button>
-      </form>
-    </div>
+    <ChatRegisterStyles>
+      {loading ? (
+        <Grid>
+          <Logo width="85px" height="125px" />
+          <Spinner size={100} />
+        </Grid>
+      ) : (
+        <>
+          {errorMessage && <div className="chat__body__wrapper__regiester__error">{errorMessage}</div>}
+          <Grid>
+            <Logo width="85px" height="125px" />
+          </Grid>
+          <form onSubmit={registerTempUser}>
+            <Input
+              id="username"
+              name="username"
+              type="text"
+              value={username}
+              placeholder="Enter Username"
+              handleChange={(event: ChangeEvent<HTMLInputElement>) => setUsername(event.target.value)}
+            />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              placeholder="Enter Email"
+              handleChange={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+            />
+            <Button color={ButtonColor.primary} disabled={!username || !email} onClick={() => registerTempUser}>
+              wyslij
+            </Button>
+          </form>
+        </>
+      )}
+    </ChatRegisterStyles>
   );
 };
 

@@ -20,7 +20,7 @@ export const themeGlobal = {
   blue: "#4477CE",
   green: "#03C988",
   grey: "#404258",
-  purple: "#451952",
+  purple: "#9d0dc9",
   size1: "8px",
   size2: "12px",
   size3: "16px",
@@ -34,12 +34,14 @@ export const lightTheme: DefaultTheme = {
   body: themeGlobal.white,
   text: themeGlobal.dark,
   primaryColor: themeGlobal.primary,
-  secondaryColor: themeGlobal.secondary
+  secondaryColor: themeGlobal.secondary_light,
+  thirdColor: themeGlobal.primary_light
 };
 
 export const darkTheme: DefaultTheme = {
   body: themeGlobal.dark,
   text: themeGlobal.white,
   primaryColor: themeGlobal.secondary,
-  secondaryColor: themeGlobal.primary
+  secondaryColor: themeGlobal.primary,
+  thirdColor: themeGlobal.secondary_light
 };

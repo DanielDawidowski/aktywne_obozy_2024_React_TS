@@ -4,7 +4,7 @@ import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { cloneDeep, findIndex, remove } from "lodash";
 import { useAppDispatch, useAppSelector } from "../../../../redux-toolkit/hooks";
 import { IChatMessage, IReceiver, ISender, ISenderReceiver } from "../../../../interfaces/chat/chat.interface";
-import { addToChatList, setSelectedChatUser } from "../../../../redux-toolkit/reducers/chat/chat.reducer";
+import { setSelectedChatUser } from "../../../../redux-toolkit/reducers/chat/chat.reducer";
 import { ChatUtils } from "../../../../utils/chat-utils.service";
 import { socketService } from "../../../../services/socket/socket.service";
 
@@ -23,7 +23,7 @@ const AdminChatList: FC = (): ReactElement => {
       socketService?.socket.on("chat list", (data: IChatMessage) => {
         if (data.senderId === profile?.authId || data.receiverId === profile?.authId) {
           const index = findIndex(chatMessageList, ["conversationId", data.conversationId]);
-          console.log("index", index);
+
           let clonedChatList: IChatMessage[] = cloneDeep(chatMessageList);
           console.log("clonedChatList before", clonedChatList);
           if (index > -1) {
@@ -47,14 +47,14 @@ const AdminChatList: FC = (): ReactElement => {
   const addUsernameToUrlQuery = async (user: IChatMessage): Promise<void> => {
     try {
       const currentAdmin: ISender = {
-        senderId: profile.authId,
-        senderName: profile.username.toLowerCase()
+        senderId: profile?.authId,
+        senderName: profile?.username.toLowerCase()
       };
       const currentUser: IReceiver = {
-        receiverId: user.senderId === profile.authId ? user.receiverId : user.senderId,
-        receiverName: user.senderName === profile.username.toLowerCase() ? user.receiverName : user.senderName
+        receiverId: user.senderId === profile?.authId ? user.receiverId : user.senderId,
+        receiverName: user.senderName === profile?.username.toLowerCase() ? user.receiverName : user.senderName
       };
-      const users: ISenderReceiver = {
+      const users: Partial<ISenderReceiver> = {
         ...currentAdmin,
         ...currentUser
       };
@@ -67,8 +67,8 @@ const AdminChatList: FC = (): ReactElement => {
       ChatUtils.privateChatMessages = [];
       socketService?.socket.emit("setup", {
         userId:
-          (user.senderName === profile.username.toLowerCase() && user.receiverName) ||
-          (user.receiverName === profile.username.toLowerCase() && user.senderName)
+          (user.senderName === profile?.username.toLowerCase() && user.receiverName) ||
+          (user.receiverName === profile?.username.toLowerCase() && user.senderName)
       });
     } catch (error) {
       console.error(error);

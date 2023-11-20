@@ -9,8 +9,4 @@ export const LogoStyles = styled(motion.div)`
   border: 1px solid ${(props) => props.theme.primary};
   background-color: ${(props) => props.theme.white};
   padding: ${(props) => props.theme.size1};
-  img {
-    width: 45px;
-    height: 65px;
-  }
 `;

@@ -14,8 +14,8 @@ export interface IChatMessage {
   conversationId: string;
   receiverId: string;
   receiverName: string;
-  senderName: string;
-  senderId: string;
+  senderName?: string;
+  senderId?: string;
   body: string;
   createdAt?: Date | string;
   type?: TypeMessages;
@@ -25,7 +25,7 @@ export type TypeMessages = EChatTypes.left | EChatTypes.right;
 
 export enum EChatTypes {
   left = "LEFT",
-  right = "RIGHT",
+  right = "RIGHT"
 }
 
 export interface IChatUsers {
@@ -40,11 +40,15 @@ export interface IMessageData {
   body: string;
 }
 
-export type IReceiver = Pick<ISenderReceiver, "receiverId" | "receiverName">;
+export type IReceiverType = Pick<ISenderReceiver, "receiverId" | "receiverName">;
 
-export type ISender = Pick<ISenderReceiver, "senderId" | "senderName">;
+export type IReceiver = Partial<IReceiverType>;
+
+export type ISenderType = Pick<ISenderReceiver, "senderId" | "senderName">;
+
+export type ISender = Partial<ISenderReceiver>;
 
 export interface IURLParams {
-  username: string;
-  _id: string;
+  username?: string;
+  _id?: string;
 }

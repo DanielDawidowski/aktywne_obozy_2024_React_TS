@@ -17,7 +17,7 @@ const Header: FC<IHeader> = (props): ReactElement => {
         <Flex $justify="space-between" $align="center">
           <div>
             <Link to="/">
-              <Logo />
+              <Logo width="45px" height="65px" />
             </Link>
           </div>
           <DisplayMedia $media>

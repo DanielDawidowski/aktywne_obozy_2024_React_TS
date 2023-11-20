@@ -3,6 +3,8 @@ import { ILayout } from "./Layout.interface";
 
 export const LayoutStyles = styled.div<ILayout>`
   position: relative;
+  height: 100%;
+  width: 100%;
   header {
     margin-top: 0;
     ul {

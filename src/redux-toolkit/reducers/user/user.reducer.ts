@@ -14,7 +14,7 @@ const loadTokenFromLocalStorage = (): string => {
 
 const initialState: ILoginUser = {
   token: loadTokenFromLocalStorage(),
-  profile: loadUserFromLocalStorage()
+  profile: loadUserFromLocalStorage() || null
 };
 
 const userSlice = createSlice({
@@ -31,7 +31,7 @@ const userSlice = createSlice({
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       state.token = "";
-      state.profile = {} as ISignUpData;
+      state.profile = null;
       localStorage.removeItem("selectedChatUser");
     }
   }

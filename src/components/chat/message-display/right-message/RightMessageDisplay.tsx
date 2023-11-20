@@ -12,7 +12,7 @@ type ProfileProps = Pick<ISignUpData, "username">;
 interface IRightMessageDisplay {
   message: IChatMessage;
   messages: IChatMessage[];
-  profile: ProfileProps;
+  profile: ProfileProps | null;
   lastMessage: IChatMessage;
 }
 

@@ -1,20 +1,24 @@
 import React, { useState, ReactElement, useEffect, useCallback } from "react";
 import type { ChangeEvent, FC, FormEvent } from "react";
+import { IoIosSend } from "react-icons/io";
 import { AxiosResponse } from "axios";
-import { FaWindowClose } from "react-icons/fa";
 import { find } from "lodash";
 import { IChatMessage } from "../../../interfaces/chat/chat.interface";
 import { ISignUpData } from "../../../interfaces/auth/auth.interface";
 import { chatService } from "../../../services/api/chat/chat.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { useAppDispatch, useAppSelector } from "../../../redux-toolkit/hooks";
-import { setOpenChat } from "../../../redux-toolkit/reducers/chat/chat.reducer";
 import useLocalStorage from "../../../hooks/useLocalStorage";
-import { clearUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { fetchAdminUsers } from "../../../redux-toolkit/api/admin";
 import MessageDisplay from "../message-display/MessageDisplay";
 import { socketService } from "../../../services/socket/socket.service";
 import { ChatUtils } from "../../../utils/chat-utils.service";
+import { ChatWindowHeaderStyles, ChatWindowStyles } from "../ChatBoxStyles";
+import { MessageInputStyles } from "../message-input/MesageInputStyles";
+import Button from "../../button/Button";
+import { ButtonColor } from "../../button/Button.interface";
+import Input from "../../input/Input";
+import { Flex } from "../../globalStyles/global.styles";
 
 const ChatWindow: FC = (): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
@@ -64,8 +68,8 @@ const ChatWindow: FC = (): ReactElement => {
       conversationId: chatConversationId ? chatConversationId.conversationId : (conversationId.get() as string),
       receiverId: admin?.authId,
       receiverName: admin?.username.toLowerCase(),
-      senderId: profile._id,
-      senderName: profile.username.toLowerCase(),
+      senderId: profile?._id,
+      senderName: profile?.username.toLowerCase(),
       body: message.trim()
     };
     socketService?.socket.emit("message received", {
@@ -88,6 +92,7 @@ const ChatWindow: FC = (): ReactElement => {
       }
     }
     if (!rendered) setRendered(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, rendered]);
 
   useEffect(() => {
@@ -97,36 +102,32 @@ const ChatWindow: FC = (): ReactElement => {
     if (!rendered) setRendered(true);
   }, [admin?.authId, rendered, getChatMessages]);
 
-  const closeChat = (): void => {
-    dispatch(setOpenChat({ isLoading: false, isOpenChat: false }));
-    dispatch(clearUser());
-    localStorage.setItem("isOpenChat", JSON.stringify(false));
-    conversationId.delete();
-  };
-
   return (
-    <div className="chat__body__wrapper__chat">
-      <div className="chat__body__wrapper__chat__header">
-        <h1>{profile?.username}</h1>
-      </div>
+    <ChatWindowStyles>
+      <ChatWindowHeaderStyles>
+        <Flex $justify="space-between" $align="center">
+          <h5>Połączono z {admin?.username}</h5>
+          <h4>{profile?.username}</h4>
+        </Flex>
+      </ChatWindowHeaderStyles>
       <div className="chat__body__wrapper__chat__body">
         <MessageDisplay messages={messages} profile={profile} />
       </div>
-      <div className="chat__body__wrapper__chat__footer">
+      <MessageInputStyles>
         <form onSubmit={handleMessage}>
-          <input
+          <Input
+            name="message"
             type="text"
             placeholder="Type a message"
             value={message}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
+            handleChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
           />
-          <button type="submit">Send a message</button>
+          <Button color={ButtonColor.chat}>
+            <IoIosSend />
+          </Button>
         </form>
-      </div>
-      <div className="chat__body__header" onClick={closeChat}>
-        <FaWindowClose />
-      </div>
-    </div>
+      </MessageInputStyles>
+    </ChatWindowStyles>
   );
 };
 

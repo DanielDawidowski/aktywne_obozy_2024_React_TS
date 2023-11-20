@@ -35,23 +35,26 @@ export class ChatUtils {
   static joinRoomEvent(receiver: IReceiver, sender: ISender): void {
     const users = {
       receiverId: receiver.receiverId,
-      receiverName: receiver.receiverName.toLowerCase(),
+      receiverName: receiver.receiverName?.toLowerCase(),
       senderId: sender.senderId,
-      senderName: sender.senderName.toLowerCase()
+      senderName: sender.senderName?.toLowerCase()
     };
     socketService?.socket?.emit("join room", users);
   }
 
-  static chatUrlParams(user: ISenderReceiver, profile: IProfileProps): { username: string; _id: string } {
+  static chatUrlParams(
+    user: Partial<ISenderReceiver>,
+    profile: IProfileProps | null
+  ): { username?: string; _id?: string } {
     const params: IURLParams = { username: "", _id: "" };
-    if (user.receiverId === profile.authId) {
-      params.username = user.senderName.toLowerCase();
+    if (user.receiverId === profile?.authId) {
+      params.username = user.senderName?.toLowerCase();
       params._id = user.senderId;
-    } else if (user.senderId === profile.authId) {
-      params.username = user.receiverName.toLowerCase();
+    } else if (user.senderId === profile?.authId) {
+      params.username = user.receiverName?.toLowerCase();
       params._id = user.receiverId;
     } else {
-      params.username = user.receiverName.toLowerCase();
+      params.username = user.receiverName?.toLowerCase();
       params._id = user.receiverId;
     }
     return params;
@@ -149,7 +152,7 @@ export class ChatUtils {
   ): () => void {
     chatMessages = cloneDeep(chatMessages);
     socketService?.socket.on("message received", (data: IChatMessage) => {
-      if (data.senderName.toLowerCase() === username || data.receiverName.toLowerCase() === username) {
+      if (data.senderName?.toLowerCase() === username || data.receiverName.toLowerCase() === username) {
         setConversationId(data.conversationId);
         ChatUtils.privateChatMessages.push(data);
         chatMessages = [...ChatUtils.privateChatMessages];

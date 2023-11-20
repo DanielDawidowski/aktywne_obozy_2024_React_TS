@@ -60,8 +60,8 @@ const AdminChatWindow: FC = (): ReactElement => {
       conversationId: selectedChatUser.conversationId,
       receiverId: searchParams.get("_id") as string,
       receiverName: searchParams.get("username") as string,
-      senderId: profile._id,
-      senderName: profile.username,
+      senderId: profile?._id,
+      senderName: profile?.username,
       body: message.trim()
     };
     try {

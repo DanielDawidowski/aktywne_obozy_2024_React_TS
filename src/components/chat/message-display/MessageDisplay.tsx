@@ -9,12 +9,12 @@ import RightMessageDisplay from "./right-message/RightMessageDisplay";
 import LeftMessageDisplay from "./left-message/LeftMessageDisplay";
 import { MessageDisplayStyles } from "./MessageStyles";
 
-interface IDisplayMessage {
+interface IMessageDisplay {
   messages: IChatMessage[];
-  profile: IProfileProps | undefined;
+  profile: IProfileProps | null;
 }
 
-const MessageDisplay: FC<IDisplayMessage> = ({ messages, profile }): ReactElement => {
+const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile }): ReactElement => {
   const scrollRef = useChatScrollToBottom(messages);
   return (
     <MessageDisplayStyles ref={scrollRef}>
@@ -23,23 +23,23 @@ const MessageDisplay: FC<IDisplayMessage> = ({ messages, profile }): ReactElemen
           {(index === 0 ||
             timeAgo.dayMonthYear(message.createdAt as Date) !==
               timeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
-            <div className="message-chat-date">{timeAgo.chatMessageTransform(message?.createdAt as Date)}</div>
+            <div className="message-chat-date">{timeAgo?.chatMessageTransform(message?.createdAt as Date)}</div>
           )}
-          {profile &&
-            (message.receiverName === profile?.username.toLowerCase() ||
-              message.senderName === profile?.username.toLowerCase()) && (
-              <>
-                {message.senderName === profile?.username.toLowerCase() && (
-                  <RightMessageDisplay
-                    message={message}
-                    messages={messages}
-                    profile={profile}
-                    lastMessage={messages[messages.length - 1]}
-                  />
-                )}
-                {message.receiverName === profile?.username.toLowerCase() && <LeftMessageDisplay message={message} />}
-              </>
-            )}
+
+          {(message.receiverName === profile?.username.toLowerCase() ||
+            message.senderName === profile?.username.toLowerCase()) && (
+            <>
+              {message.senderName === profile?.username.toLowerCase() && (
+                <RightMessageDisplay
+                  message={message}
+                  messages={messages}
+                  profile={profile}
+                  lastMessage={messages[messages.length - 1]}
+                />
+              )}
+              {message.receiverName === profile?.username.toLowerCase() && <LeftMessageDisplay message={message} />}
+            </>
+          )}
         </div>
       ))}
     </MessageDisplayStyles>

@@ -1,6 +1,11 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import type { ChangeEvent, FC, FormEvent, SetStateAction, Dispatch } from "react";
+import { IoIosSend } from "react-icons/io";
 import PropTypes from "prop-types";
+import Input from "../../input/Input";
+import Button from "../../button/Button";
+import { ButtonColor } from "../../button/Button.interface";
+import { MessageInputStyles } from "./MesageInputStyles";
 
 interface IMessageInput {
   setChatMessage: Dispatch<SetStateAction<string>>;
@@ -24,26 +29,23 @@ const MessageInput: FC<IMessageInput> = ({ setChatMessage }): ReactElement => {
   }, [setChatMessage]);
 
   return (
-    <>
-      <div className="chat-inputarea" data-testid="chat-inputarea">
-        <form onSubmit={handleClick}>
-          <input
-            ref={messageInputRef}
-            id="message"
-            name="message"
-            type="text"
-            value={message}
-            className="chat-input"
-            placeholder="Enter your message..."
-            onChange={(event: ChangeEvent<HTMLInputElement>) => setMessage(event.target.value)}
-          />
+    <MessageInputStyles>
+      <form onSubmit={handleClick}>
+        <Input
+          ref={messageInputRef}
+          id="message"
+          name="message"
+          type="text"
+          value={message}
+          placeholder="Enter your message..."
+          handleChange={(event: ChangeEvent<HTMLInputElement>) => setMessage(event.target.value)}
+        />
 
-          <button type="submit" className="chat-send" style={{ backgroundColor: "blue" }}>
-            Send
-          </button>
-        </form>
-      </div>
-    </>
+        <Button color={ButtonColor.chat}>
+          <IoIosSend />
+        </Button>
+      </form>
+    </MessageInputStyles>
   );
 };
 

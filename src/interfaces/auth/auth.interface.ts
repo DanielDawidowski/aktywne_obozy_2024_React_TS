@@ -22,7 +22,7 @@ export type ILoginResponse = Partial<ISignUpData> & { token: string };
 
 export interface ILoginUser {
   token: string;
-  profile: ISignUpData;
+  profile: ISignUpData | null;
 }
 
 export interface IUser {

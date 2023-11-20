@@ -52,6 +52,11 @@ export const Flex = styled.div<{ $justify?: string; $align?: string; $direction?
   flex-direction: ${(props) => props.$direction || ""};
 `;
 
+export const Grid = styled.div`
+  display: grid;
+  place-items: center;
+`;
+
 export const DisplayMedia = styled.div<{ $media?: boolean }>`
   ${({ $media }) =>
     $media

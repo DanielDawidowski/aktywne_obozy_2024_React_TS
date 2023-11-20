@@ -14,19 +14,18 @@ export const LableStyles = styled.label`
 `;
 
 export const InputField = styled.input`
-  width: 100%;
+  /* width: 100%; */
   padding: ${(props) => props.theme.size2};
   font-size: ${(props) => props.theme.size4};
-  border: 2px solid ${(props) => props.theme.green};
+  border: 2px solid ${(props) => props.theme.white};
   border-radius: 4px;
   outline: none;
-  box-shadow: 1px 1px 3px ${(props) => props.theme.green};
   color: ${(props) => props.theme.purple};
 
   &:focus {
     border-color: ${(props) => props.theme.orange};
-    box-shadow: 3px 2px 6px ${(props) => props.theme.orange};
-    color: ${(props) => props.theme.secondary_light};
+    box-shadow: 0 0 1px ${(props) => props.theme.orange};
+    color: ${(props) => props.theme.primary_dark};
   }
 
   @media (max-width: ${(props) => props.theme.breakpoint_small}) {

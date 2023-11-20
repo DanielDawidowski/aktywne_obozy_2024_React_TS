@@ -26,7 +26,7 @@ const Navigation: FC<IHeader> = (props): ReactElement => {
           >
             <NavHeader>
               <Flex $justify="space-between" $align="center">
-                <Logo />
+                <Logo width="45px" height="65px" />
                 <Hamburger setToggleMenu={setToggleMenu} toggleMenu={toggleMenu} />
               </Flex>
             </NavHeader>
