@@ -4,22 +4,11 @@ import { motion } from "framer-motion";
 export const MessageDisplayStyles = styled(motion.div)`
   overflow-y: scroll;
   scroll-behavior: smooth;
-  height: 495px;
+
   border: 1px solid ${(props) => props.theme.text};
 
   @media (max-width: ${(props) => props.theme.breakpoint_small}) {
     max-height: 100%;
-  }
-
-  .message-chat {
-    padding: 10px;
-
-    .message-chat-date {
-      color: ${(props) => props.theme.secondary};
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 15px;
-    }
   }
 
   /* Webkit (Safari, Chrome) */
@@ -56,16 +45,48 @@ export const MessageDisplayStyles = styled(motion.div)`
   }
 `;
 
-export const MessageStyles = styled(motion.div)`
+export const MessageChatStyles = styled.div`
+  padding: ${(props) => props.theme.size1};
+`;
+
+export const MessageChatDateStyles = styled.div`
+  padding: ${(props) => props.theme.size1};
+  color: ${(props) => props.theme.secondary};
+  font-size: ${(props) => props.theme.size2};
+  text-align: center;
+  margin-bottom: ${(props) => props.theme.size2};
+`;
+
+export const MessageStyles = styled.div`
   display: flex;
-  margin-bottom: 10px;
-  width: 100%;
+  flex-direction: column;
+  word-wrap: break-word;
+  max-width: 100%;
+
+  h5 {
+    border-radius: 16px;
+    font-size: 14px;
+    padding: 8px 18px;
+    font-family: Oswald, sans-serif;
+    letter-spacing: 1.1px;
+    color: ${(props) => props.theme.text};
+  }
 `;
 
 export const MessageRightStyles = styled(MessageStyles)`
-  justify-content: flex-end;
+  align-self: flex-end;
+  max-width: 350px;
+  h5 {
+    text-align: right;
+    background-color: ${(props) => props.theme.primaryColor};
+  }
 `;
 
 export const MessageLeftStyles = styled(MessageStyles)`
-  justify-content: flex-start;
+  align-self: flex-start;
+  max-width: 350px;
+  h5 {
+    text-align: left;
+    background-color: ${(props) => props.theme.secondaryColor};
+  }
 `;

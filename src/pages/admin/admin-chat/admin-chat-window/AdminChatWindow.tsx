@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, ReactElement } from "react";
-import type { FC, FormEvent, ChangeEvent } from "react";
+import type { FC } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../../../redux-toolkit/hooks";
 import { chatService } from "../../../../services/api/chat/chat.service";
@@ -8,11 +8,13 @@ import MessageDisplay from "../../../../components/chat/message-display/MessageD
 import { socketService } from "../../../../services/socket/socket.service";
 import { ChatUtils } from "../../../../utils/chat-utils.service";
 import { AxiosResponse } from "axios";
+import { ChatWindowStyles } from "../../../../components/chat/ChatBoxStyles";
+import Spinner from "../../../../components/spinner/Spinner";
+import MessageInput from "../../../../components/chat/message-input/MessageInput";
 
 const AdminChatWindow: FC = (): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
   const { isLoading, selectedChatUser } = useAppSelector((state) => state.chat);
-  const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [rendered, setRendered] = useState<boolean>(false);
 
@@ -52,11 +54,11 @@ const AdminChatWindow: FC = (): ReactElement => {
     }
   }, [getChatMessages, searchParams]);
 
-  const handleMessage = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
+  const handleMessage = async (message: string): Promise<void> => {
+    if (message.trim() === "") return;
 
     const messageData: IChatMessage = {
-      _id: "string",
+      _id: "",
       conversationId: selectedChatUser.conversationId,
       receiverId: searchParams.get("_id") as string,
       receiverName: searchParams.get("username") as string,
@@ -67,7 +69,6 @@ const AdminChatWindow: FC = (): ReactElement => {
     try {
       await chatService.saveChatMessage(messageData);
       socketService?.socket?.emit("message received", messageData);
-      setMessage("");
     } catch (error) {
       console.error(error);
     }
@@ -81,33 +82,16 @@ const AdminChatWindow: FC = (): ReactElement => {
   }, [rendered, getNewUserMessages]);
 
   return (
-    <div className="chat-window-container" data-testid="chatWindowContainer" style={{ height: "400px" }}>
+    <ChatWindowStyles>
       {isLoading ? (
-        <div className="message-loading" data-testid="message-loading"></div>
+        <Spinner size={40} />
       ) : (
-        <div data-testid="chatWindow">
-          <div className="chat-title" data-testid="chat-title"></div>
-          <div className="chat-window">
-            <div className="chat__body__wrapper__chat__body">
-              <MessageDisplay messages={messages} profile={profile} />
-            </div>
-            <div className="chat__body__wrapper__chat__footer">
-              <form onSubmit={handleMessage}>
-                <input
-                  type="text"
-                  placeholder="Type a message"
-                  value={message}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
-                />
-                <button type="submit" disabled={!message}>
-                  Send a message
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
+        <>
+          <MessageDisplay messages={messages} profile={profile} />
+          <MessageInput setChatMessage={handleMessage} />
+        </>
       )}
-    </div>
+    </ChatWindowStyles>
   );
 };
 

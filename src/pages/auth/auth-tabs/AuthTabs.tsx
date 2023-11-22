@@ -22,20 +22,8 @@ const AuthTabs: FC = (): ReactElement => {
           </AuthTabsElementStyles>
         </AuthTabsStyles>
         <AuthInnerStyles $signIn={type === "Sign In"}>
-          {type === "Sign In" && (
-            <div className="tab-item">
-              <div className="tab-item">
-                <Login />
-              </div>
-            </div>
-          )}
-          {type === "Sign Up" && (
-            <div className="tab-item">
-              <div className="tab-item">
-                <Register />
-              </div>
-            </div>
-          )}
+          {type === "Sign In" && <Login />}
+          {type === "Sign Up" && <Register />}
         </AuthInnerStyles>
       </AuthContainerStyles>
     </Layout>

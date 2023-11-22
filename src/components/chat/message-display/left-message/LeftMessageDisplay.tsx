@@ -13,8 +13,8 @@ const LeftMessageDisplay: FC<ILeftMessageDisplay> = ({ message }): ReactElement 
   return (
     <MessageStyles>
       <MessageLeftStyles>
-        <div className="message-content">{message?.body && message?.body}</div>
-        <div className="message-time">{timeAgo.timeFormat(message?.createdAt as string)}</div>
+        <h5>{message?.body}</h5>
+        {/* <div className="message-time">{timeAgo.timeFormat(message?.createdAt as string)}</div> */}
       </MessageLeftStyles>
     </MessageStyles>
   );

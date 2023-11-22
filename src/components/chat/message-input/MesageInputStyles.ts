@@ -14,6 +14,7 @@ export const MessageInputStyles = styled(motion.div)`
       height: 45px;
       width: 100%;
     }
+
     button {
       display: grid;
       place-items: center;

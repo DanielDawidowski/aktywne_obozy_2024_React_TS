@@ -3,12 +3,9 @@ import type { FC } from "react";
 import PropTypes from "prop-types";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { FaWindowClose } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "../../redux-toolkit/hooks";
-
 import ChatWindow from "./chat-window/ChatWindow";
 import { setOpenChat } from "../../redux-toolkit/reducers/chat/chat.reducer";
-
 import { clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
 import { IChat } from "../../interfaces/chat/chat.interface";
 import ChatRegister from "./chat-register/ChatRegister";

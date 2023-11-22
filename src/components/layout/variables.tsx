@@ -35,7 +35,8 @@ export const lightTheme: DefaultTheme = {
   text: themeGlobal.dark,
   primaryColor: themeGlobal.primary,
   secondaryColor: themeGlobal.secondary_light,
-  thirdColor: themeGlobal.primary_light
+  thirdColor: themeGlobal.primary_light,
+  fourthColor: themeGlobal.yellow
 };
 
 export const darkTheme: DefaultTheme = {
@@ -43,5 +44,6 @@ export const darkTheme: DefaultTheme = {
   text: themeGlobal.white,
   primaryColor: themeGlobal.secondary,
   secondaryColor: themeGlobal.primary,
-  thirdColor: themeGlobal.secondary_light
+  thirdColor: themeGlobal.secondary_light,
+  fourthColor: themeGlobal.orange
 };

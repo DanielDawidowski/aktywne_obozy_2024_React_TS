@@ -21,7 +21,6 @@ export class ChatUtils {
   static usersOnline(setOnlineUsers: ReactDispatch<SetStateAction<IChatMessage[]>>): void {
     socketService?.socket?.on("user online", (data) => {
       setOnlineUsers(data);
-      console.log("data", data);
     });
   }
 
@@ -29,7 +28,6 @@ export class ChatUtils {
     socketService?.socket?.on("add chat users", (data) => {
       ChatUtils.chatUsers = [...data];
     });
-    console.log("ChatUtils.chatUsers", ChatUtils.chatUsers);
   }
 
   static joinRoomEvent(receiver: IReceiver, sender: ISender): void {

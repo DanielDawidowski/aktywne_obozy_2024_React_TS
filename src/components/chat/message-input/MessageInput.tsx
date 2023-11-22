@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
-import type { ChangeEvent, FC, FormEvent, SetStateAction, Dispatch } from "react";
+import type { ChangeEvent, FC, FormEvent } from "react";
 import { IoIosSend } from "react-icons/io";
 import PropTypes from "prop-types";
 import Input from "../../input/Input";
@@ -8,7 +8,7 @@ import { ButtonColor } from "../../button/Button.interface";
 import { MessageInputStyles } from "./MesageInputStyles";
 
 interface IMessageInput {
-  setChatMessage: Dispatch<SetStateAction<string>>;
+  setChatMessage: (message: string) => Promise<void>;
 }
 
 const MessageInput: FC<IMessageInput> = ({ setChatMessage }): ReactElement => {
@@ -17,8 +17,7 @@ const MessageInput: FC<IMessageInput> = ({ setChatMessage }): ReactElement => {
 
   const handleClick = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    // setChatMessage(message.replace(/ +(?= )/g, ""), "");
-    setChatMessage(message);
+    setChatMessage(message.replace(/ +(?= )/g, ""));
     setMessage("");
   };
 

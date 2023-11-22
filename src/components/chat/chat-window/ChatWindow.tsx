@@ -1,6 +1,5 @@
 import React, { useState, ReactElement, useEffect, useCallback } from "react";
-import type { ChangeEvent, FC, FormEvent } from "react";
-import { IoIosSend } from "react-icons/io";
+import type { FC } from "react";
 import { AxiosResponse } from "axios";
 import { find } from "lodash";
 import { IChatMessage } from "../../../interfaces/chat/chat.interface";
@@ -14,16 +13,12 @@ import MessageDisplay from "../message-display/MessageDisplay";
 import { socketService } from "../../../services/socket/socket.service";
 import { ChatUtils } from "../../../utils/chat-utils.service";
 import { ChatWindowHeaderStyles, ChatWindowStyles } from "../ChatBoxStyles";
-import { MessageInputStyles } from "../message-input/MesageInputStyles";
-import Button from "../../button/Button";
-import { ButtonColor } from "../../button/Button.interface";
-import Input from "../../input/Input";
 import { Flex } from "../../globalStyles/global.styles";
+import MessageInput from "../message-input/MessageInput";
 
 const ChatWindow: FC = (): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
   const { admin } = useAppSelector((state) => state.admin);
-  const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const getUserName = useLocalStorage<ISignUpData>("user");
   const conversationId = useLocalStorage<string>("conversationId");
@@ -53,10 +48,9 @@ const ChatWindow: FC = (): ReactElement => {
     }
   }, []);
 
-  const handleMessage = async (e: FormEvent<HTMLFormElement>): Promise<IChatMessage | undefined> => {
-    e.preventDefault();
+  const handleMessage = async (message: string): Promise<void> => {
     // socketService?.socket.emit("setup", { userId: storedUsername });
-    if (message === "") return;
+    if (message.trim() === "") return;
 
     const chatConversationId = find(
       messages,
@@ -64,7 +58,7 @@ const ChatWindow: FC = (): ReactElement => {
     );
 
     const messageData: IChatMessage = {
-      _id: "string",
+      _id: "",
       conversationId: chatConversationId ? chatConversationId.conversationId : (conversationId.get() as string),
       receiverId: admin?.authId,
       receiverName: admin?.username.toLowerCase(),
@@ -72,12 +66,12 @@ const ChatWindow: FC = (): ReactElement => {
       senderName: profile?.username.toLowerCase(),
       body: message.trim()
     };
-    socketService?.socket.emit("message received", {
-      message: messageData,
-      to: admin?.authId
-    });
-    await chatService.saveChatMessage(messageData);
-    setMessage("");
+    try {
+      await chatService.saveChatMessage(messageData);
+      socketService?.socket?.emit("message received", messageData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -110,23 +104,8 @@ const ChatWindow: FC = (): ReactElement => {
           <h4>{profile?.username}</h4>
         </Flex>
       </ChatWindowHeaderStyles>
-      <div className="chat__body__wrapper__chat__body">
-        <MessageDisplay messages={messages} profile={profile} />
-      </div>
-      <MessageInputStyles>
-        <form onSubmit={handleMessage}>
-          <Input
-            name="message"
-            type="text"
-            placeholder="Type a message"
-            value={message}
-            handleChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)}
-          />
-          <Button color={ButtonColor.chat}>
-            <IoIosSend />
-          </Button>
-        </form>
-      </MessageInputStyles>
+      <MessageDisplay messages={messages} profile={profile} chatbox />
+      <MessageInput setChatMessage={handleMessage} />
     </ChatWindowStyles>
   );
 };

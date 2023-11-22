@@ -7,23 +7,33 @@ import useChatScrollToBottom from "../../../hooks/useChatScrollToBottom";
 import { timeAgo } from "../../../utils/timeago.utils";
 import RightMessageDisplay from "./right-message/RightMessageDisplay";
 import LeftMessageDisplay from "./left-message/LeftMessageDisplay";
-import { MessageDisplayStyles } from "./MessageStyles";
+import { MessageChatDateStyles, MessageChatStyles, MessageDisplayStyles } from "./MessageStyles";
+import useWindowSize from "../../../hooks/useWindowSize";
 
 interface IMessageDisplay {
   messages: IChatMessage[];
   profile: IProfileProps | null;
+  chatbox?: boolean;
 }
 
-const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile }): ReactElement => {
+const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile, chatbox = false }): ReactElement => {
   const scrollRef = useChatScrollToBottom(messages);
+  const size = useWindowSize();
+
   return (
-    <MessageDisplayStyles ref={scrollRef}>
+    <MessageDisplayStyles
+      ref={scrollRef}
+      style={{
+        height: chatbox ? 510 : 800,
+        width: chatbox ? 460 : size.width < 768 ? 300 : 700
+      }}
+    >
       {messages.map((message: IChatMessage, index: number) => (
-        <div key={message._id} className="message-chat">
+        <MessageChatStyles key={message._id}>
           {(index === 0 ||
             timeAgo.dayMonthYear(message.createdAt as Date) !==
               timeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
-            <div className="message-chat-date">{timeAgo?.chatMessageTransform(message?.createdAt as Date)}</div>
+            <MessageChatDateStyles>{timeAgo?.chatMessageTransform(message?.createdAt as Date)}</MessageChatDateStyles>
           )}
 
           {(message.receiverName === profile?.username.toLowerCase() ||
@@ -40,14 +50,15 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile }): ReactElemen
               {message.receiverName === profile?.username.toLowerCase() && <LeftMessageDisplay message={message} />}
             </>
           )}
-        </div>
+        </MessageChatStyles>
       ))}
     </MessageDisplayStyles>
   );
 };
 
 MessageDisplay.propTypes = {
-  messages: PropTypes.array.isRequired
+  messages: PropTypes.array.isRequired,
+  chatbox: PropTypes.bool
 };
 
 export default MessageDisplay;

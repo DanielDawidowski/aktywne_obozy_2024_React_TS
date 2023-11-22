@@ -20,14 +20,14 @@ const RightMessageDisplay: FC<IRightMessageDisplay> = ({ message, profile, lastM
   return (
     <MessageStyles>
       <MessageRightStyles>
-        <div data-testid="message-content" className="message-content">
-          {message?.senderName === profile?.username.toLowerCase() && <h6>{message?.body}</h6>}
-        </div>
-        <div className="message-content-bottom">
+        {/* <div data-testid="message-content" className="message-content"> */}
+        {message?.senderName === profile?.username.toLowerCase() && <h5>{message?.body}</h5>}
+        {/* </div> */}
+        {/* <div className="message-content-bottom">
           {lastMessage?.senderName === profile?.username.toLowerCase() && (
             <span data-testid="message-time">{timeAgo.timeFormat(message?.createdAt as string)}</span>
-          )}
-        </div>
+            )}
+          </div> */}
       </MessageRightStyles>
     </MessageStyles>
   );

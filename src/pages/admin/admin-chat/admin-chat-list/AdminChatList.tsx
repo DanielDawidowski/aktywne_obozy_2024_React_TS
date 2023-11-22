@@ -1,12 +1,20 @@
 import React, { useEffect, useState, ReactElement } from "react";
 import type { FC } from "react";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { cloneDeep, findIndex, remove } from "lodash";
 import { useAppDispatch, useAppSelector } from "../../../../redux-toolkit/hooks";
 import { IChatMessage, IReceiver, ISender, ISenderReceiver } from "../../../../interfaces/chat/chat.interface";
 import { setSelectedChatUser } from "../../../../redux-toolkit/reducers/chat/chat.reducer";
 import { ChatUtils } from "../../../../utils/chat-utils.service";
 import { socketService } from "../../../../services/socket/socket.service";
+import {
+  AdminChatListStyles,
+  AdminChatListTitleStyles,
+  AdminList,
+  AdminListItem,
+  AvatarStyles
+} from "../AdminChatStyles";
+import { Utils } from "../../../../utils/utils.service";
 
 const AdminChatList: FC = (): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
@@ -17,6 +25,7 @@ const AdminChatList: FC = (): ReactElement => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (rendered) {
@@ -25,14 +34,14 @@ const AdminChatList: FC = (): ReactElement => {
           const index = findIndex(chatMessageList, ["conversationId", data.conversationId]);
 
           let clonedChatList: IChatMessage[] = cloneDeep(chatMessageList);
-          console.log("clonedChatList before", clonedChatList);
+          // console.log("clonedChatList before", clonedChatList);
           if (index > -1) {
             remove(clonedChatList, (chat) => chat.conversationId === data.conversationId);
             clonedChatList = [data, ...clonedChatList];
-            console.log("clonedChatList index > -1", clonedChatList);
+            // console.log("clonedChatList index > -1", clonedChatList);
           } else {
             clonedChatList = [data, ...clonedChatList];
-            console.log("clonedChatList index < -1", clonedChatList);
+            // console.log("clonedChatList index < -1", clonedChatList);
           }
           setChatMessageList(clonedChatList);
         }
@@ -62,8 +71,6 @@ const AdminChatList: FC = (): ReactElement => {
       const params = ChatUtils.chatUrlParams(users, profile);
       navigate(`${location.pathname}?${createSearchParams(params)}`);
       ChatUtils.joinRoomEvent(currentUser, currentAdmin);
-      console.log("currentUser", currentUser);
-      console.log("currentAdmin", currentAdmin);
       ChatUtils.privateChatMessages = [];
       socketService?.socket.emit("setup", {
         userId:
@@ -75,65 +82,42 @@ const AdminChatList: FC = (): ReactElement => {
     }
   };
 
+  const showActiveChatElement = (user: IChatMessage): boolean => {
+    const paramsId = searchParams.get("_id") as string;
+
+    return paramsId === user.senderId || paramsId === user.receiverId;
+  };
+
   useEffect(() => {
     setChatMessageList(chatList);
   }, [chatList]);
 
   return (
-    <div data-testid="chatList">
-      <div className="conversation-container">
-        <div className="conversation-container-header">
-          <div className="title-text">Admin: {profile?.username}</div>
-        </div>
+    <AdminChatListStyles>
+      <AdminChatListTitleStyles>
+        <h4>
+          Admin: <b>{profile?.username}</b>
+        </h4>
+      </AdminChatListTitleStyles>
 
-        <div className="chatList-list">
-          {chatMessageList.map((data) => (
-            <div
-              key={data._id}
-              onClick={() => addUsernameToUrlQuery(data)}
-              style={{
-                cursor: "pointer",
-                border: "1px solid #000",
-                padding: "10px"
-              }}
-            >
-              <h5>senderName: {data.senderName}</h5>
-              {/* <h6>senderID:{data.senderId}</h6> */}
-              <br />
-              <h5>receiverName: {data.receiverName}</h5>
-              {/* <h6>receiverID:{data.receiverId}</h6> */}
-              <br />
-              <h6>conversationId: {data.conversationId}</h6>
-              <br />
-              <h4 className="font-weight-bold">message: {data.body}</h4>
+      <AdminList>
+        {chatMessageList.map((data) => (
+          <AdminListItem
+            $active={showActiveChatElement(data)}
+            key={data._id}
+            onClick={() => addUsernameToUrlQuery(data)}
+          >
+            <AvatarStyles>{data && Utils.getFirstLetter(Utils.getName(data, profile))}</AvatarStyles>
+            <div>
+              <h5>{Utils.getName(data, profile)}</h5>
+              <h4>
+                <b>{Utils.getStringLength(data.body, 15)}...</b>
+              </h4>
             </div>
-          ))}
-          {/* {chatList &&
-            chatList.map((data) => (
-              <div
-                key={Utils.generateString(10)}
-                onClick={() => addUsernameToUrlQuery(data)}
-                style={{
-                  cursor: "pointer",
-                  border: "1px solid #000",
-                  padding: "10px",
-                  width: "400px",
-                }}
-              >
-                <h6>senderName: {data.senderName}</h6>
-                <h6>senderID:{data.senderId}</h6>
-                <br />
-                <h6>receiverName: {data.receiverName}</h6>
-                <h6>receiverID:{data.receiverId}</h6>
-                <br />
-                <h6>conversationId: {data.conversationId}</h6>
-                <br />
-                <h3 className="font-weight-bold">message: {data.body}</h3>
-              </div>
-            ))} */}
-        </div>
-      </div>
-    </div>
+          </AdminListItem>
+        ))}
+      </AdminList>
+    </AdminChatListStyles>
   );
 };
 export default AdminChatList;

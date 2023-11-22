@@ -22,7 +22,7 @@ const Events: FC = (): ReactElement => {
     try {
       const response: AxiosResponse = await eventService.getAllEvents(currentPage);
       setEvents(response.data.events);
-      console.log("response", response.data.events);
+      // console.log("response", response.data.events);
     } catch (error) {
       console.log("error", error);
     }

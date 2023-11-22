@@ -62,8 +62,6 @@ export const ChatBoxBodyStyles = styled(motion.div)`
 
 export const ChatWindowStyles = styled(motion.div)`
   background-color: ${(props) => props.theme.thirdColor};
-  width: 100%;
-  height: 100%;
   border-radius: 8px 8px 0 0;
 `;
 

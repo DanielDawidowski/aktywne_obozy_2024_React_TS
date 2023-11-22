@@ -12,9 +12,7 @@ const AdminChat: FC = (): ReactElement => {
   return (
     <Layout chat={false}>
       <AdminChatStyles>
-        <aside>
-          <AdminChatList />
-        </aside>
+        <AdminChatList />
         <main>{selectedChatUser && <AdminChatWindow />}</main>
       </AdminChatStyles>
     </Layout>
