@@ -21,12 +21,6 @@ export const LayoutStyles = styled.div<ILayout>`
     }
   }
   main {
-    margin-top: 20%;
-    margin: 0 auto;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    margin-top: 2rem;
   }
 `;

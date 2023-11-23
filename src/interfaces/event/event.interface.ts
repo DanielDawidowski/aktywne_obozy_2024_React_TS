@@ -21,12 +21,6 @@ export interface IAddress {
   web: string;
 }
 
-export interface IEventSlide {
-  id: number;
-  title?: string;
-  image: string;
-}
-
 export enum EventType {
   mountains = "Góry",
   kayaking = "Spływy",

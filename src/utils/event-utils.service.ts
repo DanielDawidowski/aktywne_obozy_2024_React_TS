@@ -6,9 +6,10 @@ import CrabSVG from "../assets/SVG/crab.svg";
 import Events1 from "../assets/Images/morskie_2023.jpg";
 import Events2 from "../assets/Images/krakow_2023.jpg";
 import Events3 from "../assets/Images/gory_2023.jpg";
-import { EventType, EventTypes, IEventSlide } from "../interfaces/event/event.interface";
+import { EventType, EventTypes } from "../interfaces/event/event.interface";
+import { ICarousel } from "../components/carousel/Carousel.interface";
 
-export const eventSlides: IEventSlide[] = [
+export const eventSlides: ICarousel[] = [
   {
     id: 0,
     image: Events1

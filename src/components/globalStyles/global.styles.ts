@@ -41,8 +41,7 @@ img {
 
 export const Container = styled.div`
   margin: 0 auto;
-  max-width: 1440px;
-  width: 100%;
+  max-width: ${(props) => props.theme.breakpoint_medium};
 `;
 
 export const Flex = styled.div<{ $justify?: string; $align?: string; $direction?: string }>`

@@ -110,7 +110,7 @@ const Events: FC = (): ReactElement => {
           </div>
           <div className="events__carousel">
             <div className="events__carousel--inner">
-              <Carousel slides={eventSlides} />
+              <Carousel />
             </div>
           </div>
         </motion.div>

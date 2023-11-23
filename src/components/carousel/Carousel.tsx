@@ -3,7 +3,12 @@ import type { FC } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import PropTypes from "prop-types";
-import { IEventSlide } from "../../interfaces/event/event.interface";
+import useWindowSize from "../../hooks/useWindowSize";
+import { homeSlides, homeSlidesBig } from "../../utils/home-utils.service";
+import { ICarousel } from "./Carousel.interface";
+import { BreakPoint } from "../layout/Layout.interface";
+import { Container } from "../globalStyles/global.styles";
+import { CarouselContainer, CarouselInner, CarouselSlide, CarouselSlider, CarouselTitle } from "./Carousel.styles";
 
 const carouselVariants: Variants = {
   initial: (direction: number) => {
@@ -37,31 +42,35 @@ const carouselVariants: Variants = {
   }
 };
 
-interface CarouselProps {
-  slides: IEventSlide[];
-}
-
-const Carousel: FC<CarouselProps> = ({ slides }): ReactElement => {
+const Carousel: FC = (): ReactElement => {
   const [index, setIndex] = useState<number>(0);
   const [direction, setDirection] = useState<number>(0);
+  const size = useWindowSize();
 
-  const nextStep: () => void = useCallback((): void => {
+  const showSlides = useCallback((): ICarousel[] => {
+    if (size.width < BreakPoint.small) {
+      return homeSlides;
+    }
+    return homeSlidesBig;
+  }, [size.width]);
+
+  const nextStep = useCallback((): void => {
     setDirection(1);
-    if (index === slides.length - 1) {
+    if (index === showSlides().length - 1) {
       setIndex(0);
       return;
     }
     setIndex(index + 1);
-  }, [index, slides.length]);
+  }, [index, showSlides]);
 
-  const prevStep: () => void = useCallback((): void => {
+  const prevStep = useCallback((): void => {
     setDirection(-1);
     if (index === 0) {
-      setIndex(slides.length - 1);
+      setIndex(showSlides().length - 1);
       return;
     }
     setIndex(index - 1);
-  }, [index, slides.length]);
+  }, [index, showSlides]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -71,45 +80,46 @@ const Carousel: FC<CarouselProps> = ({ slides }): ReactElement => {
   }, [nextStep]);
 
   return (
-    <motion.div className="carousel">
-      <motion.div className="carousel__inner">
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div className="carousel__inner--title">
-            <motion.h3 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.4 } }}>
-              {slides[index].title}
-            </motion.h3>
-          </motion.div>
-        </AnimatePresence>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div className="carousel__inner--slider">
-            <motion.img
-              whileTap={{ cursor: "grabbing" }}
-              variants={carouselVariants}
-              animate="animate"
-              initial="initial"
-              exit="exit"
-              src={slides[index].image}
-              alt="slides"
-              className="carousel__slide"
-              key={slides[index].id}
-              custom={direction}
-              drag="x"
-              dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.1}
-              dragTransition={{ bounceStiffness: 800, bounceDamping: 10 }}
-              onDragEnd={(e, { offset }) => {
-                // console.log("velocity", velocity);
-                if (offset.x > 10) {
-                  nextStep();
-                } else if (offset.x < -10) {
-                  prevStep();
-                }
-              }}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
-    </motion.div>
+    <Container>
+      <CarouselContainer>
+        <CarouselInner>
+          <AnimatePresence initial={false} custom={direction}>
+            <CarouselTitle>
+              <motion.h3 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.4 } }}>
+                {showSlides()[index].title}
+              </motion.h3>
+            </CarouselTitle>
+          </AnimatePresence>
+          <AnimatePresence initial={false} custom={direction}>
+            <CarouselSlider>
+              <CarouselSlide
+                whileTap={{ cursor: "grabbing" }}
+                variants={carouselVariants}
+                animate="animate"
+                initial="initial"
+                exit="exit"
+                src={showSlides()[index].image}
+                alt="slides"
+                key={showSlides()[index].id}
+                custom={direction}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.1}
+                dragTransition={{ bounceStiffness: 800, bounceDamping: 10 }}
+                onDragEnd={(e, { offset }) => {
+                  // console.log("velocity", velocity);
+                  if (offset.x > 10) {
+                    nextStep();
+                  } else if (offset.x < -10) {
+                    prevStep();
+                  }
+                }}
+              />
+            </CarouselSlider>
+          </AnimatePresence>
+        </CarouselInner>
+      </CarouselContainer>
+    </Container>
   );
 };
 
