@@ -2,7 +2,6 @@ import React, { useEffect, useState, ReactElement, useCallback } from "react";
 import type { FC } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import PropTypes from "prop-types";
 import useWindowSize from "../../hooks/useWindowSize";
 import { homeSlides, homeSlidesBig } from "../../utils/home-utils.service";
 import { ICarousel } from "./Carousel.interface";
@@ -121,10 +120,6 @@ const Carousel: FC = (): ReactElement => {
       </CarouselContainer>
     </Container>
   );
-};
-
-Carousel.propTypes = {
-  slides: PropTypes.array.isRequired
 };
 
 export default Carousel;

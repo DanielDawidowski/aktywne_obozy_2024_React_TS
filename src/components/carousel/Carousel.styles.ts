@@ -9,6 +9,7 @@ export const CarouselContainer = styled.div`
 export const CarouselInner = styled(motion.div)`
   position: relative;
   width: 100%;
+  height: auto;
 `;
 
 export const CarouselTitle = styled(motion.div)`
