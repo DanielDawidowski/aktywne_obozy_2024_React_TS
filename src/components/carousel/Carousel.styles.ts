@@ -4,12 +4,13 @@ import { motion } from "framer-motion";
 export const CarouselContainer = styled.div`
   width: 100%;
   overflow: hidden;
+  height: 100%;
 `;
 
 export const CarouselInner = styled(motion.div)`
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
 `;
 
 export const CarouselTitle = styled(motion.div)`

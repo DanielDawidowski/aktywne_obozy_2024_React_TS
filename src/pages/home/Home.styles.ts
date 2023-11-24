@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import BGIcons from "../../assets/Images//home/home-icons.png";
+import { DividerStyles } from "../../components/divider/Divider.styles";
 
 export const HomeStyles = styled(motion.section)`
   width: 100%;
@@ -51,5 +52,42 @@ export const HomeIconsStyles = styled.div`
         -1px 1px 0 ${(props) => props.theme.dark},
         1px 1px 0 ${(props) => props.theme.dark};
     }
+  }
+`;
+
+export const HomeEventsStyles = styled.div`
+  padding: ${(props) => props.theme.size1} 0;
+  margin: ${(props) => props.theme.size1};
+  @media (min-width: ${(props) => props.theme.breakpoint_medium}) {
+    padding: 0 ${(props) => props.theme.size1};
+  }
+`;
+
+export const HomeEventsItemStyles = styled.div`
+  border: 1px solid ${(props) => props.theme.text};
+  border-radius: 18px;
+  margin: ${(props) => props.theme.size4} 0;
+  @media (min-width: ${(props) => props.theme.breakpoint_medium}) {
+    margin: 0 8px 72px 8px;
+  }
+
+  img {
+    height: 350px;
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    border-bottom: 1px solid ${(props) => props.theme.text};
+  }
+
+  h2 {
+    letter-spacing: 0.05em;
+    text-align: center;
+    padding: ${(props) => props.theme.size3} 0;
+
+    @media (min-width: ${(props) => props.theme.breakpoint_medium}) {
+      padding: 72px 8px;
+    }
+  }
+  ${DividerStyles} {
+    margin: var(--size-4) 0;
   }
 `;

@@ -5,7 +5,7 @@ import { ScrollTextContainer, ScrollTextSectionContainer, ScrollTextTitleStyles 
 
 const ScrollText: FC = (): ReactElement => {
   const { scrollYProgress } = useScroll();
-  const forwardX = useTransform(scrollYProgress, [0, 1], ["10%", "-80%"]);
+  const forwardX = useTransform(scrollYProgress, [0, 1], ["100%", "-100%"]);
   return (
     <ScrollTextContainer>
       <ScrollTextSectionContainer>

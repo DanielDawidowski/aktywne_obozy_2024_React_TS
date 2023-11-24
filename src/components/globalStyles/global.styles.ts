@@ -42,6 +42,9 @@ img {
 export const Container = styled.div`
   margin: 0 auto;
   max-width: ${(props) => props.theme.breakpoint_medium};
+  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+    max-width: ${(props) => props.theme.breakpoint_medium};
+  }
 `;
 
 export const Flex = styled.div<{ $justify?: string; $align?: string; $direction?: string }>`
@@ -71,4 +74,20 @@ export const DisplayMedia = styled.div<{ $media?: boolean }>`
             display: none;
           }
         `}
+`;
+
+export const TextDecoration = styled.span`
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 10%;
+    left: -5%;
+    width: 110%;
+    height: ${(props) => props.theme.size2};
+    background: ${(props) => props.theme.secondaryColor};
+    z-index: -1;
+    border-radius: 18px;
+  }
 `;

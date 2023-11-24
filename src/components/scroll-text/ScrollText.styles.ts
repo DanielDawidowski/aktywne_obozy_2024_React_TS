@@ -10,7 +10,7 @@ export const ScrollTextContainer = styled(motion.div)`
 export const ScrollTextSectionContainer = styled(motion.div)`
   position: sticky;
   top: 0;
-  height: 15vh;
+  height: 150px;
   width: 110%;
   display: flex;
   flex-direction: column;
@@ -19,26 +19,25 @@ export const ScrollTextSectionContainer = styled(motion.div)`
   overflow: hidden;
 
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-    height: 20vh;
     font-size: ${(props) => props.theme.size6};
   }
 `;
 
 export const ScrollTextTitleStyles = styled(motion.h3)`
-  letter-spacing: var(--size-1);
+  letter-spacing: ${(props) => props.theme.size1};
   word-spacing: 0.08em;
-  font-size: var(--size-7);
+  font-size: ${(props) => props.theme.size7};
   text-transform: uppercase;
   font-weight: bold;
-  margin: var(--size-1) 0;
+  margin: ${(props) => props.theme.size1} 0;
   white-space: nowrap;
-  color: var(--yellow-1);
+  color: ${(props) => props.theme.orange};
   text-shadow:
-    1px 1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+    1px 1px 0 ${(props) => props.theme.dark},
+    1px -1px 0 ${(props) => props.theme.dark},
+    -1px 1px 0 ${(props) => props.theme.dark},
+    1px 1px 0 ${(props) => props.theme.dark};
+  @media (max-width: ${(props) => props.theme.breakpoint_small}) {
     font-size: ${(props) => props.theme.size6};
   }
 `;
