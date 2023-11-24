@@ -10,6 +10,7 @@ import AdminEvents from "./pages/admin/events/AdminEvents";
 import EditEvent from "./pages/admin/events/EditEvent";
 import Events from "./pages/events/Events";
 import AdminChat from "./pages/admin/admin-chat/AdminChat";
+import Event from "./pages/event/Event";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
@@ -19,6 +20,7 @@ export const AppRouter: FC = () => {
         <Route index element={<Home />} />
         <Route path="/events" element={<Events />} />
         <Route path="/login" element={<AuthTabs />} />
+        <Route path="/event/:eventId" element={<Event />} />
         <Route
           path="/admin/event/create"
           element={

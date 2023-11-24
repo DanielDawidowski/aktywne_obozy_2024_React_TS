@@ -14,7 +14,7 @@ export const LableStyles = styled.label`
 `;
 
 export const InputField = styled.input`
-  /* width: 100%; */
+  width: 100%;
   padding: ${(props) => props.theme.size2};
   font-size: ${(props) => props.theme.size4};
   border: 2px solid ${(props) => props.theme.white};

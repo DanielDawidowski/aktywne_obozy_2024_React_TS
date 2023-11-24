@@ -6,15 +6,18 @@ import Layout from "../../../components/layout/Layout";
 import { useAppSelector } from "../../../redux-toolkit/hooks";
 import { AdminChatStyles } from "./AdminChatStyles";
 import transition from "../../../utils/transition";
+import { Container } from "../../../components/globalStyles/global.styles";
 
 const AdminChat: FC = (): ReactElement => {
   const { selectedChatUser } = useAppSelector((state) => state.chat);
   return (
     <Layout chat={false}>
-      <AdminChatStyles>
-        <AdminChatList />
-        <main>{selectedChatUser && <AdminChatWindow />}</main>
-      </AdminChatStyles>
+      <Container>
+        <AdminChatStyles>
+          <AdminChatList />
+          <main>{selectedChatUser && <AdminChatWindow />}</main>
+        </AdminChatStyles>
+      </Container>
     </Layout>
   );
 };

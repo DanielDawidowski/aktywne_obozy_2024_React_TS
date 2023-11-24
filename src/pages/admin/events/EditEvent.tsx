@@ -12,6 +12,7 @@ import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
 import EventForm from "../../../components/form/EventForm";
+import { Container } from "../../../components/globalStyles/global.styles";
 
 const initialState: IEvent = {
   name: "zakopane",
@@ -84,25 +85,27 @@ const EditEvent: FC = (): ReactElement => {
 
   return (
     <Layout>
-      {event.name}
-      {hasError && errorMessage && <h4>{errorMessage}</h4>}
-      <EventForm
-        values={values}
-        dispatch={dispatch}
-        setValues={setValues}
-        eventAction={updateEvent}
-        attractions={attractions}
-        setAttractions={setAttractions}
-        extraAttractions={extraAttractions}
-        setExtraAttractions={setExtraAttractions}
-        attractionValue={attractionValue}
-        setAttractionValue={setAttractionValue}
-        extraAttractionValue={extraAttractionValue}
-        setExtraAttractionValue={setExtraAttractionValue}
-        loading={loading}
-        hasError={hasError}
-        event={event}
-      />
+      <Container $small>
+        {event.name}
+        {hasError && errorMessage && <h4>{errorMessage}</h4>}
+        <EventForm
+          values={values}
+          dispatch={dispatch}
+          setValues={setValues}
+          eventAction={updateEvent}
+          attractions={attractions}
+          setAttractions={setAttractions}
+          extraAttractions={extraAttractions}
+          setExtraAttractions={setExtraAttractions}
+          attractionValue={attractionValue}
+          setAttractionValue={setAttractionValue}
+          extraAttractionValue={extraAttractionValue}
+          setExtraAttractionValue={setExtraAttractionValue}
+          loading={loading}
+          hasError={hasError}
+          event={event}
+        />
+      </Container>
     </Layout>
   );
 };

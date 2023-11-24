@@ -35,6 +35,7 @@ export const DropdownElementStyles = styled.div`
   a {
     h4 {
       margin: ${(props) => props.theme.size2} 0;
+      color: ${(props) => props.theme.primary_dark};
     }
   }
 

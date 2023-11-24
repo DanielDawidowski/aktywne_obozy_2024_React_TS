@@ -25,7 +25,7 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile, chatbox = fals
       ref={scrollRef}
       style={{
         height: chatbox ? 510 : 800,
-        width: chatbox ? 460 : size.width < 768 ? 300 : 700
+        width: chatbox ? 460 : size.width < 768 ? 300 : "100%"
       }}
     >
       {messages.map((message: IChatMessage, index: number) => (

@@ -39,11 +39,11 @@ img {
 }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ $small?: boolean }>`
   margin: 0 auto;
-  max-width: ${(props) => props.theme.breakpoint_medium};
+  max-width: ${(props) => props.theme.breakpoint_small};
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-    max-width: ${(props) => props.theme.breakpoint_medium};
+    max-width: ${(props) => (props.$small ? props.theme.breakpoint_small : props.theme.breakpoint_medium)};
   }
 `;
 

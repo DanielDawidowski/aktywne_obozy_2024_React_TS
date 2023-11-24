@@ -37,10 +37,9 @@ export const FormStyles = styled(motion.form)`
 `;
 
 export const FormItemStyles = styled.div<{ $attracion?: boolean }>`
-  position: relative;
   margin-bottom: ${(props) => props.theme.size1};
   display: ${(props) => (props.$attracion ? "flex" : "block")};
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
 
@@ -48,17 +47,6 @@ export const FormItemStyles = styled.div<{ $attracion?: boolean }>`
     letter-spacing: 1.3px;
     font-style: italic;
     color: ${(props) => props.theme.secondary};
-  }
-  svg {
-    width: 48px;
-    height: 48px;
-    cursor: pointer;
-    margin-left: ${(props) => props.theme.size1};
-    @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-      width: 28px;
-      height: 28px;
-      margin: 0 ${(props) => props.theme.size4};
-    }
   }
 `;
 

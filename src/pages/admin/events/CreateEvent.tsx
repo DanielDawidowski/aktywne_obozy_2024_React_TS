@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
 import EventForm from "../../../components/form/EventForm";
+import { Container } from "../../../components/globalStyles/global.styles";
 
 const initialState: IEvent = {
   name: "zakopane",
@@ -64,24 +65,26 @@ const CreateEvent: FC = (): ReactElement => {
 
   return (
     <Layout>
-      {hasError && errorMessage && <h4>{errorMessage}</h4>}
+      <Container $small>
+        {hasError && errorMessage && <h4>{errorMessage}</h4>}
 
-      <EventForm
-        values={values}
-        dispatch={dispatch}
-        setValues={setValues}
-        eventAction={createEvent}
-        attractions={attractions}
-        setAttractions={setAttractions}
-        extraAttractions={extraAttractions}
-        setExtraAttractions={setExtraAttractions}
-        attractionValue={attractionValue}
-        setAttractionValue={setAttractionValue}
-        extraAttractionValue={extraAttractionValue}
-        setExtraAttractionValue={setExtraAttractionValue}
-        loading={loading}
-        hasError={hasError}
-      />
+        <EventForm
+          values={values}
+          dispatch={dispatch}
+          setValues={setValues}
+          eventAction={createEvent}
+          attractions={attractions}
+          setAttractions={setAttractions}
+          extraAttractions={extraAttractions}
+          setExtraAttractions={setExtraAttractions}
+          attractionValue={attractionValue}
+          setAttractionValue={setAttractionValue}
+          extraAttractionValue={extraAttractionValue}
+          setExtraAttractionValue={setExtraAttractionValue}
+          loading={loading}
+          hasError={hasError}
+        />
+      </Container>
     </Layout>
   );
 };

@@ -11,11 +11,7 @@ const Input: FC<IInput> = forwardRef<HTMLInputElement, IInput>(
   ): ReactElement => {
     return (
       <InputContainer>
-        {labelText && (
-          <LableStyles htmlFor={name} className="form-label">
-            {labelText}
-          </LableStyles>
-        )}
+        {labelText && <LableStyles htmlFor={name}>{labelText}</LableStyles>}
         <InputField
           id={id}
           name={name}

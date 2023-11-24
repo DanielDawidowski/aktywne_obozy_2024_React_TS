@@ -21,6 +21,5 @@ export const LayoutStyles = styled.div<ILayout>`
     }
   }
   main {
-    margin-top: 2rem;
   }
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import BGIcons from "../../assets/Images//home/home-icons.png";
+import BGIcons from "../../assets/Images/home/home-icons.png";
 import { DividerStyles } from "../../components/divider/Divider.styles";
 
 export const HomeStyles = styled(motion.section)`
