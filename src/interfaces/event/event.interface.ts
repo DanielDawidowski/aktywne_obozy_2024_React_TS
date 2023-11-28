@@ -4,8 +4,8 @@ export interface IEvent {
   eventType: EventTypes;
   price: string;
   discountPrice: string;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date | string;
+  endDate?: Date | string;
   image?: string;
   address: IAddress;
   energyland: boolean;
@@ -16,9 +16,9 @@ export interface IEvent {
 }
 
 export interface IAddress {
-  hotel: string;
-  street: string;
-  web: string;
+  hotel?: string;
+  street?: string;
+  web?: string;
 }
 
 export enum EventType {

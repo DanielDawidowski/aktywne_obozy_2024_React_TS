@@ -4,6 +4,7 @@ import themeReducer from "./reducers/theme/theme.reducer";
 import notificationsReducer from "./reducers/notifications/notifications.reducer";
 import chatReducer from "./reducers/chat/chat.reducer";
 import adminReducer from "./reducers/admin/admin.reducer";
+import modalReducer from "./reducers/modal/modal.reducer";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     user: userReducer,
     admin: adminReducer,
     theme: themeReducer,
+    modal: modalReducer,
     notifications: notificationsReducer
   }
 });

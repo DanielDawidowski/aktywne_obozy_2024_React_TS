@@ -16,7 +16,7 @@ export const themeGlobal = {
   secondary_light: "#E19898",
   red: "#F05454",
   orange: "#F39F5A",
-  yellow: "#F2F7A1",
+  yellow: "#F9C74F",
   blue: "#4477CE",
   green: "#03C988",
   grey: "#404258",

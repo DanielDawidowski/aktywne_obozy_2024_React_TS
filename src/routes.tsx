@@ -11,11 +11,13 @@ import EditEvent from "./pages/admin/events/EditEvent";
 import Events from "./pages/events/Events";
 import AdminChat from "./pages/admin/admin-chat/AdminChat";
 import Event from "./pages/event/Event";
+import ScrollToTopOnPageChange from "./utils/scrollToTop";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
   return (
     <AnimatePresence mode="wait">
+      <ScrollToTopOnPageChange />
       <Routes location={location} key={location.pathname}>
         <Route index element={<Home />} />
         <Route path="/events" element={<Events />} />

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import type { FC } from "react";
 import PropTypes from "prop-types";
 import { IChatMessage } from "../../../../interfaces/chat/chat.interface";
-import { timeAgo } from "../../../../utils/timeago.utils";
+import { TimeAgo } from "../../../../utils/timeago.utils";
 import { MessageLeftStyles, MessageStyles } from "../MessageStyles";
 
 interface ILeftMessageDisplay {

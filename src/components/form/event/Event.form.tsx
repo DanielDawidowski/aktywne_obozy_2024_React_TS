@@ -4,20 +4,20 @@ import { Dispatch as DispatchRedux } from "@reduxjs/toolkit";
 import { AiFillDelete } from "react-icons/ai";
 import { BsFillBookmarkPlusFill } from "react-icons/bs";
 import propTypes from "prop-types";
-import Input from "../input/Input";
-import { EventType, EventTypes, IEvent } from "../../interfaces/event/event.interface";
+import Input from "../../input/Input";
+import { EventType, EventTypes, IEvent } from "../../../interfaces/event/event.interface";
 
-import Spinner from "../spinner/Spinner";
-import Button from "../button/Button";
-import Select from "../select/Select";
-import Checkbox from "../checkbox/Checkbox";
-import { ButtonColor } from "../button/Button.interface";
-import { EventUtils } from "../../utils/event-utils.service";
-import { Utils } from "../../utils/utils.service";
-import { INotificationType } from "../../interfaces/notification/notification.interface";
-import { validateForm } from "./Form.validation";
-import { FormAttractionStyles, FormImageStyles, FormItemStyles, FormStyles } from "./Form.styles";
-import { Flex } from "../globalStyles/global.styles";
+import Spinner from "../../spinner/Spinner";
+import Button from "../../button/Button";
+import Select from "../../select/Select";
+import Checkbox from "../../checkbox/Checkbox";
+import { ButtonColor } from "../../button/Button.interface";
+import { EventUtils } from "../../../utils/event-utils.service";
+import { Utils } from "../../../utils/utils.service";
+import { INotificationType } from "../../../interfaces/notification/notification.interface";
+import { validateForm } from "../Form.validation";
+import { FormAttractionStyles, FormImageStyles, FormItemStyles, FormStyles } from "../Form.styles";
+import { Flex } from "../../globalStyles/global.styles";
 
 interface CreateEventFormProps {
   values: IEvent;
@@ -83,29 +83,6 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
     setValues({ ...values, energyland: isChecked });
   };
 
-  const handleAttraction = (attractionType: string): void => {
-    EventUtils.handleAttraction(
-      attractionType,
-      attractionValue,
-      extraAttractionValue,
-      setAttractions,
-      setExtraAttractions,
-      setAttractionValue,
-      setExtraAttractionValue
-    );
-  };
-
-  const deleteAttraction = (index: number, attractionType: string): void => {
-    EventUtils.deleteAttraction(
-      index,
-      attractionType,
-      setAttractions,
-      setExtraAttractions,
-      attractions,
-      extraAttractions
-    );
-  };
-
   const showAttractionsLeft = (attractionType: string): number => {
     const total = 8;
     if (attractionType === "attractions") {
@@ -113,6 +90,26 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
     } else {
       return total - extraAttractions.length;
     }
+  };
+
+  const handleAttraction = (attractionType: string): void => {
+    if (showAttractionsLeft(attractionType) === 0) {
+      return;
+    } else {
+      EventUtils.handleAttraction(
+        attractionType,
+        attractionValue,
+        extraAttractionValue,
+        setAttractions,
+        setExtraAttractions,
+        setAttractionValue,
+        setExtraAttractionValue
+      );
+    }
+  };
+
+  const deleteAttraction = (index: number, attractionType: string): void => {
+    EventUtils.deleteAttraction(index, attractionType, setAttractions, setExtraAttractions, attractions, extraAttractions);
   };
 
   return (
@@ -187,7 +184,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
             id="startDate"
             name="startDate"
             type="date"
-            value={startDate.toString()}
+            value={startDate?.toString()}
             labelText="Data rozpoczęcia"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -200,7 +197,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
             id="endDate"
             name="endDate"
             type="date"
-            value={endDate.toString()}
+            value={endDate?.toString()}
             labelText="Data zakonczenia"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -217,7 +214,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
             id="hotel"
             name="hotel"
             type="text"
-            value={address.hotel}
+            value={address?.hotel}
             labelText="Nazwa Hotelu"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -230,7 +227,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
             id="street"
             name="street"
             type="text"
-            value={address.street}
+            value={address?.street}
             labelText="Ulica Hotelu"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -243,7 +240,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
             id="web"
             name="web"
             type="text"
-            value={address.web}
+            value={address?.web}
             labelText="Strona www Hotelu"
             placeholder="---"
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
@@ -253,11 +250,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
 
         {event && (
           <FormItemStyles>
-            <Select
-              label="Status"
-              options={["Aktywny", "Nieaktywny"]}
-              onSelect={(option: string) => setValues({ ...values, status: option })}
-            />
+            <Select label="Status" options={["Aktywny", "Nieaktywny"]} onSelect={(option: string) => setValues({ ...values, status: option })} />
           </FormItemStyles>
         )}
 

@@ -1,19 +1,23 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import BGIcons from "../../assets/Images/events/eventsBg.jpg";
+import EventBG from "../../assets/Images/events/eventBG.png";
+import { CarouselContainer } from "../../components/carousel/Carousel.styles";
 
 export const EventsStyles = styled(motion.section)`
-  background: url(${BGIcons});
-  background-position: top;
+  background: url(${EventBG});
+  background-size: cover;
+  background-repeat: no-repeat;
   background-attachment: fixed;
+  background-position: bottom right;
 `;
 
 export const EventsInnerStyles = styled.div`
   display: grid;
-
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    height: 100%;
+    padding-bottom: 17%;
   }
 `;
 
@@ -35,6 +39,13 @@ export const EventsListItemStyles = styled.div`
   }
 `;
 
+export const EventListItemHeaderStyles = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 200px;
+`;
+
 export const EventsListItemInnerStyles = styled.div`
   background: ${(props) => props.theme.body};
   border-radius: 18px;
@@ -43,6 +54,7 @@ export const EventsListItemInnerStyles = styled.div`
   }
 
   h3 {
+    font-family: Oswald;
     span {
       letter-spacing: 5px;
       font-weight: 700;
@@ -56,29 +68,37 @@ export const EventsListItemInnerStyles = styled.div`
 
 export const EventsListItemBodyStyles = styled(motion.div)`
   img {
+    width: 100%;
+    height: 200px;
     object-fit: cover;
     border-radius: 18px 18px 0 0;
+    @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+      height: 300px;
+    }
   }
+
   h2 {
     text-align: center;
-    margin: ${(props) => props.theme.size3} 0;
+    margin: ${(props) => props.theme.size1} 0;
   }
 `;
 
 export const EventsListItemCalendarsStyles = styled.ul`
-  display: grid;
-  padding: ${(props) => props.theme.size3} ${(props) => props.theme.size4};
+  padding: ${(props) => props.theme.size1} 0;
 `;
 
 export const EventsListItemCalendarStyles = styled.li`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: ${(props) => props.theme.size2} ${(props) => props.theme.size3};
+  padding: ${(props) => props.theme.size1};
   svg {
     width: 55px;
     height: 55px;
-    margin-right: ${(props) => props.theme.size5};
+    margin-right: ${(props) => props.theme.size1};
+    @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+      margin-right: ${(props) => props.theme.size5};
+    }
   }
   div {
     display: flex;
@@ -86,7 +106,7 @@ export const EventsListItemCalendarStyles = styled.li`
     justify-content: flex-start;
     align-items: flex-start;
     h3 {
-      padding: ${(props) => props.theme.size1} ${(props) => props.theme.size3};
+      padding: ${(props) => props.theme.size1};
     }
   }
 `;
@@ -111,21 +131,31 @@ export const EventsListItemFooterStyles = styled.div`
 export const EventsCarouselStyles = styled.div`
   overflow: hidden;
   padding: ${(props) => props.theme.size1};
+  img {
+    border-radius: 18px;
+  }
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     margin-top: ${(props) => props.theme.size3};
   }
 `;
 
 export const EventCarouselInnerStyles = styled.div`
+  ${CarouselContainer} {
+    max-width: 800px;
+  }
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     position: fixed;
   }
 `;
 
-export const ActiveEventStyles = styled.span`
-  color: ${(props) => props.theme.orange};
+export const ActiveEventStyles = styled.h3`
+  b {
+    color: ${(props) => props.theme.green};
+  }
 `;
 
-export const NotActiveEventStyles = styled.span`
-  color: ${(props) => props.theme.red};
+export const NotActiveEventStyles = styled.h3`
+  b {
+    color: ${(props) => props.theme.red};
+  }
 `;

@@ -3,6 +3,7 @@ import type { FC, ReactNode } from "react";
 import PropTypes from "prop-types";
 import Pin from "../../assets/SVG/Pin";
 import { InformationBodyStyles, InformationIconStyles, InformationStyles } from "./Information.styles";
+import { Grid } from "../globalStyles/global.styles";
 
 interface IInformation {
   children?: ReactNode;
@@ -17,7 +18,9 @@ const Information: FC<IInformation> = ({ children, location = false }): ReactEle
           <Pin />
         </InformationIconStyles>
       )}
-      <InformationBodyStyles>{children}</InformationBodyStyles>
+      <InformationBodyStyles>
+        <Grid>{children}</Grid>
+      </InformationBodyStyles>
     </InformationStyles>
   );
 };

@@ -25,7 +25,7 @@ const Home: FC = (): ReactElement => {
         </HomeIconsStyles>
         <Divider />
         <ScrollText />
-        <Container>
+        <Container $small>
           <HomeEventsStyles>
             <HomeEventsItemStyles>
               <Image src={EnergyLandiaImg} alt="EnergyLandia" />
@@ -43,7 +43,7 @@ const Home: FC = (): ReactElement => {
             </HomeEventsItemStyles>
           </HomeEventsStyles>
         </Container>
-        <RandomIcons />
+        <RandomIcons icons={6} flex />
       </HomeStyles>
     </Layout>
   );

@@ -11,7 +11,7 @@ import { eventService } from "../../../services/api/events/events.service";
 import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
-import EventForm from "../../../components/form/EventForm";
+import EventForm from "../../../components/form/event/Event.form";
 import { Container } from "../../../components/globalStyles/global.styles";
 
 const initialState: IEvent = {

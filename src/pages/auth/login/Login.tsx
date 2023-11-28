@@ -10,6 +10,7 @@ import { socketService } from "../../../services/socket/socket.service";
 import { Dispatch } from "@reduxjs/toolkit";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
+import { Grid } from "../../../components/globalStyles/global.styles";
 
 const Login: FC = (): ReactElement => {
   const [username, setUsername] = useState<string>("marcin");
@@ -64,9 +65,9 @@ const Login: FC = (): ReactElement => {
   }, [loading, user, navigate]);
 
   return (
-    <div className="auth-inner" style={{ display: "grid", placeItems: "center" }}>
+    <Grid>
       <form className="auth-form" onSubmit={loginUser}>
-        <div className="form-input-container">
+        <Grid>
           <Input
             id="username"
             name="username"
@@ -85,12 +86,12 @@ const Login: FC = (): ReactElement => {
             style={{ border: `${hasError ? "1px solid #fa9b8a" : ""}` }}
             handleChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
           />
-        </div>
+        </Grid>
         <Button className="auth-button button" disabled={!username || !password}>
           {loading ? "Loading..." : "Sign Up"}
         </Button>
       </form>
-    </div>
+    </Grid>
   );
 };
 

@@ -22,8 +22,8 @@ export const InformationIconStyles = styled.div`
   }
 
   svg {
-    width: 38px;
-    height: 38px;
+    width: 20px;
+    height: 20px;
     @media (min-width: ${(props) => props.theme.breakpoint_small}) {
       width: 68px;
       height: 68px;
@@ -34,8 +34,10 @@ export const InformationIconStyles = styled.div`
 export const InformationBodyStyles = styled.div`
   width: 100%;
   position: relative;
-  padding: var(--size-1);
-  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-    padding: ${(props) => props.theme.size5};
+  padding: ${(props) => props.theme.size1};
+  text-align: center;
+
+  h3 {
+    margin: ${(props) => props.theme.size1} 0;
   }
 `;

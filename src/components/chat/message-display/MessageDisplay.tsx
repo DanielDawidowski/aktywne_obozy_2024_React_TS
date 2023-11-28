@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { IChatMessage } from "../../../interfaces/chat/chat.interface";
 import { IProfileProps } from "../../../interfaces/auth/auth.interface";
 import useChatScrollToBottom from "../../../hooks/useChatScrollToBottom";
-import { timeAgo } from "../../../utils/timeago.utils";
+import { TimeAgo } from "../../../utils/timeago.utils";
 import RightMessageDisplay from "./right-message/RightMessageDisplay";
 import LeftMessageDisplay from "./left-message/LeftMessageDisplay";
 import { MessageChatDateStyles, MessageChatStyles, MessageDisplayStyles } from "./MessageStyles";
@@ -31,9 +31,9 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile, chatbox = fals
       {messages.map((message: IChatMessage, index: number) => (
         <MessageChatStyles key={message._id}>
           {(index === 0 ||
-            timeAgo.dayMonthYear(message.createdAt as Date) !==
-              timeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
-            <MessageChatDateStyles>{timeAgo?.chatMessageTransform(message?.createdAt as Date)}</MessageChatDateStyles>
+            TimeAgo.dayMonthYear(message.createdAt as Date) !==
+              TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
+            <MessageChatDateStyles>{TimeAgo?.chatMessageTransform(message?.createdAt as Date)}</MessageChatDateStyles>
           )}
 
           {(message.receiverName === profile?.username.toLowerCase() ||

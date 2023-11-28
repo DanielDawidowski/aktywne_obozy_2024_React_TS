@@ -8,13 +8,13 @@ import Calendar from "../../assets/SVG/calendar";
 import { IEvent } from "../../interfaces/event/event.interface";
 import { eventService } from "../../services/api/events/events.service";
 import Layout from "../../components/layout/Layout";
-import { timeAgo } from "../../utils/timeago.utils";
 import { Container, Grid } from "../../components/globalStyles/global.styles";
 import transition from "../../utils/transition";
 import { AxiosResponse } from "axios";
 import {
   ActiveEventStyles,
   EventCarouselInnerStyles,
+  EventListItemHeaderStyles,
   EventsCarouselStyles,
   EventsInnerStyles,
   EventsListItemBodyStyles,
@@ -28,6 +28,8 @@ import {
   EventsStyles,
   NotActiveEventStyles
 } from "./Events.styles";
+import { TimeAgo } from "../../utils/timeago.utils";
+import { Utils } from "../../utils/utils.service";
 
 const Events: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([] as IEvent[]);
@@ -48,8 +50,15 @@ const Events: FC = (): ReactElement => {
     getAllEvents();
   }, [getAllEvents]);
 
-  const handleToggle = (name: string | null): void => {
-    setToggle(toggle !== name ? name : null);
+  const handleToggle = (index: string): void => {
+    if (toggle === index) {
+      setToggle("");
+    } else {
+      setToggle(index);
+      setTimeout(() => {
+        Utils.scrollToElement(index, 200);
+      }, 500);
+    }
   };
 
   return (
@@ -64,25 +73,24 @@ const Events: FC = (): ReactElement => {
             <EventsListStyles>
               <EventsListWrapperStyles>
                 {events.map((event: IEvent) => (
-                  <EventsListItemStyles
-                    key={event._id}
-                    style={{ background: EventUtils.showEventColor(event.eventType) }}
-                  >
+                  <EventsListItemStyles key={event._id} style={{ background: EventUtils.showEventColor(event.eventType) }}>
                     <EventsListItemInnerStyles>
                       {toggle !== event.name && (
-                        <motion.div onClick={() => handleToggle(event.name)} className="events__list--item--header">
+                        <EventListItemHeaderStyles onClick={() => handleToggle(event.name)}>
                           <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
                           <Grid>
                             <h2>{event.name}</h2>
-                            <h3>
-                              {event.status === "active" ? (
-                                <ActiveEventStyles>Aktualne</ActiveEventStyles>
-                              ) : (
-                                <NotActiveEventStyles>Nieaktualne</NotActiveEventStyles>
-                              )}
-                            </h3>
+                            {event.status === "active" ? (
+                              <ActiveEventStyles>
+                                <b>Aktualne</b>
+                              </ActiveEventStyles>
+                            ) : (
+                              <NotActiveEventStyles>
+                                <b>Nieaktualne</b>
+                              </NotActiveEventStyles>
+                            )}
                           </Grid>
-                        </motion.div>
+                        </EventListItemHeaderStyles>
                       )}
                       {toggle === event.name && (
                         <EventsListItemBodyStyles
@@ -94,20 +102,22 @@ const Events: FC = (): ReactElement => {
 
                           <h2 onClick={() => handleToggle(event.name)}>{event.name}</h2>
                           <EventsListItemCalendarsStyles>
-                            <EventsListItemCalendarStyles>
-                              <Calendar color="#5cb85c" />
-                              <div>
-                                <h3 style={{ color: "green" }}>Zaczynamy</h3>
-                                <h3>{timeAgo.dayMonthYear(event.startDate)}</h3>
-                              </div>
-                            </EventsListItemCalendarStyles>
-                            <EventsListItemCalendarStyles>
-                              <Calendar color="#f94144" />
-                              <div>
-                                <h3 style={{ color: "red" }}>Kończymy</h3>
-                                <h3>{timeAgo.dayMonthYear(event.endDate)}</h3>
-                              </div>
-                            </EventsListItemCalendarStyles>
+                            <Grid>
+                              <EventsListItemCalendarStyles>
+                                <Calendar color="#5cb85c" />
+                                <div>
+                                  <h3 style={{ color: "green" }}>Zaczynamy</h3>
+                                  <h3>{TimeAgo.dayMonthYear(event.startDate as Date)}</h3>
+                                </div>
+                              </EventsListItemCalendarStyles>
+                              <EventsListItemCalendarStyles>
+                                <Calendar color="#f94144" />
+                                <div>
+                                  <h3 style={{ color: "red" }}>Kończymy</h3>
+                                  <h3>{TimeAgo.dayMonthYear(event.endDate as Date)}</h3>
+                                </div>
+                              </EventsListItemCalendarStyles>
+                            </Grid>
                           </EventsListItemCalendarsStyles>
                         </EventsListItemBodyStyles>
                       )}
@@ -115,7 +125,13 @@ const Events: FC = (): ReactElement => {
                     {toggle === event.name && (
                       <EventsListItemFooterStyles>
                         <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
-                        <Link to={`/event/${event._id}`}>Zobacz</Link>
+                        {event.status === "active" ? (
+                          <Link to={`/event/${event._id}`}>Zobacz</Link>
+                        ) : (
+                          <NotActiveEventStyles>
+                            <b>Nieaktualne</b>
+                          </NotActiveEventStyles>
+                        )}
                       </EventsListItemFooterStyles>
                     )}
                   </EventsListItemStyles>

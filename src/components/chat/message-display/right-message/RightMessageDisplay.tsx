@@ -3,7 +3,7 @@ import type { FC } from "react";
 import PropTypes from "prop-types";
 import { ISignUpData } from "../../../../interfaces/auth/auth.interface";
 import { IChatMessage } from "../../../../interfaces/chat/chat.interface";
-import { timeAgo } from "../../../../utils/timeago.utils";
+import { TimeAgo } from "../../../../utils/timeago.utils";
 import { MessageRightStyles, MessageStyles } from "../MessageStyles";
 
 // type ChatProps = Pick<IChatMessage, "senderUsername" | "createdAt">;

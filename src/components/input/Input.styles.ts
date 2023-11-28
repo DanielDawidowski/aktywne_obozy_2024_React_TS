@@ -8,7 +8,7 @@ export const InputContainer = styled.div`
 export const LableStyles = styled.label`
   padding: ${(props) => props.theme.size6};
   font-size: ${(props) => props.theme.size3};
-  color: ${(props) => props.theme.purple};
+  color: ${(props) => props.theme.dark};
   pointer-events: none;
   transition: all 0.2s ease-in-out;
 `;

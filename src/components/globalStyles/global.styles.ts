@@ -78,6 +78,7 @@ export const DisplayMedia = styled.div<{ $media?: boolean }>`
 
 export const TextDecoration = styled.span`
   position: relative;
+  z-index: 1;
 
   &::before {
     content: "";
@@ -86,8 +87,17 @@ export const TextDecoration = styled.span`
     left: -5%;
     width: 110%;
     height: ${(props) => props.theme.size2};
-    background: ${(props) => props.theme.secondaryColor};
+    background: ${(props) => props.theme.fourthColor};
     z-index: -1;
     border-radius: 18px;
   }
+`;
+
+export const Dot = styled.div`
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: ${(props) => props.theme.orange};
+  margin-right: ${(props) => props.theme.size2};
+  padding: ${(props) => props.theme.size1};
 `;

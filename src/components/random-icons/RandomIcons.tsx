@@ -1,5 +1,7 @@
 import React, { ReactElement } from "react";
 import type { FC } from "react";
+import { motion } from "framer-motion";
+import PropTypes from "prop-types";
 import Bag1 from "../../assets/SVG/Icons/Bag1";
 import Kayak1 from "../../assets/SVG/Icons/Kayak1";
 import Kayak2 from "../../assets/SVG/Icons/Kayak2";
@@ -10,18 +12,21 @@ import Skies2 from "../../assets/SVG/Icons/Skies2";
 import Snowboard1 from "../../assets/SVG/Icons/Snowboard1";
 import Snowboard2 from "../../assets/SVG/Icons/Snowboard2";
 import LifeJacket from "../../assets/SVG/Icons/LifeJacket";
-import useEffectOnce from "../../hooks/useEffectOnce";
 import { Container, Grid } from "../globalStyles/global.styles";
 import { RandomIconsContainer } from "./RandomIcons.styles";
-import useWindowSize from "../../hooks/useWindowSize";
-import { Utils } from "../../utils/utils.service";
+
+interface IRandomIcons {
+  icons: number;
+  grid?: boolean;
+  flex?: boolean;
+}
 
 interface IIcon {
   id: number;
   icon: ReactElement;
 }
 
-const icons: IIcon[] = [
+const iconsSVG: IIcon[] = [
   {
     id: 0,
     icon: <Bag1 />
@@ -64,8 +69,8 @@ const icons: IIcon[] = [
   }
 ];
 
-const RandomIcons: FC = (): ReactElement => {
-  const size = useWindowSize();
+const RandomIcons: FC<IRandomIcons> = (props): ReactElement => {
+  const { icons, flex = false, grid = false } = props;
 
   const randomIcons = (arr: IIcon[], iconsNum: number): ReactElement[] => {
     // Create a shallow copy of the array
@@ -75,32 +80,26 @@ const RandomIcons: FC = (): ReactElement => {
     const random = copyArr.sort(() => 0.5 - Math.random());
 
     // Return the subset of the shuffled array
-    return random.slice(0, iconsNum).map((item: IIcon) => <Grid key={item.id}>{item.icon}</Grid>);
+    return random.slice(0, iconsNum).map((item: IIcon) => (
+      <motion.li key={item.id}>
+        <Grid>{item.icon}</Grid>
+      </motion.li>
+    ));
   };
-
-  console.log(Utils.emitIconsAmount(size.width));
-
-  const gridAmount = (num: number): number => {
-    return num / 2;
-  };
-
-  useEffectOnce(() => {
-    randomIcons(icons, Utils.emitIconsAmount(size.width));
-  });
 
   return (
     <Container>
-      <RandomIconsContainer
-        style={{
-          gridTemplateColumns: `repeat(${gridAmount(Utils.emitIconsAmount(size.width))}, 1fr)`,
-          gridTemplateRows: `repeat(2, 1fr)`,
-          gridGap: "3rem"
-        }}
-      >
-        {randomIcons(icons, Utils.emitIconsAmount(size.width))}
+      <RandomIconsContainer $flex={flex} $grid={grid}>
+        {randomIcons(iconsSVG, icons)}
       </RandomIconsContainer>
     </Container>
   );
+};
+
+RandomIcons.propTypes = {
+  icons: PropTypes.number.isRequired,
+  grid: PropTypes.bool,
+  flex: PropTypes.bool
 };
 
 export default RandomIcons;

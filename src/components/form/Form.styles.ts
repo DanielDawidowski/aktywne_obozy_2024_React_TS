@@ -25,8 +25,8 @@ export const FormImageStyles = styled(motion.div)`
 export const FormStyles = styled(motion.form)`
   display: grid;
   margin: ${(props) => props.theme.size1};
+  padding: ${(props) => props.theme.size4} ${(props) => props.theme.size1};
   background-color: ${(props) => props.theme.primary_light};
-  padding: ${(props) => props.theme.size3} ${(props) => props.theme.size1};
   border: 1px solid ${(props) => props.theme.dark};
   border-radius: 24px;
   outline: none;
@@ -48,6 +48,10 @@ export const FormItemStyles = styled.div<{ $attracion?: boolean }>`
     font-style: italic;
     color: ${(props) => props.theme.secondary};
   }
+
+  p {
+    text-align: justify;
+  }
 `;
 
 export const FormAttractionStyles = styled.li`
@@ -68,5 +72,29 @@ export const FormAttractionStyles = styled.li`
     width: 28px;
     height: 28px;
     cursor: pointer;
+  }
+`;
+
+export const EventInfoStyles = styled(motion.div)`
+  padding: ${(props) => props.theme.size2};
+  max-width: 600px;
+  display: grid;
+  /* @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+    margin: ${(props) => props.theme.size6} 0;
+    padding: ${(props) => props.theme.size6};
+  } */
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+  p {
+    color: ${(props) => props.theme.red};
+    font-size: ${(props) => props.theme.size3};
+    margin-top: ${(props) => props.theme.size1};
+    padding: ${(props) => props.theme.size2};
+    text-align: justify;
+    border: 1px solid ${(props) => props.theme.red};
+    border-radius: 4px;
+    float: left;
   }
 `;

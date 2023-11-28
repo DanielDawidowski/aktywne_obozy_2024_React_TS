@@ -9,7 +9,7 @@ import { INotificationType } from "../../../interfaces/notification/notification
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
-import EventForm from "../../../components/form/EventForm";
+import EventForm from "../../../components/form/event/Event.form";
 import { Container } from "../../../components/globalStyles/global.styles";
 
 const initialState: IEvent = {
@@ -50,7 +50,6 @@ const CreateEvent: FC = (): ReactElement => {
       const response: AxiosResponse<IEvent> = await eventService.createEvent(values);
       setLoading(false);
       setHasError(false);
-      setValues(initialState);
       setAttractions([]);
       setExtraAttractions([]);
       setValues(initialState);
