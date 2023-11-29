@@ -1,6 +1,6 @@
 import React, { useState, ReactElement, useEffect, useCallback } from "react";
 import type { FC } from "react";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { find } from "lodash";
 import { IChatMessage } from "../../../interfaces/chat/chat.interface";
 import { ISignUpData } from "../../../interfaces/auth/auth.interface";
@@ -15,6 +15,8 @@ import { ChatUtils } from "../../../utils/chat-utils.service";
 import { ChatWindowHeaderStyles, ChatWindowStyles } from "../ChatBoxStyles";
 import { Flex } from "../../globalStyles/global.styles";
 import MessageInput from "../message-input/MessageInput";
+import { ValidationError } from "../../../interfaces/error/Error.interface";
+import Spinner from "../../spinner/Spinner";
 
 const ChatWindow: FC = (): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
@@ -23,6 +25,7 @@ const ChatWindow: FC = (): ReactElement => {
   const getUserName = useLocalStorage<ISignUpData>("user");
   const conversationId = useLocalStorage<string>("conversationId");
   const [rendered, setRendered] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
 
@@ -44,7 +47,11 @@ const ChatWindow: FC = (): ReactElement => {
       ChatUtils.privateChatMessages = [...response.data.messages];
       setMessages([...ChatUtils.privateChatMessages]);
     } catch (error) {
-      console.error(error);
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+      } else {
+        console.error(error);
+      }
     }
   }, []);
 
@@ -52,10 +59,7 @@ const ChatWindow: FC = (): ReactElement => {
     // socketService?.socket.emit("setup", { userId: storedUsername });
     if (message.trim() === "") return;
 
-    const chatConversationId = find(
-      messages,
-      (chat) => chat.receiverId === admin.authId || chat.senderId === admin.authId
-    );
+    const chatConversationId = find(messages, (chat) => chat.receiverId === admin.authId || chat.senderId === admin.authId);
 
     const messageData: IChatMessage = {
       _id: "",
@@ -104,8 +108,14 @@ const ChatWindow: FC = (): ReactElement => {
           <h4>{profile?.username}</h4>
         </Flex>
       </ChatWindowHeaderStyles>
-      <MessageDisplay messages={messages} profile={profile} chatbox />
-      <MessageInput setChatMessage={handleMessage} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <MessageDisplay messages={messages} profile={profile} chatbox />
+          <MessageInput setChatMessage={handleMessage} />
+        </>
+      )}
     </ChatWindowStyles>
   );
 };

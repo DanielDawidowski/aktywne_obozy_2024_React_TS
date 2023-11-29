@@ -3,7 +3,7 @@ import type { FC, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LuPencil } from "react-icons/lu";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import Energylandia from "../../assets/Images/energylandia.jpg";
 import PeopleImg from "../../assets/Images/events/people.png";
 import { closeModal, openModal } from "../../redux-toolkit/reducers/modal/modal.reducer";
@@ -41,8 +41,8 @@ import {
   SignUpStyles
 } from "./Event.styles";
 import { Container, Dot, Flex, Grid, TextDecoration } from "../../components/globalStyles/global.styles";
-
 import EventInfo from "./EventInfo";
+import { ValidationError } from "../../interfaces/error/Error.interface";
 
 // import Dots from "@assets/SVG/Dots";
 
@@ -76,9 +76,16 @@ const Event: FC = (): ReactElement => {
       const response: AxiosResponse = await eventService.getEvent(getId);
       setEvent(response.data.event);
     } catch (error) {
-      console.log("error", error);
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+        setHasError(true);
+        setErrorMessage(error?.response?.data.message as string);
+        Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
+      } else {
+        console.error(error);
+      }
     }
-  }, [getId]);
+  }, [getId, dispatch, errorMessage]);
 
   const createClient = async (e: FormEvent): Promise<void | undefined> => {
     e.preventDefault();
@@ -92,11 +99,15 @@ const Event: FC = (): ReactElement => {
       setValues(initialState);
       setChecked("");
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
-    } catch (error: any) {
-      setLoading(false);
-      setHasError(true);
-      setErrorMessage(error?.response?.data.message);
-      Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+        setHasError(true);
+        setErrorMessage(error?.response?.data.message as string);
+        Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
+      } else {
+        console.error(error);
+      }
     }
   };
 

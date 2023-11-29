@@ -1,5 +1,6 @@
 import React, { useState, useCallback, ReactElement } from "react";
 import type { FC, FormEvent } from "react";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { EventType, IEvent } from "../../../interfaces/event/event.interface";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
@@ -8,11 +9,11 @@ import useEffectOnce from "../../../hooks/useEffectOnce";
 import { Utils } from "../../../utils/utils.service";
 import { INotificationType } from "../../../interfaces/notification/notification.interface";
 import { eventService } from "../../../services/api/events/events.service";
-import { AxiosResponse } from "axios";
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
 import EventForm from "../../../components/form/event/Event.form";
 import { Container } from "../../../components/globalStyles/global.styles";
+import { ValidationError } from "../../../interfaces/error/Error.interface";
 
 const initialState: IEvent = {
   name: "zakopane",
@@ -71,11 +72,15 @@ const EditEvent: FC = (): ReactElement => {
       setExtraAttractions([]);
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
       navigate("/admin/events/list");
-    } catch (error: any) {
-      setLoading(false);
-      setHasError(true);
-      setErrorMessage(error?.response?.data.message);
-      Utils.dispatchNotification(error?.response?.data.message, INotificationType.ERROR, dispatch);
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+        setHasError(true);
+        setErrorMessage(error?.response?.data.message as string);
+        Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
+      } else {
+        console.error(error);
+      }
     }
   };
 
