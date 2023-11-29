@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, ReactElement } from "react";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import Carousel from "../../components/carousel/Carousel";
 import { EventUtils } from "../../utils/event-utils.service";
 import Calendar from "../../assets/SVG/calendar";

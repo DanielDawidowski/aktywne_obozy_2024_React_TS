@@ -22,7 +22,7 @@ const AdminEvents: FC = (): ReactElement => {
 
   const getAllEvents = useCallback(async (): Promise<void> => {
     try {
-      const response = await eventService.getAllEvents(currentPage);
+      const response: AxiosResponse = await eventService.getAllEvents(currentPage);
       setEvents(response.data.events);
       // console.log("response", response.data.events);
     } catch (error) {

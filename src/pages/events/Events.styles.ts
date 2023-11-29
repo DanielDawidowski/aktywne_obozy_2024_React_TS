@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import EventBG from "../../assets/Images/events/eventBG.png";
+import EventBG from "../../assets/Images/events/eventsBG.png";
 import { CarouselContainer } from "../../components/carousel/Carousel.styles";
 
 export const EventsStyles = styled(motion.section)`
   background: url(${EventBG});
-  background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom right;

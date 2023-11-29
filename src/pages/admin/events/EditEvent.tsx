@@ -50,7 +50,7 @@ const EditEvent: FC = (): ReactElement => {
 
   const getEvent = useCallback(async () => {
     try {
-      const response = await eventService.getEvent(eventId as string);
+      const response: AxiosResponse = await eventService.getEvent(eventId as string);
       setEvent(response.data.event);
     } catch (error) {
       console.log("error", error);

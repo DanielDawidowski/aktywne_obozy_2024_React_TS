@@ -12,6 +12,7 @@ import Events from "./pages/events/Events";
 import AdminChat from "./pages/admin/admin-chat/AdminChat";
 import Event from "./pages/event/Event";
 import ScrollToTopOnPageChange from "./utils/scrollToTop";
+import Contact from "./pages/contact/Contact";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ export const AppRouter: FC = () => {
         <Route path="/events" element={<Events />} />
         <Route path="/login" element={<AuthTabs />} />
         <Route path="/event/:eventId" element={<Event />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/admin/event/create"
           element={

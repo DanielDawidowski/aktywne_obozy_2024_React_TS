@@ -3,6 +3,7 @@ import type { FC, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LuPencil } from "react-icons/lu";
+import { AxiosResponse } from "axios";
 import Energylandia from "../../assets/Images/energylandia.jpg";
 import PeopleImg from "../../assets/Images/events/people.png";
 import { closeModal, openModal } from "../../redux-toolkit/reducers/modal/modal.reducer";
@@ -72,7 +73,7 @@ const Event: FC = (): ReactElement => {
 
   const getEvent = useCallback(async () => {
     try {
-      const response = await eventService.getEvent(getId);
+      const response: AxiosResponse = await eventService.getEvent(getId);
       setEvent(response.data.event);
     } catch (error) {
       console.log("error", error);
@@ -85,13 +86,12 @@ const Event: FC = (): ReactElement => {
     values.eventId = getId;
     values.eventName = event.name;
     try {
-      const response = await clientService.createClient(values);
+      const response: AxiosResponse<IClient> = await clientService.createClient(values);
       setLoading(false);
       setHasError(false);
       setValues(initialState);
       setChecked("");
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
-      console.log("response", response);
     } catch (error: any) {
       setLoading(false);
       setHasError(true);

@@ -1,5 +1,6 @@
 import React, { useCallback, useState, ReactNode, ReactElement } from "react";
 import type { FC } from "react";
+import { AxiosResponse } from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAppDispatch, useAppSelector } from "../../redux-toolkit/hooks";
@@ -24,7 +25,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
 
   const checkUser = useCallback(async () => {
     try {
-      const response = await userService.checkCurrentUser();
+      const response: AxiosResponse = await userService.checkCurrentUser();
       dispatch(getConversationList());
       setUserData(response.data.user);
       setTokenIsValid(true);

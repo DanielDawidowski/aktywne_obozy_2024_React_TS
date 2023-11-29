@@ -3,11 +3,11 @@ import React from "react";
 import { TextAreaProps } from "./Textarea.interface";
 import { StyledTextArea, TextAreaContainer, TextAreaLabel } from "./Textarea.styles";
 
-const TextArea: React.FC<TextAreaProps> = ({ label, ...props }) => {
+const TextArea: React.FC<TextAreaProps> = ({ label, onChange, ...props }) => {
   return (
     <TextAreaContainer>
       <TextAreaLabel>{label}</TextAreaLabel>
-      <StyledTextArea {...props} />
+      <StyledTextArea {...props} onChange={onChange} />
     </TextAreaContainer>
   );
 };

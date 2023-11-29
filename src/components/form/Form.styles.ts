@@ -22,7 +22,7 @@ export const FormImageStyles = styled(motion.div)`
   }
 `;
 
-export const FormStyles = styled(motion.form)`
+export const FormStyles = styled.form`
   display: grid;
   margin: ${(props) => props.theme.size1};
   padding: ${(props) => props.theme.size4} ${(props) => props.theme.size1};
