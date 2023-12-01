@@ -45,9 +45,11 @@ const Menu: FC = (): ReactElement => {
       <MenuStyles>
         <li className="first-element">
           {profile?.role === "admin" && (
-            <LogoutStyles>
-              <IoMdLogOut className="logout" onClick={logout} />
-            </LogoutStyles>
+            <Link to="/">
+              <LogoutStyles>
+                <IoMdLogOut className="logout" onClick={logout} />
+              </LogoutStyles>
+            </Link>
           )}
           <MenuThemeStyles>
             {theme === CurrentTheme.LIGHT ? (
@@ -72,18 +74,13 @@ const Menu: FC = (): ReactElement => {
           </MenuThemeStyles>
         </li>
         <li>
-          <Link to="/">
-            <h3>Home</h3>
-          </Link>
-        </li>
-        <li>
           <Link to="/events">
             <h3>Wyjazdy</h3>
           </Link>
         </li>
         <li>
           <Link to="/contact">
-            <h3>Kontact</h3>
+            <h3>FAQ</h3>
           </Link>
         </li>
 
