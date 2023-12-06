@@ -25,27 +25,19 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile, chatbox = fals
       ref={scrollRef}
       style={{
         height: chatbox ? 510 : 800,
-        width: chatbox ? 460 : size.width < 768 ? 300 : "100%"
+        width: chatbox ? "100%" : size.width < 768 ? 300 : "100%"
       }}
     >
       {messages.map((message: IChatMessage, index: number) => (
         <MessageChatStyles key={message._id}>
-          {(index === 0 ||
-            TimeAgo.dayMonthYear(message.createdAt as Date) !==
-              TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
+          {(index === 0 || TimeAgo.dayMonthYear(message.createdAt as Date) !== TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
             <MessageChatDateStyles>{TimeAgo?.chatMessageTransform(message?.createdAt as Date)}</MessageChatDateStyles>
           )}
 
-          {(message.receiverName === profile?.username.toLowerCase() ||
-            message.senderName === profile?.username.toLowerCase()) && (
+          {(message.receiverName === profile?.username.toLowerCase() || message.senderName === profile?.username.toLowerCase()) && (
             <>
               {message.senderName === profile?.username.toLowerCase() && (
-                <RightMessageDisplay
-                  message={message}
-                  messages={messages}
-                  profile={profile}
-                  lastMessage={messages[messages.length - 1]}
-                />
+                <RightMessageDisplay message={message} messages={messages} profile={profile} lastMessage={messages[messages.length - 1]} />
               )}
               {message.receiverName === profile?.username.toLowerCase() && <LeftMessageDisplay message={message} />}
             </>

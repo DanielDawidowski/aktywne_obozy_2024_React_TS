@@ -17,6 +17,11 @@ class ChatService {
     const response = await axios.post("/chat/message", body);
     return response;
   }
+
+  async deleteChatUser(conversationId: string, userId: string): Promise<AxiosResponse> {
+    const response = await axios.delete(`/chat/message/${conversationId}/${userId}`);
+    return response;
+  }
 }
 
 export const chatService = new ChatService();

@@ -3,26 +3,29 @@ import type { FC } from "react";
 import axios, { AxiosResponse } from "axios";
 import { find } from "lodash";
 import { IChatMessage } from "../../../interfaces/chat/chat.interface";
-import { ISignUpData } from "../../../interfaces/auth/auth.interface";
+import { OmitPasswrodLoginData } from "../../../interfaces/auth/auth.interface";
 import { chatService } from "../../../services/api/chat/chat.service";
 import { addUser } from "../../../redux-toolkit/reducers/user/user.reducer";
 import { useAppDispatch, useAppSelector } from "../../../redux-toolkit/hooks";
 import useLocalStorage from "../../../hooks/useLocalStorage";
-import { fetchAdminUsers } from "../../../redux-toolkit/api/admin";
 import MessageDisplay from "../message-display/MessageDisplay";
 import { socketService } from "../../../services/socket/socket.service";
 import { ChatUtils } from "../../../utils/chat-utils.service";
 import { ChatWindowHeaderStyles, ChatWindowStyles } from "../ChatBoxStyles";
-import { Flex } from "../../globalStyles/global.styles";
+import { Flex, Grid } from "../../globalStyles/global.styles";
 import MessageInput from "../message-input/MessageInput";
 import { ValidationError } from "../../../interfaces/error/Error.interface";
 import Spinner from "../../spinner/Spinner";
+import { withSocket } from "../../../utils/socketHOC";
 
-const ChatWindow: FC = (): ReactElement => {
-  const { profile } = useAppSelector((state) => state.user);
+interface IChatWidnow {
+  profile: OmitPasswrodLoginData;
+}
+
+const ChatWindow: FC<IChatWidnow> = ({ profile }): ReactElement => {
   const { admin } = useAppSelector((state) => state.admin);
   const [messages, setMessages] = useState<IChatMessage[]>([]);
-  const getUserName = useLocalStorage<ISignUpData>("user");
+  const getUserName = useLocalStorage<OmitPasswrodLoginData>("user");
   const conversationId = useLocalStorage<string>("conversationId");
   const [rendered, setRendered] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,16 +33,28 @@ const ChatWindow: FC = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    socketService?.socket.on("message received", (data) => {
-      if (data.senderId === profile?._id || data.receiverId === profile?._id) {
-        ChatUtils.privateChatMessages.push(data);
-        setMessages([...ChatUtils.privateChatMessages]);
-      }
-    });
-    return () => {
-      socketService?.socket.off("message received");
-    };
-  }, [messages, setMessages, profile?._id]);
+    if (rendered) {
+      socketService?.socket?.on("message received", (data) => {
+        if (data.senderId === profile?._id || data.receiverId === profile?._id) {
+          ChatUtils.privateChatMessages.push(data);
+          setMessages([...ChatUtils.privateChatMessages]);
+        }
+      });
+      return () => {
+        socketService?.socket?.off("message received");
+      };
+    }
+    if (!rendered) setRendered(true);
+  }, [messages, setMessages, profile?._id, rendered]);
+
+  useEffect(() => {
+    if (!rendered) {
+      const user = getUserName.get();
+      socketService?.socket.emit("setup", {
+        userId: user?.username
+      });
+    }
+  }, [getUserName, rendered]);
 
   const getChatMessages = useCallback(async (receiverId: string) => {
     try {
@@ -55,21 +70,21 @@ const ChatWindow: FC = (): ReactElement => {
     }
   }, []);
 
-  const handleMessage = async (message: string): Promise<void> => {
-    // socketService?.socket.emit("setup", { userId: storedUsername });
-    if (message.trim() === "") return;
+  const chatConversationId = find(messages, (chat) => chat.receiverId === admin.authId || chat.senderId === admin.authId);
 
-    const chatConversationId = find(messages, (chat) => chat.receiverId === admin.authId || chat.senderId === admin.authId);
+  const handleMessage = async (message: string): Promise<void> => {
+    if (message.trim() === "") return;
 
     const messageData: IChatMessage = {
       _id: "",
-      conversationId: chatConversationId ? chatConversationId.conversationId : (conversationId.get() as string),
+      conversationId: chatConversationId ? chatConversationId.conversationId : "",
       receiverId: admin?.authId,
       receiverName: admin?.username.toLowerCase(),
       senderId: profile?._id,
       senderName: profile?.username.toLowerCase(),
       body: message.trim()
     };
+
     try {
       await chatService.saveChatMessage(messageData);
       socketService?.socket?.emit("message received", messageData);
@@ -77,10 +92,6 @@ const ChatWindow: FC = (): ReactElement => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchAdminUsers());
-  }, [dispatch]);
 
   useEffect(() => {
     if (getUserName && rendered) {
@@ -97,10 +108,15 @@ const ChatWindow: FC = (): ReactElement => {
     if (admin?.authId && rendered) {
       getChatMessages(admin?.authId);
     }
+
     if (!rendered) setRendered(true);
   }, [admin?.authId, rendered, getChatMessages]);
 
-  return (
+  return loading ? (
+    <Grid>
+      <Spinner />
+    </Grid>
+  ) : (
     <ChatWindowStyles>
       <ChatWindowHeaderStyles>
         <Flex $justify="space-between" $align="center">
@@ -108,16 +124,11 @@ const ChatWindow: FC = (): ReactElement => {
           <h4>{profile?.username}</h4>
         </Flex>
       </ChatWindowHeaderStyles>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          <MessageDisplay messages={messages} profile={profile} chatbox />
-          <MessageInput setChatMessage={handleMessage} />
-        </>
-      )}
+
+      <MessageDisplay messages={messages} profile={profile} chatbox />
+      <MessageInput setChatMessage={handleMessage} />
     </ChatWindowStyles>
   );
 };
 
-export default ChatWindow;
+export default withSocket(ChatWindow);

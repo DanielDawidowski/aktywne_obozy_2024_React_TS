@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { orderBy } from "lodash";
 import { IConversationList, getConversationList } from "../../api/chat";
-import { IChatMessage } from "../../../interfaces/chat/chat.interface";
+import { IChatListUser } from "../../../interfaces/chat/chat.interface";
 
 export interface IChatProps {
-  chatList: IChatMessage[];
+  chatList: IChatListUser[];
   isOpenChat: boolean;
   isLoading: boolean;
-  selectedChatUser: IChatMessage;
+  selectedChatUser: IChatListUser;
 }
 
-const loadUserFromLocalStorage = (): IChatMessage => {
+const loadUserFromLocalStorage = (): IChatListUser => {
   const selectedChatUser = localStorage.getItem("selectedChatUser");
   return selectedChatUser ? JSON.parse(selectedChatUser) : null;
 };
@@ -34,8 +34,9 @@ const chatSlice = createSlice({
       const { isLoading, isOpenChat } = action.payload;
       state.isOpenChat = isOpenChat;
       state.isLoading = isLoading;
+      localStorage.setItem("isOpenChat", JSON.stringify(!isOpenChat));
     },
-    setSelectedChatUser: (state, action: PayloadAction<IChatMessage>) => {
+    setSelectedChatUser: (state, action: PayloadAction<IChatListUser>) => {
       state.selectedChatUser = action.payload;
       localStorage.setItem("selectedChatUser", JSON.stringify(action.payload));
     }

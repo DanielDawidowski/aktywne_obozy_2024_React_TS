@@ -20,9 +20,11 @@ export interface ISignUpData {
 
 export type ILoginResponse = Partial<ISignUpData> & { token: string };
 
+export type OmitPasswrodLoginData = Omit<ISignUpData, "password">;
+
 export interface ILoginUser {
   token: string;
-  profile: ISignUpData | null;
+  profile: OmitPasswrodLoginData | null;
 }
 
 export interface IUser {
@@ -33,12 +35,3 @@ export interface IUser {
 }
 
 export type IProfileProps = Pick<ISignUpData, "authId" | "username">;
-
-export interface INewChatUser {
-  conversationId: string;
-  receiverId: string;
-  receiverName: string;
-  senderName: string;
-  senderId: string;
-  body: string;
-}

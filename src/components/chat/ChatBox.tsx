@@ -9,38 +9,36 @@ import { setOpenChat } from "../../redux-toolkit/reducers/chat/chat.reducer";
 import { clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
 import { IChat } from "../../interfaces/chat/chat.interface";
 import ChatRegister from "./chat-register/ChatRegister";
-import {
-  ChatBoxBigStyles,
-  ChatBoxBodyStyles,
-  ChatBoxHeaderStyles,
-  ChatBoxSmallStyles,
-  ChatBoxStyles
-} from "./ChatBoxStyles";
+import { ChatBoxBigStyles, ChatBoxBodyStyles, ChatBoxHeaderStyles, ChatBoxSmallStyles, ChatBoxStyles } from "./ChatBoxStyles";
 import useWindowSize from "../../hooks/useWindowSize";
 import { BreakPoint } from "../layout/Layout.interface";
 import { Flex, Grid } from "../globalStyles/global.styles";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { ISignUpData } from "../../interfaces/auth/auth.interface";
+import { socketService } from "../../services/socket/socket.service";
 
 const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
+  const storedUser = useLocalStorage<ISignUpData>("user");
+
+  const user = storedUser.get() as ISignUpData;
 
   const size = useWindowSize();
   const dispatch = useAppDispatch();
 
   const openChat = (): void => {
     dispatch(setOpenChat({ isLoading: false, isOpenChat: true }));
-    localStorage.setItem("isOpenChat", JSON.stringify(true));
   };
 
   const closeChat = (): void => {
-    dispatch(clearUser());
     dispatch(setOpenChat({ isLoading: false, isOpenChat: false }));
-
-    localStorage.setItem("isOpenChat", JSON.stringify(false));
+    dispatch(clearUser());
+    socketService?.socket.disconnect();
   };
 
   return (
     <ChatBoxStyles>
-      {!isOpenChat ? (
+      {!isOpenChat && !user ? (
         <ChatBoxSmallStyles
           animate={{
             borderRadius: 100,
@@ -68,14 +66,14 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement => {
             right: size.width < BreakPoint.xsmall ? 0 : 20
           }}
         >
-          <ChatBoxHeaderStyles onClick={closeChat}>
+          <ChatBoxHeaderStyles>
             <Flex $align="center" $justify="space-between">
               <span>Chat Online</span>
-              <FaWindowClose />
+              <FaWindowClose onClick={closeChat} />
             </Flex>
           </ChatBoxHeaderStyles>
           <ChatBoxBodyStyles>
-            <Grid>{!profile ? <ChatRegister /> : <ChatWindow />}</Grid>
+            <Grid>{!profile ? <ChatRegister /> : <ChatWindow profile={profile} />}</Grid>
           </ChatBoxBodyStyles>
         </ChatBoxBigStyles>
       )}

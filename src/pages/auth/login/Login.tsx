@@ -11,10 +11,12 @@ import { Dispatch } from "@reduxjs/toolkit";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
 import { Grid } from "../../../components/globalStyles/global.styles";
+import axios from "axios";
+import { ValidationError } from "../../../interfaces/error/Error.interface";
 
 const Login: FC = (): ReactElement => {
-  const [username, setUsername] = useState<string>("marcin");
-  const [password, setPassword] = useState<string>("qwerty");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<ISignUpData | null>();
   const [hasError, setHasError] = useState<boolean>(false);
@@ -52,10 +54,13 @@ const Login: FC = (): ReactElement => {
       socketService?.socket.emit("setup", {
         userId: result && result.data.user.username.toLowerCase()
       });
-    } catch (error: any) {
-      setLoading(false);
-      setHasError(true);
-      console.error(error.response.data.message);
+    } catch (error) {
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+        setHasError(true);
+      } else {
+        console.error(error);
+      }
     }
   };
 

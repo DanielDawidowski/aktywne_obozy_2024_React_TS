@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Flex, Grid } from "../../../components/globalStyles/global.styles";
 
 export const AdminChatStyles = styled.section`
   display: flex;
@@ -31,32 +32,40 @@ export const AdminList = styled.ul`
 `;
 
 export const AdminListItem = styled.li<{ $active: boolean }>`
-  display: flex;
+  display: grid;
   border-radius: 4px;
   border: 2px solid ${(props) => (props.$active ? props.theme.thirdColor : props.theme.secondaryColor)};
   cursor: pointer;
   margin-bottom: ${(props) => props.theme.size1};
   padding: ${(props) => props.theme.size2};
   background-color: ${(props) => (props.$active ? props.theme.thirdColor : props.theme.secondaryColor)};
-  color: ${(props) => (props.$active ? props.theme.primaryColor : props.theme.text)};
+  box-shadow:
+    inset 0 0 4px ${(props) => (props.$active ? props.theme.thirdColor : props.theme.secondaryColor)},
+    1px 0 4px ${(props) => (props.$active ? props.theme.primaryColor : props.theme.text)};
+  width: 100%;
+  h5 {
+    color: ${(props) => (props.$active ? props.theme.dark : props.theme.text)};
+    letter-spacing: ${(props) => (props.$active ? "1px" : "0px")};
+    font-size: ${(props) => (props.$active ? props.theme.size4 : props.theme.size3)};
+  }
 
-  div {
-    display: grid;
-    h5 {
-      letter-spacing: ${(props) => (props.$active ? "1px" : "0px")};
+  h4 {
+    b {
+      color: ${(props) => props.theme.dark};
       font-size: ${(props) => (props.$active ? props.theme.size4 : props.theme.size3)};
     }
+  }
 
-    h4 {
-      b {
-        color: ${(props) => props.theme.dark};
-        font-size: ${(props) => (props.$active ? props.theme.size4 : props.theme.size3)};
-      }
-    }
+  ${Flex} {
+    width: 100%;
   }
 
   &:hover {
     background-color: ${(props) => props.theme.fourthColor};
+    border: 2px solid ${(props) => props.theme.white};
+    box-shadow:
+      inset 0 0 4px ${(props) => props.theme.white},
+      1px 0 4px ${(props) => props.theme.white};
   }
 `;
 

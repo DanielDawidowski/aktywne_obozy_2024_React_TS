@@ -64,7 +64,7 @@ const Event: FC = (): ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [checked, setChecked] = useState<string>("");
 
-  const { isOpen } = useAppSelector((state) => state.modal);
+  const { isOpenModal } = useAppSelector((state) => state.modal);
 
   const dispatch = useDispatch();
 
@@ -125,8 +125,8 @@ const Event: FC = (): ReactElement => {
 
   return (
     <Layout chat={false}>
-      {isOpen && (
-        <Modal isOpen={isOpen} onClose={closeModalClient}>
+      {isOpenModal && (
+        <Modal isOpen={isOpenModal} onClose={closeModalClient}>
           <EventInfo event={event} openModalClient={openModalClient} checked={checked} />
           <ClientForm
             event={event}

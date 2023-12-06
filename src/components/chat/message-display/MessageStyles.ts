@@ -70,6 +70,9 @@ export const MessageStyles = styled.div`
     font-family: Oswald, sans-serif;
     letter-spacing: 1.1px;
     color: ${(props) => props.theme.text};
+    box-shadow:
+      inset 0 0 1px ${(props) => props.theme.body},
+      0 1px 2px ${(props) => props.theme.dark};
   }
 `;
 

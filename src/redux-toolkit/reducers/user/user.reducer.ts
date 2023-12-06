@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ILoginUser, ISignUpData } from "../../../interfaces/auth/auth.interface";
+import { ILoginUser, OmitPasswrodLoginData } from "../../../interfaces/auth/auth.interface";
 
-const loadUserFromLocalStorage = (): ISignUpData => {
+const loadUserFromLocalStorage = (): OmitPasswrodLoginData => {
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
 };

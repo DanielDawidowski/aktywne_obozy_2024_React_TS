@@ -18,7 +18,10 @@ export interface IChatMessage {
   senderId?: string;
   body: string;
   createdAt?: Date | string;
-  type?: TypeMessages;
+}
+
+export interface IChatListUser extends IChatMessage {
+  disconnected?: boolean;
 }
 
 export type TypeMessages = EChatTypes.left | EChatTypes.right;
@@ -51,4 +54,13 @@ export type ISender = Partial<ISenderReceiver>;
 export interface IURLParams {
   username?: string;
   _id?: string;
+}
+
+export interface INewChatUser {
+  conversationId: string;
+  receiverId: string;
+  receiverName: string;
+  senderName: string;
+  senderId: string;
+  body: string;
 }

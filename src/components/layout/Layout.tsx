@@ -1,4 +1,5 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
+import type { FC } from "react";
 import PropTypes from "prop-types";
 import { ILayout } from "./Layout.interface";
 import { LayoutStyles } from "./Layout.styles";
@@ -14,7 +15,6 @@ const Layout: FC<ILayout> = (props): ReactElement => {
   const { children, chat = true } = props;
   const { isOpenChat } = useAppSelector((state) => state.chat);
   const { profile } = useAppSelector((state) => state.user);
-
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (

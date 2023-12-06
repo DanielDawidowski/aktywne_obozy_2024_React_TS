@@ -44,9 +44,13 @@ export const MenuThemeStyles = styled.div`
   place-items: center;
   padding: ${(props) => props.theme.size2};
   background-color: ${(props) => props.theme.text};
-  border: 1px solid ${(props) => props.theme.body};
+  border: 0.5 solid ${(props) => props.theme.body};
   width: 70px;
   border-radius: 26px;
+  box-shadow:
+    inset 0 0 2px ${(props) => props.theme.body},
+    1px 0 2px ${(props) => props.theme.dark};
+
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     padding: ${(props) => props.theme.size1};
     width: 60px;

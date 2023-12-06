@@ -15,7 +15,7 @@ const AdminChat: FC = (): ReactElement => {
       <Container>
         <AdminChatStyles>
           <AdminChatList />
-          <main>{selectedChatUser && <AdminChatWindow />}</main>
+          <main>{selectedChatUser ? <AdminChatWindow /> : null}</main>
         </AdminChatStyles>
       </Container>
     </Layout>

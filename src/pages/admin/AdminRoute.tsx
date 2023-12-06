@@ -1,4 +1,4 @@
-import React, { useCallback, useState, ReactNode, ReactElement } from "react";
+import React, { useCallback, useState, ReactNode, ReactElement, useEffect } from "react";
 import type { FC } from "react";
 import { AxiosResponse } from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import { getConversationList } from "../../redux-toolkit/api/chat";
 import { addUser, clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
 import useEffectOnce from "../../hooks/useEffectOnce";
 import { ISignUpData } from "../../interfaces/auth/auth.interface";
+import { socketService } from "../../services/socket/socket.service";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -48,6 +49,10 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
   useEffectOnce(() => {
     checkUser();
   });
+
+  useEffect(() => {
+    socketService.socketConnetction();
+  }, []);
 
   if (userData || (profile && token)) {
     if (!tokenIsValid) {

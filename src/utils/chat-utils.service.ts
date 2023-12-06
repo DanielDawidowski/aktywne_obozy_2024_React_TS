@@ -2,12 +2,13 @@ import { cloneDeep, find, remove, uniqBy } from "lodash";
 import type { Dispatch as ReactDispatch, SetStateAction } from "react";
 import { NavigateFunction, createSearchParams } from "react-router-dom";
 import type { Dispatch as ReduxDispatch } from "@reduxjs/toolkit";
-import { INewChatUser, IProfileProps, IUser } from "../interfaces/auth/auth.interface";
+import { IProfileProps, IUser } from "../interfaces/auth/auth.interface";
 import { socketService } from "../services/socket/socket.service";
 import {
   IChatMessage,
   IChatUsers,
   IMessageData,
+  INewChatUser,
   IReceiver,
   ISender,
   ISenderReceiver,
@@ -18,7 +19,7 @@ export class ChatUtils {
   static privateChatMessages: IChatMessage[] = [];
   static chatUsers: IChatUsers[] = [];
 
-  static usersOnline(setOnlineUsers: ReactDispatch<SetStateAction<IChatMessage[]>>): void {
+  static usersOnline(setOnlineUsers: ReactDispatch<SetStateAction<string[] | null>>): void {
     socketService?.socket?.on("user online", (data) => {
       setOnlineUsers(data);
     });
@@ -40,10 +41,19 @@ export class ChatUtils {
     socketService?.socket?.emit("join room", users);
   }
 
-  static chatUrlParams(
-    user: Partial<ISenderReceiver>,
-    profile: IProfileProps | null
-  ): { username?: string; _id?: string } {
+  static getName(data: IChatMessage, profile: IProfileProps | null): string {
+    const name =
+      (data.senderName === profile?.username.toLowerCase() && data.receiverName) ||
+      (data.receiverName === profile?.username.toLowerCase() && data.senderName);
+    return name as string;
+  }
+
+  static getUserId(data: IChatMessage, profile: IProfileProps | null): string {
+    const userId = data.senderId === profile?.authId ? data.receiverId : data.senderId;
+    return userId as string;
+  }
+
+  static chatUrlParams(user: Partial<ISenderReceiver>, profile: IProfileProps | null): { username?: string; _id?: string } {
     const params: IURLParams = { username: "", _id: "" };
     if (user.receiverId === profile?.authId) {
       params.username = user.senderName?.toLowerCase();
@@ -71,10 +81,7 @@ export class ChatUtils {
     conversationId: string;
     chatMessages: IChatMessage[];
   }): IMessageData {
-    const chatConversationId = find(
-      chatMessages,
-      (chat) => chat.receiverId === searchParamsId || chat.senderId === searchParamsId
-    );
+    const chatConversationId = find(chatMessages, (chat) => chat.receiverId === searchParamsId || chat.senderId === searchParamsId);
 
     const messageData: IMessageData = {
       conversationId: chatConversationId ? chatConversationId.conversationId : conversationId,
@@ -169,10 +176,7 @@ export class ChatUtils {
     const minutes = currentDate.getMinutes();
 
     // Check if the current time is between the specified startHour and endHour
-    if (
-      (hours > startHour || (hours === startHour && minutes >= 0)) &&
-      (hours < endHour || (hours === endHour && minutes <= 0))
-    ) {
+    if ((hours > startHour || (hours === startHour && minutes >= 0)) && (hours < endHour || (hours === endHour && minutes <= 0))) {
       return true;
     } else {
       return false;

@@ -1,8 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { addNotification, clearNotification } from "../redux-toolkit/reducers/notifications/notifications.reducer";
 import { INotificationTypes } from "../interfaces/notification/notification.interface";
-import { IProfileProps } from "../interfaces/auth/auth.interface";
-import { IChatMessage } from "../interfaces/chat/chat.interface";
 import { BreakPoint } from "../components/layout/Layout.interface";
 
 export class Utils {
@@ -15,7 +13,7 @@ export class Utils {
   }
 
   static generateString(length: number): string {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
@@ -32,11 +30,9 @@ export class Utils {
     return name.charAt(0).toUpperCase();
   }
 
-  static getName(data: IChatMessage, profile: IProfileProps | null): string {
-    const name =
-      (data.senderName === profile?.username.toLowerCase() && data.receiverName) ||
-      (data.receiverName === profile?.username.toLowerCase() && data.senderName);
-    return name as string;
+  static checkIfUserIsOnline(username: string | null, onlineUsers: string[] | null): boolean | undefined {
+    return onlineUsers?.some((user) => user.toLowerCase() === username?.toLowerCase());
+    return false;
   }
 
   static emitIconsAmount(windowSize: number): number {
