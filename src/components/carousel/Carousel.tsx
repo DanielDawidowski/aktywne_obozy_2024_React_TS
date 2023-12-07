@@ -8,6 +8,7 @@ import { ICarousel } from "./Carousel.interface";
 import { BreakPoint } from "../layout/Layout.interface";
 import { Container } from "../globalStyles/global.styles";
 import { CarouselContainer, CarouselInner, CarouselSlide, CarouselSlider, CarouselTitle } from "./Carousel.styles";
+import AnimatedLetters from "../animated-letters/AnimatedLetters";
 
 const carouselVariants: Variants = {
   initial: (direction: number) => {
@@ -74,7 +75,7 @@ const Carousel: FC = (): ReactElement => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextStep();
-    }, 5000);
+    }, 7000);
     return () => clearInterval(interval);
   }, [nextStep]);
 
@@ -82,14 +83,14 @@ const Carousel: FC = (): ReactElement => {
     <Container>
       <CarouselContainer>
         <CarouselInner>
-          <AnimatePresence initial={false} custom={direction}>
-            <CarouselTitle>
-              <motion.h3 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0, transition: { delay: 0.4 } }}>
-                {showSlides()[index].title}
+          <CarouselTitle>
+            <AnimatePresence mode="wait" initial={false} custom={direction}>
+              <motion.h3 initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+                <AnimatedLetters sentence={showSlides()[index].title as string} />
               </motion.h3>
-            </CarouselTitle>
-          </AnimatePresence>
-          <AnimatePresence initial={false} custom={direction}>
+            </AnimatePresence>
+          </CarouselTitle>
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
             <CarouselSlider>
               <CarouselSlide
                 whileTap={{ cursor: "grabbing" }}

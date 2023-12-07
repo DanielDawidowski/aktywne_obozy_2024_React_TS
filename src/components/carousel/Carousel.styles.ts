@@ -10,18 +10,33 @@ export const CarouselContainer = styled.div`
 export const CarouselInner = styled(motion.div)`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 170px;
+  @media (min-width: ${(props) => props.theme.breakpoint_xsmall}) {
+    height: 270px;
+  }
+  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+    height: 450px;
+  }
+  @media (min-width: ${(props) => props.theme.breakpoint_medium}) {
+    height: 650px;
+  }
 `;
 
 export const CarouselTitle = styled(motion.div)`
   position: absolute;
-  bottom: 10%;
-  left: ${(props) => props.theme.size1};
+  top: 10%;
+  left: 7%;
   z-index: 1;
+  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
+    top: 10%;
+    left: 10%;
+  }
+
   h3 {
     color: ${(props) => props.theme.yellow};
+    letter-spacing: 1px;
     text-align: center;
-    letter-spacing: 3px;
+    font-size: 1rem;
     text-shadow:
       -1px -1px 0 ${(props) => props.theme.dark},
       1px -1px 0 ${(props) => props.theme.dark},

@@ -25,6 +25,7 @@ const Home: FC = (): ReactElement => {
         </HomeIconsStyles>
         <Divider />
         <ScrollText />
+        <Divider />
         <Container $small>
           <HomeEventsStyles>
             <HomeEventsItemStyles>

@@ -26,7 +26,6 @@ const ChatWindow: FC<IChatWidnow> = ({ profile }): ReactElement => {
   const { admin } = useAppSelector((state) => state.admin);
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const getUserName = useLocalStorage<OmitPasswrodLoginData>("user");
-  const conversationId = useLocalStorage<string>("conversationId");
   const [rendered, setRendered] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 

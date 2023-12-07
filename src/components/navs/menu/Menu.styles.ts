@@ -1,6 +1,17 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
-export const MenuStyles = styled.ul`
+export const MenuItem = styled(motion.li)<{ $active?: boolean }>`
+  display: grid;
+  place-items: center;
+  padding: ${(props) => props.theme.size1};
+  h3 {
+    font-family: Oswald;
+    color: ${(props) => (props.$active ? props.theme.orange : props.theme.text)};
+  }
+`;
+
+export const MenuStyles = styled(motion.ul)`
   background: none;
   border-radius: 8px;
 
@@ -8,34 +19,20 @@ export const MenuStyles = styled.ul`
     background-color: ${(props) => props.theme.primaryColor};
     padding: ${(props) => props.theme.size2};
   }
-  .first-element {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  ${MenuItem}:nth-child(1) {
     border-radius: 26px;
     @media (max-width: ${(props) => props.theme.breakpoint_small}) {
       border: 1px solid ${(props) => props.theme.text};
     }
   }
-  li {
-    display: grid;
-    place-items: center;
-    padding: ${(props) => props.theme.size1};
-    h3 {
-      color: ${(props) => props.theme.text};
-      @media (max-width: ${(props) => props.theme.breakpoint_small}) {
-        color: ${(props) => props.theme.text};
-      }
-    }
 
-    &:last-child {
-      margin-right: 0;
-    }
-    @media (max-width: ${(props) => props.theme.breakpoint_small}) {
-      width: 100%;
-      padding: ${(props) => props.theme.size2};
-      margin: ${(props) => props.theme.size1} 0;
-    }
+  ${MenuItem}:last-child {
+    margin-right: 0;
+  }
+  @media (max-width: ${(props) => props.theme.breakpoint_small}) {
+    width: 100%;
+    padding: ${(props) => props.theme.size2};
+    margin: ${(props) => props.theme.size1} 0;
   }
 `;
 
@@ -70,8 +67,8 @@ export const LogoutStyles = styled.div`
   place-items: center;
   background-color: ${(props) => props.theme.white};
   border-radius: 26px;
-  height: 30px;
-  width: 30px;
+  height: 31px;
+  width: 31px;
   margin-right: ${(props) => props.theme.size6};
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     margin-right: ${(props) => props.theme.size4};

@@ -17,10 +17,6 @@ export const ScrollTextSectionContainer = styled(motion.div)`
   align-items: flex-start;
   justify-content: center;
   overflow: hidden;
-
-  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-    font-size: ${(props) => props.theme.size6};
-  }
 `;
 
 export const ScrollTextTitleStyles = styled(motion.h3)`
