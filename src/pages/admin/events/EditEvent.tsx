@@ -64,7 +64,7 @@ const EditEvent: FC = (): ReactElement => {
     values.attractions = attractions;
     values.extraAttractions = extraAttractions;
     try {
-      const response: AxiosResponse<IEvent> = await eventService.updateEvent(eventId as string, values);
+      const response: AxiosResponse = await eventService.updateEvent(eventId as string, values);
       setLoading(false);
       setHasError(false);
       setValues(initialState);

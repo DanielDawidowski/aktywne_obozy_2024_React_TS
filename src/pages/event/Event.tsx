@@ -1,7 +1,6 @@
 import React, { useCallback, useState, ReactElement } from "react";
 import type { FC, FormEvent } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { LuPencil } from "react-icons/lu";
 import axios, { AxiosResponse } from "axios";
 import Energylandia from "../../assets/Images/energylandia.jpg";
@@ -24,7 +23,7 @@ import HotelSVG from "../../assets/SVG/hotel";
 import TransportSVG from "../../assets/SVG/transport";
 import transition from "../../utils/transition";
 import Modal from "../../components/modal/Modal";
-import { useAppSelector } from "../../redux-toolkit/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux-toolkit/hooks";
 import { IClient } from "../../interfaces/client/client.interface";
 import ClientForm from "../../components/form/client/Client.form";
 import {
@@ -64,9 +63,9 @@ const Event: FC = (): ReactElement => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [checked, setChecked] = useState<string>("");
 
-  const { isOpenModal } = useAppSelector((state) => state.modal);
+  const { isModalOpen } = useAppSelector((state) => state.modal);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { eventId } = useParams();
   const getId = eventId as string;
@@ -125,8 +124,8 @@ const Event: FC = (): ReactElement => {
 
   return (
     <Layout chat={false}>
-      {isOpenModal && (
-        <Modal isOpen={isOpenModal} onClose={closeModalClient}>
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={closeModalClient}>
           <EventInfo event={event} openModalClient={openModalClient} checked={checked} />
           <ClientForm
             event={event}

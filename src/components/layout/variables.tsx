@@ -5,9 +5,10 @@ export const themeGlobal = {
   breakpoint_medium: "1440px",
   breakpoint_small: "960px",
   breakpoint_xsmall: "480px",
-  white: "#F6F1F0",
+  white: "#FDFBF9",
   white_opacity: "rgba(255, 255, 255, 0.7)",
-  dark: "#2C3333",
+  dark: "#171717",
+  dark_light: "#22333b",
   primary: "#0E8388",
   primary_dark: "#2E4F4F",
   primary_light: "#CBE4DE",
@@ -34,9 +35,10 @@ export const lightTheme: DefaultTheme = {
   body: themeGlobal.white,
   text: themeGlobal.dark,
   primaryColor: themeGlobal.primary,
-  secondaryColor: themeGlobal.secondary_light,
+  secondaryColor: themeGlobal.secondary,
   thirdColor: themeGlobal.primary_light,
-  fourthColor: themeGlobal.yellow
+  fourthColor: themeGlobal.yellow,
+  fifthColor: themeGlobal.secondary_light
 };
 
 export const darkTheme: DefaultTheme = {
@@ -45,5 +47,6 @@ export const darkTheme: DefaultTheme = {
   primaryColor: themeGlobal.secondary,
   secondaryColor: themeGlobal.primary,
   thirdColor: themeGlobal.secondary_light,
-  fourthColor: themeGlobal.orange
+  fourthColor: themeGlobal.orange,
+  fifthColor: themeGlobal.primary_dark
 };

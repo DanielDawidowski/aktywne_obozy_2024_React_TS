@@ -4,7 +4,6 @@ import { AnimatePresence } from "framer-motion";
 import Home from "./pages/home/Home";
 import { AuthTabs } from "./pages/auth";
 import AdminRoute from "./pages/admin/AdminRoute";
-
 import CreateEvent from "./pages/admin/events/CreateEvent";
 import AdminEvents from "./pages/admin/events/AdminEvents";
 import EditEvent from "./pages/admin/events/EditEvent";
@@ -13,11 +12,12 @@ import AdminChat from "./pages/admin/admin-chat/AdminChat";
 import Event from "./pages/event/Event";
 import ScrollToTopOnPageChange from "./utils/scrollToTop";
 import Contact from "./pages/contact/Contact";
+import EditSettings from "./pages/admin/settings-chat/EditSettings";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <ScrollToTopOnPageChange />
       <Routes location={location} key={location.pathname}>
         <Route index element={<Home />} />
@@ -54,6 +54,14 @@ export const AppRouter: FC = () => {
           element={
             <AdminRoute>
               <AdminChat />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/settings"
+          element={
+            <AdminRoute>
+              <EditSettings />
             </AdminRoute>
           }
         />

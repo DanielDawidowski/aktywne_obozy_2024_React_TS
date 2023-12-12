@@ -5,9 +5,14 @@ export const DropdownContainer = styled.div`
   position: relative;
 `;
 
-export const DropdownButton = styled.h3`
-  border: none;
+export const DropdownButton = styled.h3<{ $active?: boolean }>`
   cursor: pointer;
+  border: 1px solid ${(props) => props.theme.text};
+  box-shadow: inset 0 0 3px ${(props) => props.theme.text};
+  background: ${(props) => (props.$active ? props.theme.text : props.theme.fifthColor)};
+  color: ${(props) => (props.$active ? props.theme.fifthColor : props.theme.text)};
+  border-radius: 8px;
+  padding: ${(props) => props.theme.size1};
 `;
 
 export const DropdownContent = styled(motion.div)`

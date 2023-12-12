@@ -64,3 +64,11 @@ export interface INewChatUser {
   senderId: string;
   body: string;
 }
+
+export interface IChatSettings {
+  _id?: string;
+  startTime: string;
+  endTime: string;
+  startDay: string;
+  endDay: string;
+}

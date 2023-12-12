@@ -1,11 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IModalProps {
-  isOpenModal: boolean;
+  isModalOpen: boolean;
+  isCookieModalOpen: boolean;
 }
 
 const initialState: IModalProps = {
-  isOpenModal: false
+  isModalOpen: false,
+  isCookieModalOpen: false
 };
 
 const modalSlice = createSlice({
@@ -13,13 +15,17 @@ const modalSlice = createSlice({
   initialState,
   reducers: {
     openModal: (state) => {
-      state.isOpenModal = true;
+      state.isModalOpen = true;
     },
     closeModal: (state) => {
-      state.isOpenModal = false;
+      state.isModalOpen = false;
+      state.isCookieModalOpen = false;
+    },
+    toggleCookieModal: (state, action: PayloadAction<boolean>) => {
+      state.isCookieModalOpen = action.payload;
     }
   }
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, toggleCookieModal } = modalSlice.actions;
 export default modalSlice.reducer;

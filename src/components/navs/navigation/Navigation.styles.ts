@@ -13,6 +13,7 @@ export const NavStyles = styled(motion.section)`
 
 export const NavHeader = styled.div`
   padding: ${(props) => props.theme.size1};
+  box-shadow: inset 1px 2px 10px ${(props) => props.theme.dark};
 `;
 
 export const NavBody = styled.div`

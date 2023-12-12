@@ -9,7 +9,7 @@ export const ModalOverlay = styled(motion.div)`
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 99997;
+  z-index: 997;
 `;
 
 export const ModalWrapper = styled.div`
@@ -18,7 +18,7 @@ export const ModalWrapper = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 99998;
+  z-index: 998;
   overflow-y: scroll;
   scroll-behavior: smooth;
   display: grid;

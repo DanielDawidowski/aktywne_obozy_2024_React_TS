@@ -1,10 +1,9 @@
-// Modal.tsx
 import React, { useEffect } from "react";
 import type { FC, ReactNode } from "react";
 import { AnimatePresence } from "framer-motion";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { CloseModalStyles, ModalContent, ModalOverlay, ModalWrapper } from "./Modal.styles";
-import { Flex, Grid } from "../globalStyles/global.styles";
+import { Flex } from "../globalStyles/global.styles";
 
 interface ModalProps {
   isOpen: boolean;
@@ -31,7 +30,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
     <AnimatePresence>
       {isOpen && (
         <>
-          <ModalOverlay initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />
+          <ModalOverlay initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <ModalWrapper>
             <ModalContent initial={{ y: -50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -50, opacity: 0 }}>
               <Flex $align="flex-end" $justify="flex-end">

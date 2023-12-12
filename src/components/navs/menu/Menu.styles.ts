@@ -8,6 +8,8 @@ export const MenuItem = styled(motion.li)<{ $active?: boolean }>`
   h3 {
     font-family: Oswald;
     color: ${(props) => (props.$active ? props.theme.orange : props.theme.text)};
+    text-shadow: 0 0 1px ${(props) => props.theme.text};
+    font-weight: 700;
   }
 `;
 
@@ -16,13 +18,16 @@ export const MenuStyles = styled(motion.ul)`
   border-radius: 8px;
 
   @media (max-width: ${(props) => props.theme.breakpoint_small}) {
-    background-color: ${(props) => props.theme.primaryColor};
+    background-color: ${(props) => props.theme.fifthColor};
     padding: ${(props) => props.theme.size2};
+    box-shadow: inset 0 0 3px ${(props) => props.theme.dark};
   }
   ${MenuItem}:nth-child(1) {
     border-radius: 26px;
+
     @media (max-width: ${(props) => props.theme.breakpoint_small}) {
       border: 1px solid ${(props) => props.theme.text};
+      box-shadow: inset 0 0 3px ${(props) => props.theme.text};
     }
   }
 

@@ -30,7 +30,7 @@ export const AdminEventListItemStyles = styled.li`
   padding: ${(props) => props.theme.size4};
   border-radius: 0.5rem;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-  background-color: #fff;
+  background-color: ${(props) => props.theme.white};
   h4 {
     color: ${(props) => props.theme.primary};
   }
@@ -49,5 +49,29 @@ export const ButtonActionStyles = styled.div`
   svg {
     width: 1.5rem;
     height: 1.5rem;
+  }
+`;
+
+export const ChatSettingsData = styled.div`
+  margin: ${(props) => props.theme.size1};
+  padding: ${(props) => props.theme.size2};
+  @media (max-width: ${(props) => props.theme.breakpoint_small}) {
+    margin-top: ${(props) => props.theme.size2};
+  }
+  h2 {
+    margin: ${(props) => props.theme.size1};
+  }
+  h3 {
+    margin: ${(props) => props.theme.size2};
+    padding-bottom: ${(props) => props.theme.size2};
+    border-bottom: 1px solid ${(props) => props.theme.text};
+    svg {
+      width: 45px;
+      height: 45px;
+      margin-right: ${(props) => props.theme.size2};
+    }
+    &:last-child() {
+      border-bottom: none;
+    }
   }
 `;

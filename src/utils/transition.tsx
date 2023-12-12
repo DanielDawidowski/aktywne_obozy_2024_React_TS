@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import type { FC, ComponentType } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import BG from "../assets/Images/transitionBG.jpg";
 
@@ -33,11 +33,23 @@ const SlideOut = styled(motion.div)`
 const transition = (OgComponent: ComponentType): FC => {
   // eslint-disable-next-line react/display-name
   return (): ReactElement => (
-    <>
+    <AnimatePresence initial={false}>
       <OgComponent />
-      <SlideIn initial={{ scaleY: 0 }} animate={{ scaleY: 0 }} exit={{ scaleY: 1 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} />
-      <SlideOut initial={{ scaleY: 1 }} animate={{ scaleY: 0 }} exit={{ scaleY: 0 }} transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }} />
-    </>
+      <SlideIn
+        key="child1"
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 0 }}
+        exit={{ scaleY: 1 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      />
+      <SlideOut
+        key="child2"
+        initial={{ scaleY: 1 }}
+        animate={{ scaleY: 0 }}
+        exit={{ scaleY: 0 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      />
+    </AnimatePresence>
   );
 };
 

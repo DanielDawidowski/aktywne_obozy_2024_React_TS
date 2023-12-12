@@ -11,6 +11,6 @@ export const Dot = styled.div`
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background-color: ${(props) => props.theme.body};
+  background-color: ${(props) => props.theme.fourthColor};
   border: 1px solid ${(props) => props.theme.fourthColor};
 `;

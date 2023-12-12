@@ -6,6 +6,7 @@ import { IProfileProps, IUser } from "../interfaces/auth/auth.interface";
 import { socketService } from "../services/socket/socket.service";
 import {
   IChatMessage,
+  IChatSettings,
   IChatUsers,
   IMessageData,
   INewChatUser,
@@ -14,6 +15,8 @@ import {
   ISenderReceiver,
   IURLParams
 } from "../interfaces/chat/chat.interface";
+
+export const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 export class ChatUtils {
   static privateChatMessages: IChatMessage[] = [];
@@ -115,13 +118,6 @@ export class ChatUtils {
       navigate(`${pathname}?${createSearchParams(params)}`);
     } else {
       dispatch(setSelectedChatUser({ isLoading: false, user: null }));
-      // const sender = find(
-      //   ChatUtils.chatUsers,
-      //   (user) => user.userOne === profile?.username && user.userTwo.toLowerCase() === username
-      // );
-      // if (sender) {
-      //   chatService.removeChatUsers(sender);
-      // }
     }
   }
 
@@ -170,17 +166,34 @@ export class ChatUtils {
     };
   }
 
-  static isCurrentTimeBetween(startHour: number, endHour: number): boolean {
-    const currentDate = new Date();
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
+  static getDayIndex(day: string): number {
+    return daysOfWeek.indexOf(day);
+  }
 
-    // Check if the current time is between the specified startHour and endHour
-    if ((hours > startHour || (hours === startHour && minutes >= 0)) && (hours < endHour || (hours === endHour && minutes <= 0))) {
-      return true;
-    } else {
-      return false;
-    }
+  static isWithinSchedule(currentTime: string, currentDay: string, settings: IChatSettings): boolean {
+    const isWithinTimeRange = currentTime >= settings?.startTime && currentTime <= settings?.endTime;
+
+    const isWithinDayRange =
+      ChatUtils.getDayIndex(currentDay) >= ChatUtils.getDayIndex(settings?.startDay) &&
+      ChatUtils.getDayIndex(currentDay) <= ChatUtils.getDayIndex(settings?.endDay);
+
+    return isWithinTimeRange && isWithinDayRange;
+  }
+
+  static getCurrentDay(): string {
+    const now = new Date();
+    const currentDay = daysOfWeek[now.getDay()];
+
+    return currentDay;
+  }
+
+  static getCurrentTime(): string {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+
+    return `${hours}:${minutes}:${seconds}`;
   }
 
   static eliminateDuplicates(objects: IChatMessage[], key: string): IChatMessage[] {

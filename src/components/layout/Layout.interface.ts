@@ -13,9 +13,9 @@ export enum BreakPoint {
   xlarge = 1920
 }
 
-export type BreakPoints =
-  | BreakPoint.xsmall
-  | BreakPoint.small
-  | BreakPoint.medium
-  | BreakPoint.large
-  | BreakPoint.xlarge;
+export type BreakPoints = BreakPoint.xsmall | BreakPoint.small | BreakPoint.medium | BreakPoint.large | BreakPoint.xlarge;
+
+export interface ICookieData {
+  accepted: boolean;
+  expirationDays: number;
+}

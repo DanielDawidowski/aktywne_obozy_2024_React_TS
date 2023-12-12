@@ -52,6 +52,38 @@ export class Utils {
     }
   }
 
+  static setCookie = (name: string, value: string, days: number): void => {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + days);
+
+    const cookieData = {
+      name,
+      value,
+      expires: expirationDate.getTime()
+    };
+
+    localStorage.setItem(name, JSON.stringify(cookieData));
+  };
+
+  static getCookie = (name: string): string | null => {
+    const cookieDataString = localStorage.getItem(name);
+
+    if (cookieDataString) {
+      const cookieData = JSON.parse(cookieDataString);
+
+      // Check if the cookie has expired
+      if (cookieData.expires && cookieData.expires > Date.now()) {
+        return cookieData.value;
+      }
+    }
+
+    return null;
+  };
+
+  static deleteCookie = (name: string): void => {
+    localStorage.removeItem(name);
+  };
+
   static scrollToElement = (id: string, time: number): void => {
     const element = document.getElementById(id);
     console.log("element", element);

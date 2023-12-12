@@ -7,21 +7,21 @@ const COLOR = {
     color: ${(props) => props.theme.secondary_dark};
     background: ${(props) => props.theme.primary_light};
     border: 2px solid ${(props) => props.theme.primary_dark};
-    box-shadow: 1px 2px 4px ${(props) => props.theme.secondary};
+    box-shadow: 1px 2px 1px ${(props) => props.theme.secondary};
     border-radius: 8px;
   `,
   SECONDARY: css`
     color: ${(props) => props.theme.orange};
     background: ${(props) => props.theme.secondary};
     border: 2px solid ${(props) => props.theme.orange};
-    box-shadow: 1px 2px 4px ${(props) => props.theme.secondary};
+    box-shadow: 1px 2px 1px ${(props) => props.theme.secondary};
     border-radius: 8px;
   `,
   AUTH: css`
     color: ${(props) => props.theme.white};
     background: ${(props) => props.theme.orange};
     border: 2px solid ${(props) => props.theme.secondary};
-    box-shadow: 1px 2px 4px ${(props) => props.theme.orange};
+    box-shadow: 0 0 3px ${(props) => props.theme.orange};
     border-radius: 6px;
   `,
   CHAT: css`

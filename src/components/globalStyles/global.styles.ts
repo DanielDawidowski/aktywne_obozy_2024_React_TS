@@ -87,7 +87,7 @@ export const TextDecoration = styled.span`
     left: -5%;
     width: 110%;
     height: ${(props) => props.theme.size2};
-    background: ${(props) => props.theme.fourthColor};
+    background: ${(props) => props.theme.fifthColor};
     z-index: -1;
     border-radius: 18px;
   }

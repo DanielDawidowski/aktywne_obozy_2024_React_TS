@@ -15,7 +15,9 @@ const Dropdown: React.FC<DropdownProps> = ({ Label, children }) => {
 
   return (
     <DropdownContainer ref={dropdownRef} onClick={() => setToggleDropdown(true)}>
-      <DropdownButton onClick={setDropdown}>{Label}</DropdownButton>
+      <DropdownButton $active={toggleDropdown === true} onClick={setDropdown}>
+        {Label}
+      </DropdownButton>
       <AnimatePresence>
         {toggleDropdown && (
           <DropdownContent

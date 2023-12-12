@@ -57,9 +57,6 @@ const Menu: FC = (): ReactElement => {
     return path;
   };
 
-  console.log("path", location.pathname.substring(1));
-  console.log("act", showActiveLink("/events"));
-
   const logout = async (): Promise<void> => {
     await userService.logoutUser();
     dispatch(clearUser());
@@ -134,7 +131,12 @@ const Menu: FC = (): ReactElement => {
                   </DropdownElementStyles>
                   <DropdownElementStyles>
                     <Link to="/admin/chat">
-                      <h4>Chat</h4>
+                      <h4>chat</h4>
+                    </Link>
+                  </DropdownElementStyles>
+                  <DropdownElementStyles>
+                    <Link to="/admin/settings">
+                      <h4>czas chatu</h4>
                     </Link>
                   </DropdownElementStyles>
                 </Dropdown>
@@ -156,7 +158,12 @@ const Menu: FC = (): ReactElement => {
                 </DropdownElementStyles>
                 <DropdownElementStyles>
                   <Link to="/admin/chat">
-                    <h4>Chat</h4>
+                    <h4>chat</h4>
+                  </Link>
+                </DropdownElementStyles>
+                <DropdownElementStyles>
+                  <Link to="/admin/settings">
+                    <h4>czas chatu</h4>
                   </Link>
                 </DropdownElementStyles>
               </Accordion>
