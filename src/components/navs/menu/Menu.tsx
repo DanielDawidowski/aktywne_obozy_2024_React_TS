@@ -139,6 +139,11 @@ const Menu: FC = (): ReactElement => {
                       <h4>czas chatu</h4>
                     </Link>
                   </DropdownElementStyles>
+                  <DropdownElementStyles>
+                    <Link to="/admin/clients">
+                      <h4>zgłoszenia</h4>
+                    </Link>
+                  </DropdownElementStyles>
                 </Dropdown>
               </li>
             </DisplayMedia>
@@ -164,6 +169,11 @@ const Menu: FC = (): ReactElement => {
                 <DropdownElementStyles>
                   <Link to="/admin/settings">
                     <h4>czas chatu</h4>
+                  </Link>
+                </DropdownElementStyles>
+                <DropdownElementStyles>
+                  <Link to="/admin/clients">
+                    <h4>zgłoszenia</h4>
                   </Link>
                 </DropdownElementStyles>
               </Accordion>

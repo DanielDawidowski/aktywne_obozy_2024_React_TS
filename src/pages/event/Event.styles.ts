@@ -148,12 +148,14 @@ export const LeftCornerStyles = styled(CornerStyles)`
   top: 20px;
   left: -15px;
   transform: rotate(-45deg);
+  z-index: 996;
 `;
 
 export const RightCornerStyles = styled(CornerStyles)`
   top: 20px;
   right: -15px;
   transform: rotate(45deg);
+  z-index: 996;
 `;
 
 export const SignUpStyles = styled(motion.div)`

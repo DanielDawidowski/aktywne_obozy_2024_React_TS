@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import type { FC, ReactNode } from "react";
 import { AnimatePresence } from "framer-motion";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -12,17 +12,21 @@ interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  const modalContentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const handleEscape = (event: KeyboardEvent): void => {
-      if (event.key === "Escape" && isOpen) {
+    const handleOutsideClick = (event: MouseEvent): void => {
+      if (modalContentRef.current && !modalContentRef.current.contains(event.target as Node)) {
         onClose();
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
 
     return () => {
-      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [isOpen, onClose]);
 
@@ -32,7 +36,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
         <>
           <ModalOverlay initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <ModalWrapper>
-            <ModalContent initial={{ y: -50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -50, opacity: 0 }}>
+            <ModalContent ref={modalContentRef} initial={{ y: -50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -50, opacity: 0 }}>
               <Flex $align="flex-end" $justify="flex-end">
                 <CloseModalStyles>
                   <IoIosCloseCircleOutline onClick={onClose} />

@@ -4,7 +4,7 @@ import { CheckboxProps } from "./Checkbox.interface";
 import { CheckIcon, CheckboxContainer, CheckboxLabel, StyledCheckbox } from "./Checkbox.styles";
 
 const Checkbox: React.FC<CheckboxProps> = ({ label, onChange }) => {
-  const [isChecked, setChecked] = useState(false);
+  const [isChecked, setChecked] = useState<boolean>(false);
 
   const handleToggle = (): void => {
     const newCheckedState = !isChecked;
@@ -15,10 +15,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, onChange }) => {
   return (
     <CheckboxContainer>
       <StyledCheckbox onClick={handleToggle} $isChecked={isChecked}>
-        <CheckIcon
-          animate={{ opacity: isChecked ? 1 : 0, rotate: isChecked ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-        />
+        <CheckIcon animate={{ opacity: isChecked ? 1 : 0, rotate: isChecked ? 180 : 0 }} transition={{ duration: 0.2 }} />
       </StyledCheckbox>
       <CheckboxLabel $isChecked={isChecked}>{label}</CheckboxLabel>
     </CheckboxContainer>

@@ -32,7 +32,7 @@ const initialState: IChatSettings = {
 
 const EditSettings: FC = (): ReactElement => {
   const [values, setValues] = useState<IChatSettings>(initialState);
-  const [settings, setSettings] = useState<IChatSettings[]>([] as IChatSettings[]);
+  const [settings, setSettings] = useState<IChatSettings[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 

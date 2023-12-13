@@ -8,8 +8,8 @@ export const MenuItem = styled(motion.li)<{ $active?: boolean }>`
   h3 {
     font-family: Oswald;
     color: ${(props) => (props.$active ? props.theme.orange : props.theme.text)};
-    text-shadow: 0 0 1px ${(props) => props.theme.text};
     font-weight: 700;
+    letter-spacing: 0.2px;
   }
 `;
 

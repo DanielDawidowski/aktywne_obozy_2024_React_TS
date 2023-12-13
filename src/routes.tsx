@@ -13,6 +13,7 @@ import Event from "./pages/event/Event";
 import ScrollToTopOnPageChange from "./utils/scrollToTop";
 import Contact from "./pages/contact/Contact";
 import EditSettings from "./pages/admin/settings-chat/EditSettings";
+import Clients from "./pages/admin/clients/ClientList";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
@@ -62,6 +63,14 @@ export const AppRouter: FC = () => {
           element={
             <AdminRoute>
               <EditSettings />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/clients"
+          element={
+            <AdminRoute>
+              <Clients />
             </AdminRoute>
           }
         />
