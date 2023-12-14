@@ -218,14 +218,8 @@ export const EventRightElementStyles = styled.div`
 
   h4:nth-child(1) {
     b {
-      color: ${(props) => props.theme.secondary_dark};
+      color: ${(props) => props.theme.orange};
       letter-spacing: 3px;
-    }
-  }
-
-  h4:nth-child(2) {
-    b {
-      color: ${(props) => props.theme.text};
     }
   }
 `;

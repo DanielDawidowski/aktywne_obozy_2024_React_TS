@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
-export const MessageInputStyles = styled(motion.div)`
+export const MessageInputStyles = styled.div`
   background-color: ${(props) => props.theme.secondaryColor};
+  grid-area: input;
 
   form {
     display: grid;

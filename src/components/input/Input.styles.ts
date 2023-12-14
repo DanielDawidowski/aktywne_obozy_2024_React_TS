@@ -23,7 +23,7 @@ export const InputField = styled.input`
   color: ${(props) => props.theme.purple};
   box-shadow:
     inset 0 0 2px ${(props) => props.theme.body},
-    1px 0 6px ${(props) => props.theme.dark};
+    0 0 1px ${(props) => props.theme.dark};
 
   &:focus {
     border-color: ${(props) => props.theme.orange};

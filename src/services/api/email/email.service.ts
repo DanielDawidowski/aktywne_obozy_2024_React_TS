@@ -4,7 +4,7 @@ import { IEmail } from "../../../interfaces/email/Email.interface";
 
 class EmailService {
   async sendMessage(body: IEmail): Promise<AxiosResponse<IEmail>> {
-    const response = await axios.post("/contact", body);
+    const response: Awaited<AxiosResponse> = await axios.post("/contact", body);
     return response;
   }
 }

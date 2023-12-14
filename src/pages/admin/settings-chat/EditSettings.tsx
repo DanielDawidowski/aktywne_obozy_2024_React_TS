@@ -1,6 +1,6 @@
 import React, { useState, useCallback, ReactElement } from "react";
 import type { FC, FormEvent, ChangeEvent } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { BsClock } from "react-icons/bs";
 import { IChatSettings } from "../../../interfaces/chat/chat.interface";
 import { chatService } from "../../../services/api/chat/chat.service";
@@ -42,7 +42,7 @@ const EditSettings: FC = (): ReactElement => {
 
   const getSettings = useCallback(async () => {
     try {
-      const response: AxiosResponse = await chatService.getChatSettings();
+      const response = await chatService.getChatSettings();
       setSettings(response.data.chatSettings);
     } catch (error) {
       console.log("error", error);
@@ -53,7 +53,7 @@ const EditSettings: FC = (): ReactElement => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response: AxiosResponse = await chatService.editChatSettings(settings[0]._id as string, values);
+      const response = await chatService.editChatSettings(settings[0]._id as string, values);
       setLoading(false);
       setValues(initialState);
       Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);

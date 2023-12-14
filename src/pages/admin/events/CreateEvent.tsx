@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import type { FC, FormEvent } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
 import { eventService } from "../../../services/api/events/events.service";
 import { EventType, IEvent } from "../../../interfaces/event/event.interface";
@@ -14,17 +14,17 @@ import { Container } from "../../../components/globalStyles/global.styles";
 import { ValidationError } from "../../../interfaces/error/Error.interface";
 
 const initialState: IEvent = {
-  name: "zakopane",
+  name: "",
   eventType: EventType.mountains,
-  price: "1400",
-  discountPrice: "900",
+  price: "",
+  discountPrice: "",
   startDate: new Date(),
   endDate: new Date(),
   image: "",
   address: {
-    hotel: "galicowka",
-    street: "male ciche",
-    web: "www.wp.pl"
+    hotel: "",
+    street: "",
+    web: ""
   },
   energyland: false,
   attractions: [],
@@ -48,7 +48,7 @@ const CreateEvent: FC = (): ReactElement => {
     values.attractions = attractions;
     values.extraAttractions = extraAttractions;
     try {
-      const response: AxiosResponse<IEvent> = await eventService.createEvent(values);
+      const response = await eventService.createEvent(values);
       setLoading(false);
       setHasError(false);
       setAttractions([]);

@@ -1,7 +1,7 @@
 import React, { useEffect, ReactElement, useCallback, useState, useMemo } from "react";
 import type { FC } from "react";
 import type { Dispatch } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { AiOutlineEdit } from "react-icons/ai";
 import { MdDeleteForever } from "react-icons/md";
@@ -14,15 +14,19 @@ import { AdminEventListItemStyles, AdminEventListStyles, ButtonActionStyles } fr
 import Layout from "../../../components/layout/Layout";
 import transition from "../../../utils/transition";
 import { Container } from "../../../components/globalStyles/global.styles";
+import { ValidationError } from "../../../interfaces/error/Error.interface";
+import Spinner from "../../../components/spinner/Spinner";
 
 const AdminEvents: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [currentPage] = useState<number>(1);
   const dispatch: Dispatch = useAppDispatch();
 
   const getAllEvents = useCallback(async (): Promise<void> => {
     try {
-      const response: AxiosResponse = await eventService.getAllEvents(currentPage);
+      const response = await eventService.getAllEvents(currentPage);
       setEvents(response.data.events);
       // console.log("response", response.data.events);
     } catch (error) {
@@ -34,12 +38,18 @@ const AdminEvents: FC = (): ReactElement => {
     const result = confirm("Czy na pewno chcesz usunąć?");
     if (result) {
       try {
-        const response: AxiosResponse<IEvent> = await eventService.deleteEvent(eventId);
+        const response = await eventService.deleteEvent(eventId);
         Utils.dispatchNotification(response?.data?.message as string, INotificationType.SUCCESS, dispatch);
         // console.log("response", response);
         getAllEvents();
-      } catch (error: any) {
-        Utils.dispatchNotification(error?.response?.data.message, INotificationType.ERROR, dispatch);
+      } catch (error) {
+        if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+          setLoading(false);
+          setErrorMessage(error?.response?.data.message as string);
+          Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
+        } else {
+          console.error(error);
+        }
       }
     }
   };
@@ -55,19 +65,23 @@ const AdminEvents: FC = (): ReactElement => {
   return (
     <Layout>
       <Container $small>
-        <AdminEventListStyles>
-          {sortedList.map((event, index) => (
-            <AdminEventListItemStyles key={index}>
-              <h2>{event.name}</h2>
-              <ButtonActionStyles>
-                <Link to={`/admin/events/update/${event._id}`}>
-                  <AiOutlineEdit />
-                </Link>
-                <MdDeleteForever style={{ fill: "red" }} onClick={() => deleteEvent(event._id as string)} />
-              </ButtonActionStyles>
-            </AdminEventListItemStyles>
-          ))}
-        </AdminEventListStyles>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <AdminEventListStyles>
+            {sortedList.map((event, index) => (
+              <AdminEventListItemStyles key={index}>
+                <h2>{event.name}</h2>
+                <ButtonActionStyles>
+                  <Link to={`/admin/events/update/${event._id}`}>
+                    <AiOutlineEdit />
+                  </Link>
+                  <MdDeleteForever style={{ fill: "red" }} onClick={() => deleteEvent(event._id as string)} />
+                </ButtonActionStyles>
+              </AdminEventListItemStyles>
+            ))}
+          </AdminEventListStyles>
+        )}
       </Container>
     </Layout>
   );

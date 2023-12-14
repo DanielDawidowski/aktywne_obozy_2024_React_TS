@@ -1,15 +1,12 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
-export const MessageDisplayStyles = styled(motion.div)`
+export const MessageDisplayStyles = styled.div`
   overflow-y: scroll;
   scroll-behavior: smooth;
-
+  grid-area: display;
+  width: 100%;
+  height: 100%;
   border: 1px solid ${(props) => props.theme.text};
-
-  @media (max-width: ${(props) => props.theme.breakpoint_small}) {
-    max-height: 100%;
-  }
 
   /* Webkit (Safari, Chrome) */
   &::-webkit-scrollbar {

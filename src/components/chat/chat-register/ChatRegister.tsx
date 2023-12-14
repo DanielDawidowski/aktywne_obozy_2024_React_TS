@@ -1,6 +1,6 @@
 import React, { useState, ReactElement } from "react";
 import type { ChangeEvent, FC, FormEvent } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { ISignUpData } from "../../../interfaces/auth/auth.interface";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
@@ -13,7 +13,7 @@ import Logo from "../../logo/Logo";
 import { Flex, Grid } from "../../globalStyles/global.styles";
 import Spinner from "../../spinner/Spinner";
 import { ChatRegisterStyles } from "../ChatBoxStyles";
-import { FormItemStyles } from "../../form/Form.styles";
+import { FormItemStyles, FormStyles } from "../../form/Form.styles";
 import { ValidationError } from "../../../interfaces/error/Error.interface";
 import { Utils } from "../../../utils/utils.service";
 import { socketService } from "../../../services/socket/socket.service";
@@ -32,7 +32,7 @@ const ChatRegister: FC = (): ReactElement => {
     setLoading(true);
     // const password = Utils.generateString(10);
     try {
-      const response: AxiosResponse = await authService.signUp({
+      const response = await authService.signUp({
         username,
         email,
         password: Utils.generateString(10),
@@ -67,9 +67,9 @@ const ChatRegister: FC = (): ReactElement => {
             </Flex>
           )}
           <Grid>
-            <Logo width="85px" height="125px" />
+            <Logo width="125px" height="185px" />
           </Grid>
-          <form onSubmit={registerTempUser}>
+          <FormStyles onSubmit={registerTempUser} $bg>
             <FormItemStyles>
               <Input
                 id="username"
@@ -91,11 +91,11 @@ const ChatRegister: FC = (): ReactElement => {
               />
             </FormItemStyles>
             <FormItemStyles>
-              <Button color={ButtonColor.primary} disabled={!username || !email}>
-                wyslij
+              <Button color={ButtonColor.chat} disabled={!username || !email}>
+                chat
               </Button>
             </FormItemStyles>
-          </form>
+          </FormStyles>
         </>
       )}
     </ChatRegisterStyles>

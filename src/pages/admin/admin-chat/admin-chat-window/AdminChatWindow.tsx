@@ -7,10 +7,10 @@ import { IChatMessage } from "../../../../interfaces/chat/chat.interface";
 import MessageDisplay from "../../../../components/chat/message-display/MessageDisplay";
 import { socketService } from "../../../../services/socket/socket.service";
 import { ChatUtils } from "../../../../utils/chat-utils.service";
-import { AxiosResponse } from "axios";
 import { ChatWindowStyles } from "../../../../components/chat/ChatBoxStyles";
 import Spinner from "../../../../components/spinner/Spinner";
 import MessageInput from "../../../../components/chat/message-input/MessageInput";
+import { AdminWindowStyles } from "../../Admin.styles";
 
 const AdminChatWindow: FC = (): ReactElement => {
   const { profile } = useAppSelector((state) => state.user);
@@ -38,7 +38,7 @@ const AdminChatWindow: FC = (): ReactElement => {
 
   const getChatMessages = useCallback(async (receiverId: string) => {
     try {
-      const response: AxiosResponse = await chatService.getChatMessages(receiverId);
+      const response = await chatService.getChatMessages(receiverId);
       ChatUtils.privateChatMessages = [...response.data.messages];
       setMessages([...ChatUtils.privateChatMessages]);
     } catch (error) {
@@ -82,16 +82,18 @@ const AdminChatWindow: FC = (): ReactElement => {
   }, [rendered, getNewUserMessages]);
 
   return (
-    <ChatWindowStyles>
-      {isLoading ? (
-        <Spinner size={40} />
-      ) : (
-        <>
-          <MessageDisplay messages={messages} profile={profile} />
-          <MessageInput setChatMessage={handleMessage} />
-        </>
-      )}
-    </ChatWindowStyles>
+    <AdminWindowStyles>
+      <ChatWindowStyles>
+        {isLoading ? (
+          <Spinner size={40} />
+        ) : (
+          <>
+            <MessageDisplay messages={messages} profile={profile} />
+            <MessageInput setChatMessage={handleMessage} />
+          </>
+        )}
+      </ChatWindowStyles>
+    </AdminWindowStyles>
   );
 };
 

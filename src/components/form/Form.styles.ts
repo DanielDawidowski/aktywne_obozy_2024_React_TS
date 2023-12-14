@@ -22,17 +22,17 @@ export const FormImageStyles = styled(motion.div)`
   }
 `;
 
-export const FormStyles = styled.form`
+export const FormStyles = styled.form<{ $bg?: boolean }>`
   display: grid;
   margin: ${(props) => props.theme.size1};
   padding: ${(props) => props.theme.size4} ${(props) => props.theme.size1};
-  background-color: ${(props) => props.theme.primary_light};
-  border: 1px solid ${(props) => props.theme.dark};
+  background-color: ${(props) => (props.$bg ? "none" : props.theme.primary_light)};
+  border: 1px solid ${(props) => (props.$bg ? "none" : props.theme.dark)};
   border-radius: 24px;
   outline: none;
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-    margin: ${(props) => props.theme.size6} 0;
-    padding: ${(props) => props.theme.size6};
+    margin: ${(props) => (props.$bg ? props.theme.size1 : props.theme.size6)} 0;
+    padding: ${(props) => (props.$bg ? props.theme.size1 : props.theme.size6)};
   }
 `;
 
@@ -51,6 +51,12 @@ export const FormItemStyles = styled.div<{ $attracion?: boolean }>`
 
   p {
     text-align: justify;
+  }
+
+  svg {
+    margin-left: ${(props) => (props.$attracion ? "8px" : "0px")};
+    width: ${(props) => (props.$attracion ? "25px" : "0px")};
+    height: ${(props) => (props.$attracion ? "25px" : "0px")};
   }
 `;
 
@@ -77,7 +83,7 @@ export const FormAttractionStyles = styled.li`
 
 export const EventInfoStyles = styled(motion.div)`
   padding: ${(props) => props.theme.size2};
-  max-width: 600px;
+  max-width: 500px;
   display: grid;
   /* @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     margin: ${(props) => props.theme.size6} 0;

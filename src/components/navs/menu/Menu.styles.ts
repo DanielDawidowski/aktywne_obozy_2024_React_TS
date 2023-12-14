@@ -7,7 +7,7 @@ export const MenuItem = styled(motion.li)<{ $active?: boolean }>`
   padding: ${(props) => props.theme.size1};
   h3 {
     font-family: Oswald;
-    color: ${(props) => (props.$active ? props.theme.orange : props.theme.text)};
+    color: ${(props) => (props.$active ? props.theme.thirdColor : props.theme.text)};
     font-weight: 700;
     letter-spacing: 0.2px;
   }

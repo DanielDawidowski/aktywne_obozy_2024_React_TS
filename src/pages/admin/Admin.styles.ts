@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { InputContainer, LableStyles } from "../../components/input/Input.styles";
+import { MessageDisplayStyles } from "../../components/chat/message-display/MessageStyles";
+import { ChatWindowStyles } from "../../components/chat/ChatBoxStyles";
 
 export const AdminDashboardStyles = styled.section`
   display: grid;
@@ -34,6 +36,20 @@ export const AdminEventListItemStyles = styled.li`
   background-color: ${(props) => props.theme.white};
   h4 {
     color: ${(props) => props.theme.primary};
+  }
+`;
+
+export const AdminWindowStyles = styled.div`
+  height: 80vh;
+  ${ChatWindowStyles} {
+    display: grid;
+    grid-template-rows: 1fr 30px;
+    grid-template-areas:
+      "display"
+      "input";
+  }
+  ${MessageDisplayStyles} {
+    height: 100%;
   }
 `;
 

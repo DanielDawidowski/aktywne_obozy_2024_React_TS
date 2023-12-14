@@ -1,6 +1,6 @@
 import React, { useState, useCallback, ReactElement } from "react";
 import type { FC, FormEvent } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { EventType, IEvent } from "../../../interfaces/event/event.interface";
 import { useAppDispatch } from "../../../redux-toolkit/hooks";
@@ -51,12 +51,19 @@ const EditEvent: FC = (): ReactElement => {
 
   const getEvent = useCallback(async () => {
     try {
-      const response: AxiosResponse = await eventService.getEvent(eventId as string);
+      const response = await eventService.getEvent(eventId as string);
       setEvent(response.data.event);
     } catch (error) {
-      console.log("error", error);
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+        setHasError(true);
+        setErrorMessage(error?.response?.data.message as string);
+        Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
+      } else {
+        console.error(error);
+      }
     }
-  }, [eventId]);
+  }, [eventId, dispatch, errorMessage]);
 
   const updateEvent = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
@@ -64,7 +71,7 @@ const EditEvent: FC = (): ReactElement => {
     values.attractions = attractions;
     values.extraAttractions = extraAttractions;
     try {
-      const response: AxiosResponse = await eventService.updateEvent(eventId as string, values);
+      const response = await eventService.updateEvent(eventId as string, values);
       setLoading(false);
       setHasError(false);
       setValues(initialState);

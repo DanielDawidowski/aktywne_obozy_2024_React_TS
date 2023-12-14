@@ -171,11 +171,17 @@ export class ChatUtils {
   }
 
   static isWithinSchedule(currentTime: string, currentDay: string, settings: IChatSettings): boolean {
-    const isWithinTimeRange = currentTime >= settings?.startTime && currentTime <= settings?.endTime;
+    const isWithinTimeRange =
+      (currentTime >= settings.startTime && currentTime <= settings.endTime) ||
+      (settings.startTime > settings.endTime && (currentTime >= settings.startTime || currentTime <= settings.endTime));
+
+    const currentDayIndex = ChatUtils.getDayIndex(currentDay);
+    const startDayIndex = ChatUtils.getDayIndex(settings.startDay);
+    const endDayIndex = ChatUtils.getDayIndex(settings.endDay);
 
     const isWithinDayRange =
-      ChatUtils.getDayIndex(currentDay) >= ChatUtils.getDayIndex(settings?.startDay) &&
-      ChatUtils.getDayIndex(currentDay) <= ChatUtils.getDayIndex(settings?.endDay);
+      (currentDayIndex >= startDayIndex && currentDayIndex <= endDayIndex) ||
+      (startDayIndex > endDayIndex && (currentDayIndex >= startDayIndex || currentDayIndex <= endDayIndex));
 
     return isWithinTimeRange && isWithinDayRange;
   }

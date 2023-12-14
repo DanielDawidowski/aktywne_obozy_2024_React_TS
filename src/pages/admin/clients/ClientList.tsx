@@ -1,6 +1,6 @@
 import React, { useState, useCallback, ReactElement, useMemo } from "react";
 import type { FC, ChangeEvent } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { Dispatch } from "@reduxjs/toolkit";
 import { AiOutlineEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -32,7 +32,7 @@ const Clients: FC = (): ReactElement => {
   const getClients = useCallback(async () => {
     setLoading(true);
     try {
-      const response: AxiosResponse = await clientService.getAllClients(1);
+      const response = await clientService.getAllClients(1);
       setClients(response.data.clients);
     } catch (error) {
       console.log("error", error);

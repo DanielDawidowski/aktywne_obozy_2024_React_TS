@@ -1,6 +1,6 @@
 import React, { useState, ReactElement, useEffect, useCallback } from "react";
 import type { FC } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { find } from "lodash";
 import { IChatMessage } from "../../../interfaces/chat/chat.interface";
 import { OmitPasswrodLoginData } from "../../../interfaces/auth/auth.interface";
@@ -57,7 +57,7 @@ const ChatWindow: FC<IChatWidnow> = ({ profile }): ReactElement => {
 
   const getChatMessages = useCallback(async (receiverId: string) => {
     try {
-      const response: AxiosResponse = await chatService.getChatMessages(receiverId);
+      const response = await chatService.getChatMessages(receiverId);
       ChatUtils.privateChatMessages = [...response.data.messages];
       setMessages([...ChatUtils.privateChatMessages]);
     } catch (error) {
@@ -124,7 +124,7 @@ const ChatWindow: FC<IChatWidnow> = ({ profile }): ReactElement => {
         </Flex>
       </ChatWindowHeaderStyles>
 
-      <MessageDisplay messages={messages} profile={profile} chatbox />
+      <MessageDisplay messages={messages} profile={profile} />
       <MessageInput setChatMessage={handleMessage} />
     </ChatWindowStyles>
   );

@@ -3,28 +3,28 @@ import axios from "../../axios";
 import { IEvent } from "../../../interfaces/event/event.interface";
 
 class EventService {
-  async createEvent(body: IEvent): Promise<AxiosResponse<IEvent>> {
-    const response = await axios.post("/event", body);
+  async createEvent(body: IEvent): Promise<AxiosResponse> {
+    const response: Awaited<AxiosResponse> = await axios.post("/event", body);
     return response;
   }
 
   async getAllEvents(page: number): Promise<AxiosResponse> {
-    const response = await axios.get(`/event/all/${page}`);
+    const response: Awaited<AxiosResponse> = await axios.get(`/event/all/${page}`);
     return response;
   }
 
   async getEvent(eventId: string): Promise<AxiosResponse> {
-    const response = await axios.get(`/event/${eventId}`);
+    const response: Awaited<AxiosResponse> = await axios.get(`/event/${eventId}`);
     return response;
   }
 
-  async updateEvent(eventId: string, body: IEvent): Promise<AxiosResponse<IEvent>> {
-    const response = await axios.put(`/event/${eventId}`, body);
+  async updateEvent(eventId: string, body: IEvent): Promise<AxiosResponse> {
+    const response: Awaited<AxiosResponse> = await axios.put(`/event/${eventId}`, body);
     return response;
   }
 
   async deleteEvent(eventId: string): Promise<AxiosResponse> {
-    const response = await axios.delete(`/event/${eventId}`);
+    const response: Awaited<AxiosResponse> = await axios.delete(`/event/${eventId}`);
     return response;
   }
 }

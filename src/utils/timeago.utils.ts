@@ -11,9 +11,9 @@ export class TimeAgo {
     const date: Date = typeof value === "string" ? new Date(value) : value;
     const yesterday = subDays(new Date(), 1);
     if (isSameDay(date, new Date())) {
-      return "Today";
+      return "Dziś";
     } else if (isSameDay(date, yesterday)) {
-      return "Yesterday";
+      return "Wczoraj";
     } else if (getISOWeek(new Date()) === getISOWeek(date) || getISOWeek(new Date()) - getISOWeek(date) === 1) {
       return format(date, "EEEE", { locale: pl });
     } else {

@@ -1,16 +1,15 @@
 import React, { useState, ReactElement, useCallback } from "react";
 import type { FC } from "react";
-import { AxiosResponse } from "axios";
 import PropTypes from "prop-types";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
-import { FaWindowClose } from "react-icons/fa";
+import { FaWindowClose, FaCheck } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "../../redux-toolkit/hooks";
 import ChatWindow from "./chat-window/ChatWindow";
 import { setOpenChat } from "../../redux-toolkit/reducers/chat/chat.reducer";
 import { clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
 import { IChat, IChatSettings } from "../../interfaces/chat/chat.interface";
 import ChatRegister from "./chat-register/ChatRegister";
-import { ChatBoxBigStyles, ChatBoxBodyStyles, ChatBoxHeaderStyles, ChatBoxSmallStyles, ChatBoxStyles } from "./ChatBoxStyles";
+import { ChatBoxBigStyles, ChatBoxBodyStyles, ChatBoxHeaderConfirm, ChatBoxHeaderStyles, ChatBoxSmallStyles, ChatBoxStyles } from "./ChatBoxStyles";
 import useWindowSize from "../../hooks/useWindowSize";
 import { BreakPoint } from "../layout/Layout.interface";
 import { Flex, Grid } from "../globalStyles/global.styles";
@@ -22,8 +21,9 @@ import useEffectOnce from "../../hooks/useEffectOnce";
 import { ChatUtils } from "../../utils/chat-utils.service";
 
 const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
+  const [confirm, setConfirm] = useState<boolean>(false);
   const { profile } = useAppSelector((state) => state.user);
-  const [settings, setSettings] = useState<IChatSettings[]>([] as IChatSettings[]);
+  const [settings, setSettings] = useState<IChatSettings>({} as IChatSettings);
   const storedUser = useLocalStorage<ISignUpData>("user");
 
   const user = storedUser.get() as ISignUpData;
@@ -36,8 +36,8 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
 
   const getSettings = useCallback(async () => {
     try {
-      const response: AxiosResponse = await chatService.getChatSettings();
-      setSettings(response.data.chatSettings);
+      const response = await chatService.getChatSettings();
+      setSettings(response.data.chatSettings[0]);
     } catch (error) {
       console.log("error", error);
     }
@@ -48,6 +48,7 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
   };
 
   const closeChat = (): void => {
+    setConfirm(false);
     dispatch(setOpenChat({ isLoading: false, isOpenChat: false }));
     dispatch(clearUser());
     socketService?.socket.disconnect();
@@ -57,9 +58,7 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
     getSettings();
   });
 
-  console.log("settings", settings[0]);
-
-  const isChatVisible = ChatUtils.isWithinSchedule(currentTime, currentDay, settings[0]);
+  const isChatVisible = ChatUtils.isWithinSchedule(currentTime, currentDay, settings);
 
   return isChatVisible ? (
     <ChatBoxStyles>
@@ -83,8 +82,8 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
         <ChatBoxBigStyles
           animate={{
             borderRadius: 20,
-            height: size.width < BreakPoint.xsmall ? "100%" : BreakPoint.small,
-            width: size.width < BreakPoint.xsmall ? "100%" : BreakPoint.xsmall
+            height: size.width < BreakPoint.small ? "100%" : BreakPoint.small,
+            width: size.width < BreakPoint.small ? "100%" : BreakPoint.xsmall
           }}
           style={{
             bottom: size.width < BreakPoint.xsmall ? 0 : 20,
@@ -92,14 +91,24 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
           }}
         >
           <ChatBoxHeaderStyles>
-            <Flex $align="center" $justify="space-between">
-              <span>Chat Online</span>
-              <FaWindowClose onClick={closeChat} />
-            </Flex>
+            {!confirm ? (
+              <Flex $align="center" $justify="space-between">
+                <span>Chat Online</span>
+                <FaWindowClose onClick={() => setConfirm(true)} />
+              </Flex>
+            ) : (
+              <ChatBoxHeaderConfirm>
+                <Flex $align="center" $justify="space-between">
+                  <span>Czy chcesz zamknąć chat ?</span>
+                  <Flex $align="center" $justify="space-between">
+                    <FaCheck onClick={closeChat} />
+                    <FaWindowClose onClick={() => setConfirm(false)} />
+                  </Flex>
+                </Flex>
+              </ChatBoxHeaderConfirm>
+            )}
           </ChatBoxHeaderStyles>
-          <ChatBoxBodyStyles>
-            <Grid>{!profile ? <ChatRegister /> : <ChatWindow profile={profile} />}</Grid>
-          </ChatBoxBodyStyles>
+          <ChatBoxBodyStyles>{!profile ? <ChatRegister /> : <ChatWindow profile={profile} />}</ChatBoxBodyStyles>
         </ChatBoxBigStyles>
       )}
     </ChatBoxStyles>

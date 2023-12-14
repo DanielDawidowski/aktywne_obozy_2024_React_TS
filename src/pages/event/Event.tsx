@@ -2,7 +2,7 @@ import React, { useCallback, useState, ReactElement } from "react";
 import type { FC, FormEvent } from "react";
 import { useParams } from "react-router-dom";
 import { LuPencil } from "react-icons/lu";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Energylandia from "../../assets/Images/energylandia.jpg";
 import PeopleImg from "../../assets/Images/events/people.png";
 import { closeModal, openModal } from "../../redux-toolkit/reducers/modal/modal.reducer";
@@ -72,7 +72,7 @@ const Event: FC = (): ReactElement => {
 
   const getEvent = useCallback(async () => {
     try {
-      const response: AxiosResponse = await eventService.getEvent(getId);
+      const response = await eventService.getEvent(getId);
       setEvent(response.data.event);
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
@@ -92,7 +92,7 @@ const Event: FC = (): ReactElement => {
     values.eventId = getId;
     values.eventName = event.name;
     try {
-      const response: AxiosResponse<IClient> = await clientService.createClient(values);
+      const response = await clientService.createClient(values);
       setLoading(false);
       setHasError(false);
       setValues(initialState);
@@ -160,7 +160,7 @@ const Event: FC = (): ReactElement => {
             <EventLeftStyles>
               <EventLeftHeaderStyles>
                 <LeftCornerStyles />
-                <Image src={event.image as string} alt="event" />
+                {event.image ? <Image src={event.image as string} alt="event" /> : null}
                 <RightCornerStyles />
               </EventLeftHeaderStyles>
 

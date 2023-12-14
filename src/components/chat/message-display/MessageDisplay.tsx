@@ -8,26 +8,17 @@ import { TimeAgo } from "../../../utils/timeago.utils";
 import RightMessageDisplay from "./right-message/RightMessageDisplay";
 import LeftMessageDisplay from "./left-message/LeftMessageDisplay";
 import { MessageChatDateStyles, MessageChatStyles, MessageDisplayStyles } from "./MessageStyles";
-import useWindowSize from "../../../hooks/useWindowSize";
 
 interface IMessageDisplay {
   messages: IChatMessage[];
   profile: IProfileProps | null;
-  chatbox?: boolean;
 }
 
-const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile, chatbox = false }): ReactElement => {
+const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile }): ReactElement => {
   const scrollRef = useChatScrollToBottom(messages);
-  const size = useWindowSize();
 
   return (
-    <MessageDisplayStyles
-      ref={scrollRef}
-      style={{
-        height: chatbox ? 510 : 800,
-        width: chatbox ? "100%" : size.width < 768 ? 300 : "100%"
-      }}
-    >
+    <MessageDisplayStyles ref={scrollRef}>
       {messages.map((message: IChatMessage, index: number) => (
         <MessageChatStyles key={message._id}>
           {(index === 0 || TimeAgo.dayMonthYear(message.createdAt as Date) !== TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
@@ -49,8 +40,7 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile, chatbox = fals
 };
 
 MessageDisplay.propTypes = {
-  messages: PropTypes.array.isRequired,
-  chatbox: PropTypes.bool
+  messages: PropTypes.array.isRequired
 };
 
 export default MessageDisplay;

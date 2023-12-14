@@ -2,6 +2,7 @@ import styled from "styled-components";
 import ContactBG from "../../assets/Images/contact/contactBG.png";
 import { DotsContainer } from "../../components/dots/Dots.styles";
 import { Grid } from "../../components/globalStyles/global.styles";
+import { FormStyles } from "../../components/form/Form.styles";
 
 export const ContactStyles = styled.section`
   width: 100%;
@@ -35,6 +36,14 @@ export const ContactLeftInner = styled.div`
 
 export const ContactRight = styled.div`
   width: 100%;
+  h3 {
+    background-color: ${(props) => props.theme.fourthColor};
+    border: 1px solid ${(props) => props.theme.text};
+    border-radius: 24px;
+    padding: ${(props) => props.theme.size1} ${(props) => props.theme.size2};
+    color: ${(props) => props.theme.body};
+    text-shadow: 0px 1px 1px ${(props) => props.theme.text};
+  }
 `;
 
 export const ContactRightInner = styled.div``;
@@ -45,6 +54,10 @@ export const ContactOuter = styled.div`
   border-radius: 24px;
   margin: ${(props) => props.theme.size1};
   box-shadow: 0px 0px 4px 1px ${(props) => props.theme.text};
+  ${FormStyles} {
+    padding: ${(props) => props.theme.size2};
+    margin: ${(props) => props.theme.size2} 0;
+  }
 `;
 
 export const ContactInner = styled.div<{ $bg?: boolean }>`
@@ -91,9 +104,7 @@ export const ContactInfo = styled.div`
   padding: ${(props) => props.theme.size1};
   position: relative;
   z-index: 2;
-  @media (min-width: ${(props) => props.theme.breakpoint_small}) {
-    padding: ${(props) => props.theme.size2};
-  }
+
   h4 {
     font-family: Oswald;
     margin-top: ${(props) => props.theme.size1};
