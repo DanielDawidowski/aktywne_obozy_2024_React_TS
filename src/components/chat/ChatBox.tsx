@@ -19,13 +19,18 @@ import { socketService } from "../../services/socket/socket.service";
 import { chatService } from "../../services/api/chat/chat.service";
 import useEffectOnce from "../../hooks/useEffectOnce";
 import { ChatUtils } from "../../utils/chat-utils.service";
+import axios from "axios";
+import { ValidationError } from "../../interfaces/error/Error.interface";
+import Spinner from "../spinner/Spinner";
 
 const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
   const [confirm, setConfirm] = useState<boolean>(false);
-  const { profile } = useAppSelector((state) => state.user);
+  const [loading, setLoading] = useState<boolean>(false);
   const [settings, setSettings] = useState<IChatSettings>({} as IChatSettings);
-  const storedUser = useLocalStorage<ISignUpData>("user");
 
+  const { profile } = useAppSelector((state) => state.user);
+
+  const storedUser = useLocalStorage<ISignUpData>("user");
   const user = storedUser.get() as ISignUpData;
 
   const size = useWindowSize();
@@ -39,7 +44,11 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
       const response = await chatService.getChatSettings();
       setSettings(response.data.chatSettings[0]);
     } catch (error) {
-      console.log("error", error);
+      if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
+        setLoading(false);
+      } else {
+        console.error(error);
+      }
     }
   }, []);
 
@@ -58,9 +67,9 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
     getSettings();
   });
 
-  const isChatVisible = ChatUtils.isWithinSchedule(currentTime, currentDay, settings);
+  // const isChatVisible = ChatUtils.isWithinSchedule(currentTime, currentDay, settings);
 
-  return isChatVisible ? (
+  return (
     <ChatBoxStyles>
       {!isOpenChat && !user ? (
         <ChatBoxSmallStyles
@@ -108,11 +117,12 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
               </ChatBoxHeaderConfirm>
             )}
           </ChatBoxHeaderStyles>
-          <ChatBoxBodyStyles>{!profile ? <ChatRegister /> : <ChatWindow profile={profile} />}</ChatBoxBodyStyles>
+          {!loading ? <ChatBoxBodyStyles>{!profile ? <ChatRegister /> : <ChatWindow profile={profile} />}</ChatBoxBodyStyles> : <Spinner />}
         </ChatBoxBigStyles>
       )}
     </ChatBoxStyles>
-  ) : null;
+  );
+  // ) : null;
 };
 
 ChatBox.propTypes = {

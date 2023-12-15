@@ -73,7 +73,7 @@ const CookieContent: FC = (): ReactElement => {
       <h3>
         <b>Kontakt:</b>
       </h3>
-      <p>W sprawach związanych z ochroną danych osobowych można skontaktować się z nami pod adresem [adres e-mail] lub [numer telefonu].</p>
+      <p>W sprawach związanych z ochroną danych osobowych można skontaktować się z nami pod adresem aktywneobozy@gmail.com lub +48602423775.</p>
       <br />
       <p>
         Niniejsza Polityka Prywatności może ulec zmianie. Aktualna wersja zawsze będzie dostępna na naszej stronie internetowej. O wszelkich istotnych

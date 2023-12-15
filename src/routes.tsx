@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useLocation, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import Home from "./pages/home/Home";
+// import Home from "./pages/home/Home";
 import { AuthTabs } from "./pages/auth";
 import AdminRoute from "./pages/admin/AdminRoute";
 import CreateEvent from "./pages/admin/events/CreateEvent";
