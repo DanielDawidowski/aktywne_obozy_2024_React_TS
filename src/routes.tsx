@@ -14,6 +14,7 @@ import ScrollToTopOnPageChange from "./utils/scrollToTop";
 import Contact from "./pages/contact/Contact";
 import EditSettings from "./pages/admin/settings-chat/EditSettings";
 import Clients from "./pages/admin/clients/ClientList";
+import Temp from "./pages/temp/Temp";
 
 export const AppRouter: FC = () => {
   const location = useLocation();
@@ -21,7 +22,8 @@ export const AppRouter: FC = () => {
     <AnimatePresence mode="wait" initial={false}>
       <ScrollToTopOnPageChange />
       <Routes location={location} key={location.pathname}>
-        <Route index element={<Home />} />
+        <Route index element={<Temp />} />
+        {/* <Route index element={<Home />} /> */}
         <Route path="/events" element={<Events />} />
         <Route path="/login" element={<AuthTabs />} />
         <Route path="/event/:eventId" element={<Event />} />
