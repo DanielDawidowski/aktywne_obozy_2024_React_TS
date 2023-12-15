@@ -12,7 +12,7 @@ import ChatRegister from "./chat-register/ChatRegister";
 import { ChatBoxBigStyles, ChatBoxBodyStyles, ChatBoxHeaderConfirm, ChatBoxHeaderStyles, ChatBoxSmallStyles, ChatBoxStyles } from "./ChatBoxStyles";
 import useWindowSize from "../../hooks/useWindowSize";
 import { BreakPoint } from "../layout/Layout.interface";
-import { Flex, Grid } from "../globalStyles/global.styles";
+import { Flex } from "../globalStyles/global.styles";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { ISignUpData } from "../../interfaces/auth/auth.interface";
 import { socketService } from "../../services/socket/socket.service";

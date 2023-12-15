@@ -8,6 +8,7 @@ import { TimeAgo } from "../../../utils/timeago.utils";
 import RightMessageDisplay from "./right-message/RightMessageDisplay";
 import LeftMessageDisplay from "./left-message/LeftMessageDisplay";
 import { MessageChatDateStyles, MessageChatStyles, MessageDisplayStyles } from "./MessageStyles";
+import { Grid } from "../../globalStyles/global.styles";
 
 interface IMessageDisplay {
   messages: IChatMessage[];
@@ -22,7 +23,11 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile }): ReactElemen
       {messages.map((message: IChatMessage, index: number) => (
         <MessageChatStyles key={message._id}>
           {(index === 0 || TimeAgo.dayMonthYear(message.createdAt as Date) !== TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
-            <MessageChatDateStyles>{TimeAgo?.chatMessageTransform(message?.createdAt as Date)}</MessageChatDateStyles>
+            <MessageChatDateStyles>
+              <Grid>
+                <h5>{TimeAgo?.chatMessageTransform(message?.createdAt as Date)}</h5>
+              </Grid>
+            </MessageChatDateStyles>
           )}
 
           {(message.receiverName === profile?.username.toLowerCase() || message.senderName === profile?.username.toLowerCase()) && (

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import ChatBG from "../../../assets/Images/chatBG.png";
 
 export const MessageDisplayStyles = styled.div`
   overflow-y: scroll;
@@ -7,6 +8,9 @@ export const MessageDisplayStyles = styled.div`
   width: 100%;
   height: 100%;
   border: 1px solid ${(props) => props.theme.text};
+  background: url(${ChatBG});
+  background-size: cover;
+  background-repeat: no-repeat;
 
   /* Webkit (Safari, Chrome) */
   &::-webkit-scrollbar {
@@ -47,11 +51,29 @@ export const MessageChatStyles = styled.div`
 `;
 
 export const MessageChatDateStyles = styled.div`
-  padding: ${(props) => props.theme.size1};
-  color: ${(props) => props.theme.secondary};
+  position: relative;
   font-size: ${(props) => props.theme.size2};
-  text-align: center;
   margin-bottom: ${(props) => props.theme.size2};
+  z-index: 1;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    background-color: ${(props) => props.theme.dark};
+    height: 1px;
+    width: 50%;
+    border-radius: 25%;
+    z-index: -1;
+  }
+  h5 {
+    color: ${(props) => props.theme.dark};
+    background-color: ${(props) => props.theme.white};
+    border-radius: 4px;
+    text-align: center;
+    padding: 4px ${(props) => props.theme.size1};
+    border: 1px solid ${(props) => props.theme.dark};
+  }
 `;
 
 export const MessageStyles = styled.div`
