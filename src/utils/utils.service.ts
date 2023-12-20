@@ -86,7 +86,6 @@ export class Utils {
 
   static scrollToElement = (id: string, time: number): void => {
     const element = document.getElementById(id);
-    console.log("element", element);
     if (element) {
       const targetPosition = element.getBoundingClientRect().top + window.scrollY;
       const startPosition = window.scrollY;
@@ -111,7 +110,6 @@ export class Utils {
 
 export const scrollToElement = (id: string, time: number): void => {
   const element = document.getElementById(id);
-  console.log("element", element);
   if (element) {
     const targetPosition = element.getBoundingClientRect().top + window.scrollY;
     const startPosition = window.scrollY;

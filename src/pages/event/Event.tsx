@@ -211,27 +211,31 @@ const Event: FC = (): ReactElement => {
                   </li>
                 </EventLeftAttractionStyles>
                 <Divider />
-                <Grid>
-                  <h3>
-                    <b>
-                      <TextDecoration>Zajęcia</TextDecoration> poza programem
-                    </b>
-                  </h3>
-                </Grid>
-                <EventLeftAttractionStyles>
-                  {event.extraAttractions &&
-                    event.extraAttractions.map((attraction, index) => (
-                      <li key={index}>
-                        <Flex $align="center" $justify="flex-start">
-                          <Dot />
-                          <h4>{attraction}</h4>
-                        </Flex>
-                      </li>
-                    ))}
-                </EventLeftAttractionStyles>
-                <Grid>
-                  <RandomIcons icons={4} flex />
-                </Grid>
+                {event.extraAttractions && event.extraAttractions.length > 0 ? (
+                  <>
+                    <Grid>
+                      <h3>
+                        <b>
+                          <TextDecoration>Zajęcia</TextDecoration> poza programem
+                        </b>
+                      </h3>
+                    </Grid>
+                    <EventLeftAttractionStyles>
+                      {event.extraAttractions &&
+                        event.extraAttractions.map((attraction, index) => (
+                          <li key={index}>
+                            <Flex $align="center" $justify="flex-start">
+                              <Dot />
+                              <h4>{attraction}</h4>
+                            </Flex>
+                          </li>
+                        ))}
+                    </EventLeftAttractionStyles>
+                    <Grid>
+                      <RandomIcons icons={4} flex />
+                    </Grid>
+                  </>
+                ) : null}
               </EventLeftElementStyles>
               <EventLeftElementStyles $bg>
                 <LeftCornerStyles />

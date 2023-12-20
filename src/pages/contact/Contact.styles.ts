@@ -120,3 +120,16 @@ export const ContactInfo = styled.div`
     z-index: -1;
   }
 `;
+
+export const ErrorMessage = styled.div`
+  width: 100%;
+  padding: ${(props) => props.theme.size1} 0;
+  margin: ${(props) => props.theme.size1} 0;
+  border: 1px dashed ${(props) => props.theme.white};
+  background-color: ${(props) => props.theme.red};
+  border-radius: 8px;
+  h4 {
+    color: ${(props) => props.theme.white};
+    text-align: center;
+  }
+`;

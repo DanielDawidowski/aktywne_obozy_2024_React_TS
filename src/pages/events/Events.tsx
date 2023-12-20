@@ -30,33 +30,26 @@ import {
 import { TimeAgo } from "../../utils/timeago.utils";
 import { Utils } from "../../utils/utils.service";
 import { ValidationError } from "../../interfaces/error/Error.interface";
-import { INotificationType } from "../../interfaces/notification/notification.interface";
-import { useAppDispatch } from "../../redux-toolkit/hooks";
-import { Dispatch } from "@reduxjs/toolkit";
 import Spinner from "../../components/spinner/Spinner";
 
 const Events: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([] as IEvent[]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
   const [toggle, setToggle] = useState<string | null>();
-  const dispatch: Dispatch = useAppDispatch();
 
   const getAllEvents = useCallback(async () => {
     try {
-      const response = await eventService.getAllEvents(1);
+      const response = await eventService.getAllEvents();
       setEvents(response.data.events);
       // console.log("response", response.data.events);
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
         setLoading(false);
-        setErrorMessage(error?.response?.data.message as string);
-        Utils.dispatchNotification(errorMessage, INotificationType.ERROR, dispatch);
       } else {
         console.error(error);
       }
     }
-  }, [dispatch, errorMessage]);
+  }, []);
 
   useEffect(() => {
     getAllEvents();

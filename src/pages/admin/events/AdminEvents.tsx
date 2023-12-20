@@ -21,18 +21,17 @@ const AdminEvents: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [currentPage] = useState<number>(1);
   const dispatch: Dispatch = useAppDispatch();
 
   const getAllEvents = useCallback(async (): Promise<void> => {
     try {
-      const response = await eventService.getAllEvents(currentPage);
+      const response = await eventService.getAllEvents();
       setEvents(response.data.events);
       // console.log("response", response.data.events);
     } catch (error) {
       console.log("error", error);
     }
-  }, [currentPage]);
+  }, []);
 
   const deleteEvent = async (eventId: string): Promise<void> => {
     const result = confirm("Czy na pewno chcesz usunąć?");

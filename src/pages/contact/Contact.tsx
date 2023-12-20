@@ -13,7 +13,8 @@ import {
   ContactOuter,
   ContactRight,
   ContactRightInner,
-  ContactStyles
+  ContactStyles,
+  ErrorMessage
 } from "./Contact.styles";
 import { Container, Flex, Grid, TextDecoration } from "../../components/globalStyles/global.styles";
 import { useAppDispatch } from "../../redux-toolkit/hooks";
@@ -113,6 +114,13 @@ const Contact: FC = (): ReactElement => {
 
                 <ContactOuter>
                   <FormStyles>
+                    {errorMessage ? (
+                      <ErrorMessage>
+                        <Grid>
+                          <h4>{errorMessage}</h4>
+                        </Grid>
+                      </ErrorMessage>
+                    ) : null}
                     <FormItemStyles>
                       <Input
                         id="senderName"

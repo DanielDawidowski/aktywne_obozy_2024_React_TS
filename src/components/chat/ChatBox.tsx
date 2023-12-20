@@ -67,9 +67,9 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
     getSettings();
   });
 
-  // const isChatVisible = ChatUtils.isWithinSchedule(currentTime, currentDay, settings);
+  const isChatVisible = ChatUtils.isWithinSchedule(currentTime, currentDay, settings);
 
-  return (
+  return isChatVisible ? (
     <ChatBoxStyles>
       {!isOpenChat && !user ? (
         <ChatBoxSmallStyles
@@ -121,8 +121,7 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
         </ChatBoxBigStyles>
       )}
     </ChatBoxStyles>
-  );
-  // ) : null;
+  ) : null;
 };
 
 ChatBox.propTypes = {

@@ -8,8 +8,8 @@ class EventService {
     return response;
   }
 
-  async getAllEvents(page: number): Promise<AxiosResponse> {
-    const response: Awaited<AxiosResponse> = await axios.get(`/event/all/${page}`);
+  async getAllEvents(): Promise<AxiosResponse> {
+    const response: Awaited<AxiosResponse> = await axios.get(`/events`);
     return response;
   }
 

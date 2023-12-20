@@ -41,7 +41,7 @@ const Clients: FC = (): ReactElement => {
 
   const getAllEvents = useCallback(async () => {
     try {
-      const response = await eventService.getAllEvents(1);
+      const response = await eventService.getAllEvents();
       setEvents(response.data.events);
       // console.log("response", response.data.events);
     } catch (error) {

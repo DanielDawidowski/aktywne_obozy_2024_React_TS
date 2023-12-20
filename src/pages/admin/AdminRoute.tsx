@@ -3,7 +3,6 @@ import type { FC } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAppDispatch, useAppSelector } from "../../redux-toolkit/hooks";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { userService } from "../../services/api/user/user.service";
 import { getConversationList } from "../../redux-toolkit/api/chat";
 import { addUser, clearUser } from "../../redux-toolkit/reducers/user/user.reducer";
@@ -19,7 +18,6 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
   const { profile, token } = useAppSelector((state) => state.user);
   const [userData, setUserData] = useState<ISignUpData | null>(null);
   const [tokenIsValid, setTokenIsValid] = useState<boolean>(false);
-  const userStorage = useLocalStorage<ISignUpData>("user");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -32,7 +30,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
       dispatch(
         addUser({
           token: response.data.token,
-          profile: userStorage.get() as ISignUpData
+          profile: response.data.user
         })
       );
     } catch (error) {
@@ -43,7 +41,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
         navigate("/");
       }, 1000);
     }
-  }, [dispatch, navigate, userStorage]);
+  }, [dispatch, navigate]);
 
   useEffectOnce(() => {
     checkUser();
@@ -51,7 +49,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ children }): ReactElement => 
 
   useEffect(() => {
     socketService.socketConnetction();
-  }, []);
+  }, [dispatch]);
 
   if (userData || (profile && token)) {
     if (!tokenIsValid) {
