@@ -10,7 +10,7 @@ export const EventsStyles = styled(motion.section)`
   background-position: bottom right;
 `;
 
-export const EventsInnerStyles = styled.div`
+export const Inner = styled.div`
   display: grid;
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     display: grid;
@@ -20,40 +20,51 @@ export const EventsInnerStyles = styled.div`
   }
 `;
 
-export const EventsListStyles = styled.div`
+export const List = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 4px;
 `;
 
-export const EventsListWrapperStyles = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const EventsListItemStyles = styled.div`
+export const Loading = styled.div`
+  margin: ${(props) => props.theme.size4} ${(props) => props.theme.size1};
+  border: 1px solid ${(props) => props.theme.text};
+  border-radius: ${(props) => props.theme.size1};
+  padding: ${(props) => props.theme.size7};
+`;
+
+export const ListItem = styled.div`
   padding: ${(props) => props.theme.size3};
   margin: ${(props) => props.theme.size3} ${(props) => props.theme.size4};
   border-radius: 18px;
+  box-shadow: 1px 3px 2px ${(props) => props.theme.secondaryColor};
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     margin: ${(props) => props.theme.size4} 0;
   }
 `;
 
-export const EventListItemHeaderStyles = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-width: 200px;
+export const ListItemHeader = styled.div`
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  padding: ${(props) => props.theme.size1};
+  img {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
-export const EventsListItemInnerStyles = styled.div`
+export const ListItemInner = styled.div`
   background: ${(props) => props.theme.body};
   border-radius: 18px;
-  h2 {
+  h3 {
     padding: ${(props) => props.theme.size1};
   }
 
   h3 {
-    font-family: Oswald;
     span {
       letter-spacing: 5px;
       font-weight: 700;
@@ -65,7 +76,7 @@ export const EventsListItemInnerStyles = styled.div`
   }
 `;
 
-export const EventsListItemBodyStyles = styled(motion.div)`
+export const ListItemBody = styled(motion.div)`
   img {
     width: 100%;
     height: 200px;
@@ -79,14 +90,15 @@ export const EventsListItemBodyStyles = styled(motion.div)`
   h2 {
     text-align: center;
     margin: ${(props) => props.theme.size1} 0;
+    padding: ${(props) => props.theme.size1};
   }
 `;
 
-export const EventsListItemCalendarsStyles = styled.ul`
+export const CalendarsStyles = styled.ul`
   padding: ${(props) => props.theme.size1} 0;
 `;
 
-export const EventsListItemCalendarStyles = styled.li`
+export const CalendarStyles = styled.li`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -110,7 +122,7 @@ export const EventsListItemCalendarStyles = styled.li`
   }
 `;
 
-export const EventsListItemFooterStyles = styled.div`
+export const ListItemFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,7 +139,7 @@ export const EventsListItemFooterStyles = styled.div`
   }
 `;
 
-export const EventsCarouselStyles = styled.div`
+export const CarouselStyles = styled.div`
   overflow: hidden;
   padding: ${(props) => props.theme.size1};
   img {
@@ -138,7 +150,7 @@ export const EventsCarouselStyles = styled.div`
   }
 `;
 
-export const EventCarouselInnerStyles = styled.div`
+export const CarouselInner = styled.div`
   ${CarouselContainer} {
     max-width: 800px;
   }
@@ -147,14 +159,16 @@ export const EventCarouselInnerStyles = styled.div`
   }
 `;
 
-export const ActiveEventStyles = styled.h3`
+export const Active = styled.h3`
   b {
     color: ${(props) => props.theme.green};
+    font-family: BlinkMacSystemFont;
   }
 `;
 
-export const NotActiveEventStyles = styled.h3`
+export const NotActive = styled.h3`
   b {
     color: ${(props) => props.theme.red};
+    font-family: BlinkMacSystemFont;
   }
 `;

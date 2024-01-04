@@ -159,7 +159,7 @@ export const Info = styled(motion.div)`
   display: flex;
   bottom: 10%;
   left: 0%;
-  box-shadow: 1px 1px 2px ${(props) => props.theme.text};
+  box-shadow: 1px 2px 6px ${(props) => props.theme.text};
   @media (min-width: ${(props) => props.theme.breakpoint_xsmall}) and (max-width: ${(props) => props.theme.breakpoint_small}) {
     left: 15%;
   }

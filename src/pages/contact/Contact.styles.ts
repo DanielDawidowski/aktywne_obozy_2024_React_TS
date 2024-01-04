@@ -78,7 +78,7 @@ export const ContactInner = styled.div<{ $bg?: boolean }>`
   }
   p {
     color: ${(props) => props.theme.text};
-    font-family: Oswald;
+    font-family: BlinkMacSystemFont;
     font-size: 1.5rem;
     margin: ${(props) => props.theme.size1};
   }
@@ -106,7 +106,7 @@ export const ContactInfo = styled.div`
   z-index: 2;
 
   h4 {
-    font-family: Oswald;
+    font-family: BlinkMacSystemFont;
     margin-top: ${(props) => props.theme.size1};
     b {
       text-shadow: 0px 2px 1px ${(props) => props.theme.body};

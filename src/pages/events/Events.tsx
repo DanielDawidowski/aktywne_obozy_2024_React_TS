@@ -11,26 +11,28 @@ import { Container, Grid } from "../../components/globalStyles/global.styles";
 import transition from "../../utils/transition";
 import axios from "axios";
 import {
-  ActiveEventStyles,
-  EventCarouselInnerStyles,
-  EventListItemHeaderStyles,
-  EventsCarouselStyles,
-  EventsInnerStyles,
-  EventsListItemBodyStyles,
-  EventsListItemCalendarStyles,
-  EventsListItemCalendarsStyles,
-  EventsListItemFooterStyles,
-  EventsListItemInnerStyles,
-  EventsListItemStyles,
-  EventsListStyles,
-  EventsListWrapperStyles,
+  Active,
+  CarouselInner,
+  ListItemHeader,
+  CarouselStyles,
+  Inner,
+  ListItemBody,
+  CalendarStyles,
+  CalendarsStyles,
+  ListItemFooter,
+  ListItemInner,
+  ListItem,
+  List,
+  Wrapper,
   EventsStyles,
-  NotActiveEventStyles
+  NotActive,
+  Loading
 } from "./Events.styles";
 import { TimeAgo } from "../../utils/timeago.utils";
 import { Utils } from "../../utils/utils.service";
 import { ValidationError } from "../../interfaces/error/Error.interface";
 import Spinner from "../../components/spinner/Spinner";
+import Divider from "../../components/divider/Divider";
 
 const Events: FC = (): ReactElement => {
   const [events, setEvents] = useState<IEvent[]>([] as IEvent[]);
@@ -38,10 +40,12 @@ const Events: FC = (): ReactElement => {
   const [toggle, setToggle] = useState<string | null>();
 
   const getAllEvents = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await eventService.getAllEvents();
       setEvents(response.data.events);
       // console.log("response", response.data.events);
+      setLoading(false);
     } catch (error) {
       if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
         setLoading(false);
@@ -74,34 +78,41 @@ const Events: FC = (): ReactElement => {
         exit={{ opacity: 0, x: 10, transition: { duration: 0.5 } }}
       >
         <Container>
-          <EventsInnerStyles>
-            <EventsListStyles>
-              <EventsListWrapperStyles>
+          <Inner>
+            <List>
+              <Wrapper>
                 {loading ? (
-                  <Spinner />
+                  <Loading>
+                    <Grid>
+                      <Spinner />
+                      <p>ładowanie ...</p>
+                    </Grid>
+                  </Loading>
                 ) : (
                   events.map((event: IEvent) => (
-                    <EventsListItemStyles key={event._id} style={{ background: EventUtils.showEventColor(event.eventType) }}>
-                      <EventsListItemInnerStyles>
+                    <ListItem key={event._id} style={{ background: EventUtils.showEventColor(event.eventType) }}>
+                      <ListItemInner>
                         {toggle !== event.name && (
-                          <EventListItemHeaderStyles onClick={() => handleToggle(event.name)}>
-                            <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
+                          <ListItemHeader onClick={() => handleToggle(event.name)}>
                             <Grid>
-                              <h2>{event.name}</h2>
+                              <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
+                            </Grid>
+                            <Grid>
+                              <h3>{event.name}</h3>
                               {event.status === "active" ? (
-                                <ActiveEventStyles>
+                                <Active>
                                   <b>Aktualne</b>
-                                </ActiveEventStyles>
+                                </Active>
                               ) : (
-                                <NotActiveEventStyles>
+                                <NotActive>
                                   <b>Nieaktualne</b>
-                                </NotActiveEventStyles>
+                                </NotActive>
                               )}
                             </Grid>
-                          </EventListItemHeaderStyles>
+                          </ListItemHeader>
                         )}
                         {toggle === event.name && (
-                          <EventsListItemBodyStyles
+                          <ListItemBody
                             initial={{ opacity: 0, height: "0%" }}
                             animate={{ opacity: 1, height: "100%", transition: { duration: 1.5 } }}
                             exit={{ opacity: 0, height: "0%", transition: { duration: 1.5 } }}
@@ -109,50 +120,51 @@ const Events: FC = (): ReactElement => {
                             <img src={event.image} alt={event.name} onClick={() => handleToggle(event.name)} />
 
                             <h2 onClick={() => handleToggle(event.name)}>{event.name}</h2>
-                            <EventsListItemCalendarsStyles>
+                            <Divider />
+                            <CalendarsStyles>
                               <Grid>
-                                <EventsListItemCalendarStyles>
+                                <CalendarStyles>
                                   <Calendar color="#5cb85c" />
                                   <div>
                                     <h3 style={{ color: "green" }}>Zaczynamy</h3>
                                     <h3>{TimeAgo.dayMonthYear(event.startDate as Date)}</h3>
                                   </div>
-                                </EventsListItemCalendarStyles>
-                                <EventsListItemCalendarStyles>
+                                </CalendarStyles>
+                                <CalendarStyles>
                                   <Calendar color="#f94144" />
                                   <div>
                                     <h3 style={{ color: "red" }}>Kończymy</h3>
                                     <h3>{TimeAgo.dayMonthYear(event.endDate as Date)}</h3>
                                   </div>
-                                </EventsListItemCalendarStyles>
+                                </CalendarStyles>
                               </Grid>
-                            </EventsListItemCalendarsStyles>
-                          </EventsListItemBodyStyles>
+                            </CalendarsStyles>
+                          </ListItemBody>
                         )}
-                      </EventsListItemInnerStyles>
+                      </ListItemInner>
                       {toggle === event.name && (
-                        <EventsListItemFooterStyles>
+                        <ListItemFooter>
                           <img src={EventUtils.emitEventIcon(event.eventType)} alt={event.name} />
                           {event.status === "active" ? (
                             <Link to={`/event/${event._id}`}>Zobacz</Link>
                           ) : (
-                            <NotActiveEventStyles>
+                            <NotActive>
                               <b>Nieaktualne</b>
-                            </NotActiveEventStyles>
+                            </NotActive>
                           )}
-                        </EventsListItemFooterStyles>
+                        </ListItemFooter>
                       )}
-                    </EventsListItemStyles>
+                    </ListItem>
                   ))
                 )}
-              </EventsListWrapperStyles>
-            </EventsListStyles>
-            <EventsCarouselStyles>
-              <EventCarouselInnerStyles>
+              </Wrapper>
+            </List>
+            <CarouselStyles>
+              <CarouselInner>
                 <Carousel />
-              </EventCarouselInnerStyles>
-            </EventsCarouselStyles>
-          </EventsInnerStyles>
+              </CarouselInner>
+            </CarouselStyles>
+          </Inner>
         </Container>
       </EventsStyles>
     </Layout>

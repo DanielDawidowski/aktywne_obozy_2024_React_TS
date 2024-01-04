@@ -1,26 +1,29 @@
-import React, { FC } from "react";
+import React, { lazy } from "react";
+import type { FC } from "react";
 import { useLocation, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import Home from "./pages/home/Home";
 import { AuthTabs } from "./pages/auth";
-import AdminRoute from "./pages/admin/AdminRoute";
-import CreateEvent from "./pages/admin/events/CreateEvent";
-import AdminEvents from "./pages/admin/events/AdminEvents";
-import EditEvent from "./pages/admin/events/EditEvent";
-import Events from "./pages/events/Events";
-import AdminChat from "./pages/admin/admin-chat/AdminChat";
-import Event from "./pages/event/Event";
-import ScrollToTopOnPageChange from "./utils/scrollToTop";
-import Contact from "./pages/contact/Contact";
-import EditSettings from "./pages/admin/settings-chat/EditSettings";
-import Clients from "./pages/admin/clients/ClientList";
+import ScrollToTop from "./utils/scrollToTop";
 // import Temp from "./pages/temp/Temp";
+
+const Home = lazy(() => import("./pages/home/Home"));
+const AdminRoute = lazy(() => import("./pages/admin/AdminRoute"));
+const CreateEvent = lazy(() => import("./pages/admin/events/CreateEvent"));
+const AdminEvents = lazy(() => import("./pages/admin/events/AdminEvents"));
+const EditEvent = lazy(() => import("./pages/admin/events/EditEvent"));
+const Events = lazy(() => import("./pages/events/Events"));
+const AdminChat = lazy(() => import("./pages/admin/admin-chat/AdminChat"));
+const Event = lazy(() => import("./pages/event/Event"));
+const Contact = lazy(() => import("./pages/contact/Contact"));
+const EditSettings = lazy(() => import("./pages/admin/settings-chat/EditSettings"));
+const Clients = lazy(() => import("./pages/admin/clients/ClientList"));
 
 export const AppRouter: FC = () => {
   const location = useLocation();
+
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <ScrollToTopOnPageChange />
+      <ScrollToTop />
       <Routes location={location} key={location.pathname}>
         {/* <Route index element={<Temp />} /> */}
         <Route index element={<Home />} />

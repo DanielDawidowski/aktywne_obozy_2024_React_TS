@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from "react";
 
-const ScrollToTopOnPageChange: FC = () => {
+const ScrollToTop: FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -8,4 +8,4 @@ const ScrollToTopOnPageChange: FC = () => {
   return null;
 };
 
-export default ScrollToTopOnPageChange;
+export default ScrollToTop;
