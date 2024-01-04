@@ -8,7 +8,7 @@ import { BreakPoint } from "../layout/Layout.interface";
 const ScrollText: FC = (): ReactElement => {
   const size = useWindowSize();
   const { scrollYProgress } = useScroll();
-  const forwardX = useTransform(scrollYProgress, [0, 1], [size.width < BreakPoint.xsmall ? "30%" : "100%", "-200%"]);
+  const forwardX = useTransform(scrollYProgress, [0, 1], [size.width < BreakPoint.xsmall ? "100%" : "100%", "-100%"]);
   return (
     <ScrollTextContainer>
       <ScrollTextSectionContainer>

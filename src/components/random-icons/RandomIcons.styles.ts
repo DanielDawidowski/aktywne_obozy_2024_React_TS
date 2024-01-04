@@ -23,6 +23,7 @@ export const RandomIconsContainer = styled(motion.ul)<{ $grid: boolean; $flex: b
 
   li {
     display: none;
+    margin: ${(props) => props.theme.size1};
   }
 
   @media (max-width: ${(props) => props.theme.breakpoint_xsmall}) {

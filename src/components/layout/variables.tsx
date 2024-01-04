@@ -19,7 +19,7 @@ export const themeGlobal = {
   orange: "#F39F5A",
   yellow: "#F9C74F",
   blue: "#4477CE",
-  green: "#03C988",
+  green: "#90BE6D",
   grey: "#404258",
   purple: "#9d0dc9",
   size1: "8px",

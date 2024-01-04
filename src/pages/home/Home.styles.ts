@@ -7,8 +7,6 @@ export const HomeStyles = styled(motion.section)`
   width: 100%;
   height: 100%;
   z-index: 999;
-  display: grid;
-  place-items: center;
 `;
 
 export const HomeIconsStyles = styled.div`
@@ -16,7 +14,7 @@ export const HomeIconsStyles = styled.div`
   background: url(${BGIcons});
   background-size: cover;
   background-position: center;
-  height: 70px;
+  height: 100px;
   width: 100%;
   margin: ${(props) => props.theme.size4} 0;
   display: flex;

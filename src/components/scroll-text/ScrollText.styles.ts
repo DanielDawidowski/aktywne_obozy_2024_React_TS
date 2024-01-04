@@ -27,7 +27,7 @@ export const ScrollTextTitleStyles = styled(motion.h3)`
   font-weight: bold;
   margin: ${(props) => props.theme.size1} 0;
   white-space: nowrap;
-  color: ${(props) => props.theme.fifthColor};
+  color: ${(props) => props.theme.thirdColor};
   text-shadow:
     1px 1px 0 ${(props) => props.theme.dark},
     1px -1px 0 ${(props) => props.theme.dark},

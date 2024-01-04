@@ -11,7 +11,7 @@ import { eventService } from "../../services/api/events/events.service";
 import { ValidationError } from "../../interfaces/error/Error.interface";
 
 const Temp: FC = (): ReactElement => {
-  const [userData, setUserData] = useState<ISignUpData | null>(null);
+  // const [userData, setUserData] = useState<ISignUpData | null>(null);
   const [events, setEvents] = useState<IEvent[]>([] as IEvent[]);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -29,25 +29,26 @@ const Temp: FC = (): ReactElement => {
     }
   }, []);
 
-  const checkUser = useCallback(async () => {
-    try {
-      const response = await userService.checkCurrentUser();
-      setUserData(response.data.user);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+  // const checkUser = useCallback(async () => {
+  //   try {
+  //     const response = await userService.checkCurrentUser();
+  //     setUserData(response.data.user);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, []);
 
   useEffectOnce(() => {
-    checkUser();
+    // checkUser();
     getAllEvents();
   });
+
   return (
     <div style={{ height: "800px", width: "100vw" }}>
       <Grid>
         <Logo width="85px" height="125px" />
         <h1>Strona tymczasowo nieczynna</h1>
-        <h3>{userData?.username}</h3>
+
         {events.map((event: IEvent) => (
           <h1 key={event._id}>{event.name}</h1>
         ))}

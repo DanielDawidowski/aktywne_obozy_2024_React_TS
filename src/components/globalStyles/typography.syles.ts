@@ -4,8 +4,6 @@ export const TypographyStyles = createGlobalStyle`
 h1, h2, h3, h4, h5, h6, b { 
     color: ${(props) => props.theme.text};
     font-weight: 300;
-    /* font-family: "Lora", serif; */
-    font-family: 'Lora',  sans-serif;
 }
 
 b {

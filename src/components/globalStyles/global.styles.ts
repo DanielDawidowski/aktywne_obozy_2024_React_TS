@@ -15,7 +15,7 @@ html {
 body {
     background: ${(props) => props.theme.body};
     color: ${(props) => props.theme.text};
-     font-family: "Oswald", serif;
+    font-family: 'Racing Sans One', sans-serif;
 }
 
 a {

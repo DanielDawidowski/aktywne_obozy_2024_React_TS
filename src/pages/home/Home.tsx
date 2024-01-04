@@ -1,23 +1,26 @@
 import React, { ReactElement } from "react";
 import type { FC } from "react";
+import { Link } from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import transition from "../../utils/transition";
 import { HomeEventsItemStyles, HomeEventsStyles, HomeIconsStyles, HomeStyles } from "./Home.styles";
-import Carousel from "../../components/carousel/Carousel";
 import Divider from "../../components/divider/Divider";
-import { Link } from "react-router-dom";
 import ScrollText from "../../components/scroll-text/ScrollText";
 import EnergyLandiaImg from "../../assets/Images/energylandia-big.jpg";
 import Home1Big from "../../assets/Images/narty-big.jpg";
 import Image from "../../components/image/Image";
-import { Container, TextDecoration } from "../../components/globalStyles/global.styles";
+import { Container, Flex, Grid, TextDecoration } from "../../components/globalStyles/global.styles";
 import RandomIcons from "../../components/random-icons/RandomIcons";
+import Hero from "./hero/Hero";
 
 const Home: FC = (): ReactElement => {
   return (
     <Layout>
       <HomeStyles>
-        <Carousel />
+        <Container>
+          <Hero />
+        </Container>
+
         <HomeIconsStyles>
           <Link to="/events">
             <h4>Zobacz</h4>
@@ -44,7 +47,9 @@ const Home: FC = (): ReactElement => {
             </HomeEventsItemStyles>
           </HomeEventsStyles>
         </Container>
-        <RandomIcons icons={6} flex />
+        <Flex $align="center" $justify="center">
+          <RandomIcons icons={6} flex />
+        </Flex>
       </HomeStyles>
     </Layout>
   );
