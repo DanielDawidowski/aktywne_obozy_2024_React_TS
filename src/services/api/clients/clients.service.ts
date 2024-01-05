@@ -27,6 +27,11 @@ class ClientService {
     const response: Awaited<AxiosResponse> = await axios.delete(`/client/${clientId}`);
     return response;
   }
+
+  async deleteClients(clients: string[]): Promise<AxiosResponse> {
+    const response: Awaited<AxiosResponse> = await axios.delete("/clients", { data: { clientIds: clients } });
+    return response;
+  }
 }
 
 export const clientService = new ClientService();

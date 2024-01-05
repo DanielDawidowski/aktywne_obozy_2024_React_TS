@@ -88,7 +88,7 @@ export const MessageStyles = styled.div`
     padding: 8px 18px;
     font-family: BlinkMacSystemFont;
     letter-spacing: 1.1px;
-    color: ${(props) => props.theme.text};
+    color: ${(props) => props.theme.white};
     box-shadow:
       inset 0 0 1px ${(props) => props.theme.body},
       0 1px 2px ${(props) => props.theme.dark};

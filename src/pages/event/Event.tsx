@@ -27,17 +27,17 @@ import { useAppSelector, useAppDispatch } from "../../redux-toolkit/hooks";
 import { IClient } from "../../interfaces/client/client.interface";
 import ClientForm from "../../components/form/client/Client.form";
 import {
-  EventInnerStyles,
-  EventLeftAttractionStyles,
-  EventLeftElementStyles,
-  EventLeftHeaderStyles,
-  EventLeftStyles,
-  EventRightInnerStyles,
-  EventRightStyles,
+  EventInner,
+  EventLeftAttraction,
+  EventLeftElement,
+  EventLeftHeader,
+  EventLeft,
+  EventRightInner,
+  EventRight,
   EventStyles,
-  LeftCornerStyles,
-  RightCornerStyles,
-  SignUpStyles
+  LeftCorner,
+  RightCorner,
+  SignUp
 } from "./Event.styles";
 import { Container, Dot, Flex, Grid, TextDecoration } from "../../components/globalStyles/global.styles";
 import EventInfo from "./EventInfo";
@@ -139,7 +139,7 @@ const Event: FC = (): ReactElement => {
           />
         </Modal>
       )}
-      <SignUpStyles
+      <SignUp
         animate={{
           borderRadius: 100,
           height: 70,
@@ -152,17 +152,17 @@ const Event: FC = (): ReactElement => {
         }}
       >
         <LuPencil />
-      </SignUpStyles>
+      </SignUp>
       <EventStyles>
         <Container>
           {/* <GoBackButton /> */}
-          <EventInnerStyles>
-            <EventLeftStyles>
-              <EventLeftHeaderStyles>
-                <LeftCornerStyles />
+          <EventInner>
+            <EventLeft>
+              <EventLeftHeader>
+                <LeftCorner />
                 {event.image ? <Image src={event.image as string} alt="event" /> : null}
-                <RightCornerStyles />
-              </EventLeftHeaderStyles>
+                <RightCorner />
+              </EventLeftHeader>
 
               <Grid>
                 <RandomIcons icons={6} flex />
@@ -171,12 +171,12 @@ const Event: FC = (): ReactElement => {
                   <Divider />
                 </Information>
               </Grid>
-              <EventLeftElementStyles>
+              <EventLeftElement>
                 {event.energyland && (
                   <>
-                    <LeftCornerStyles />
+                    <LeftCorner />
                     <Image src={Energylandia} alt="Energylandia" />
-                    <RightCornerStyles />
+                    <RightCorner />
                     <Grid>
                       <Information>
                         <h3>Całodniowa wycieczka do Energylandii</h3>
@@ -185,10 +185,10 @@ const Event: FC = (): ReactElement => {
                     </Grid>
                   </>
                 )}
-              </EventLeftElementStyles>
-              <EventLeftElementStyles $bg>
-                <LeftCornerStyles />
-                <RightCornerStyles />
+              </EventLeftElement>
+              <EventLeftElement $bg>
+                <LeftCorner />
+                <RightCorner />
                 <Grid>
                   <h3>
                     <b>
@@ -196,7 +196,7 @@ const Event: FC = (): ReactElement => {
                     </b>
                   </h3>
                 </Grid>
-                <EventLeftAttractionStyles>
+                <EventLeftAttraction>
                   {event.attractions &&
                     event.attractions.map((attraction, index) => (
                       <li key={index}>
@@ -209,7 +209,7 @@ const Event: FC = (): ReactElement => {
                   <li>
                     <Image src={PeopleImg} alt="people" />
                   </li>
-                </EventLeftAttractionStyles>
+                </EventLeftAttraction>
                 <Divider />
                 {event.extraAttractions && event.extraAttractions.length > 0 ? (
                   <>
@@ -220,7 +220,7 @@ const Event: FC = (): ReactElement => {
                         </b>
                       </h3>
                     </Grid>
-                    <EventLeftAttractionStyles>
+                    <EventLeftAttraction>
                       {event.extraAttractions &&
                         event.extraAttractions.map((attraction, index) => (
                           <li key={index}>
@@ -230,16 +230,16 @@ const Event: FC = (): ReactElement => {
                             </Flex>
                           </li>
                         ))}
-                    </EventLeftAttractionStyles>
+                    </EventLeftAttraction>
                     <Grid>
                       <RandomIcons icons={4} flex />
                     </Grid>
                   </>
                 ) : null}
-              </EventLeftElementStyles>
-              <EventLeftElementStyles $bg>
-                <LeftCornerStyles />
-                <RightCornerStyles />
+              </EventLeftElement>
+              <EventLeftElement $bg>
+                <LeftCorner />
+                <RightCorner />
                 <Grid>
                   <ul>
                     <li>
@@ -276,19 +276,19 @@ const Event: FC = (): ReactElement => {
                     </h2>
                   </Grid>
                 </Grid>
-              </EventLeftElementStyles>
+              </EventLeftElement>
 
               <Grid>
                 <RandomIcons icons={12} flex />
               </Grid>
-            </EventLeftStyles>
+            </EventLeft>
 
-            <EventRightStyles>
-              <EventRightInnerStyles>
+            <EventRight>
+              <EventRightInner>
                 <EventInfo event={event} openModalClient={openModalClient} showBtn checked={checked} />
-              </EventRightInnerStyles>
-            </EventRightStyles>
-          </EventInnerStyles>
+              </EventRightInner>
+            </EventRight>
+          </EventInner>
         </Container>
       </EventStyles>
     </Layout>

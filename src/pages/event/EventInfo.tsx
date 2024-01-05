@@ -3,7 +3,7 @@ import type { FC } from "react";
 import propTypes from "prop-types";
 import { ButtonColor } from "../../components/button/Button.interface";
 import { Flex, Grid } from "../../components/globalStyles/global.styles";
-import { EventRightElementStyles, PriceStyles } from "./Event.styles";
+import { EventRightElement, Price } from "./Event.styles";
 import Calendar from "../../assets/SVG/calendar";
 import { TimeAgo } from "../../utils/timeago.utils";
 import Logo from "../../components/logo/Logo";
@@ -28,7 +28,7 @@ const EventInfo: FC<EventInfoProps> = (props): ReactElement => {
       </Grid>
       <Flex $align="center" $justify="space-around">
         <Grid>
-          <EventRightElementStyles>
+          <EventRightElement>
             <Flex $align="center" $justify="flex-start">
               <Calendar color="#03C988" />
               <Flex $align="flex-start" $justify="flex-start" $direction="column">
@@ -38,8 +38,8 @@ const EventInfo: FC<EventInfoProps> = (props): ReactElement => {
                 <h4>{TimeAgo.dayMonthYear(event.startDate as Date)}</h4>
               </Flex>
             </Flex>
-          </EventRightElementStyles>
-          <EventRightElementStyles>
+          </EventRightElement>
+          <EventRightElement>
             <Flex $align="center" $justify="flex-start">
               <Calendar color="#F05454" />
               <Flex $align="flex-start" $justify="flex-start" $direction="column">
@@ -49,32 +49,32 @@ const EventInfo: FC<EventInfoProps> = (props): ReactElement => {
                 <h4>{TimeAgo.dayMonthYear(event.endDate as Date)}</h4>
               </Flex>
             </Flex>
-          </EventRightElementStyles>
+          </EventRightElement>
         </Grid>
         <Logo width="65px" height="85px" />
       </Flex>
-      <EventRightElementStyles>
+      <EventRightElement>
         <Flex $align="center" $justify="center">
-          <PriceStyles>
+          <Price>
             <b>{checked === "price" ? event.price : event.discountPrice} PLN</b>
-          </PriceStyles>
+          </Price>
         </Flex>
-      </EventRightElementStyles>
-      <EventRightElementStyles>
+      </EventRightElement>
+      <EventRightElement>
         <Grid>
           <h4>
             hotel: <b>{event?.address?.hotel}</b>
           </h4>
         </Grid>
-      </EventRightElementStyles>
+      </EventRightElement>
       {showBtn && (
-        <EventRightElementStyles>
+        <EventRightElement>
           <Grid>
             <Button color={ButtonColor.auth} onClick={openModalClient}>
               Zapisz się
             </Button>
           </Grid>
-        </EventRightElementStyles>
+        </EventRightElement>
       )}
     </>
   );

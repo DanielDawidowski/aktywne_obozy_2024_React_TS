@@ -11,7 +11,7 @@ export const EventStyles = styled(motion.section)`
   background-position: bottom right;
 `;
 
-export const EventInnerStyles = styled.div`
+export const EventInner = styled.div`
   display: grid;
   padding: ${(props) => props.theme.size1};
 
@@ -21,7 +21,7 @@ export const EventInnerStyles = styled.div`
   }
 `;
 
-export const EventLeftStyles = styled.div`
+export const EventLeft = styled.div`
   width: 100%;
   padding: ${(props) => props.theme.size1};
   border-radius: 18px;
@@ -29,7 +29,7 @@ export const EventLeftStyles = styled.div`
   box-shadow: 0 0 5px ${(props) => props.theme.text};
 `;
 
-export const EventLeftHeaderStyles = styled.div`
+export const EventLeftHeader = styled.div`
   margin-bottom: ${(props) => props.theme.size1};
   position: relative;
 
@@ -38,7 +38,7 @@ export const EventLeftHeaderStyles = styled.div`
   }
 `;
 
-export const EventLeftElementStyles = styled.div<{ $bg?: boolean }>`
+export const EventLeftElement = styled.div<{ $bg?: boolean }>`
   position: relative;
   margin-top: ${(props) => props.theme.size7};
   background: ${(props) => props.$bg && props.theme.body};
@@ -89,7 +89,7 @@ export const EventLeftElementStyles = styled.div<{ $bg?: boolean }>`
   }
 `;
 
-export const EventLeftAttractionStyles = styled.ul`
+export const EventLeftAttraction = styled.ul`
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: minmax(50px, auto);
@@ -135,32 +135,30 @@ export const EventLeftAttractionStyles = styled.ul`
   }
 `;
 
-const CornerStyles = styled.div`
+const Corner = styled.div`
   border-radius: 18px;
   background-color: ${(props) => props.theme.yellow};
   position: absolute;
   width: 80px;
   height: 10px;
-  z-index: 999;
+  z-index: 995;
 `;
 
-export const LeftCornerStyles = styled(CornerStyles)`
+export const LeftCorner = styled(Corner)`
   top: 20px;
   left: -15px;
   transform: rotate(-45deg);
-  z-index: 996;
 `;
 
-export const RightCornerStyles = styled(CornerStyles)`
+export const RightCorner = styled(Corner)`
   top: 20px;
   right: -15px;
   transform: rotate(45deg);
-  z-index: 996;
 `;
 
-export const SignUpStyles = styled(motion.div)`
+export const SignUp = styled(motion.div)`
   position: fixed;
-  z-index: 9998;
+  z-index: 996;
   cursor: pointer;
   background-color: ${(props) => props.theme.fourthColor};
   border: 10px solid ${(props) => props.theme.primaryColor};
@@ -177,11 +175,11 @@ export const SignUpStyles = styled(motion.div)`
   }
 `;
 
-export const EventRightStyles = styled.div`
+export const EventRight = styled.div`
   width: 100%;
 `;
 
-export const EventRightInnerStyles = styled.div`
+export const EventRightInner = styled.div`
   position: fixed;
   margin: 0 ${(props) => props.theme.size1};
   padding: ${(props) => props.theme.size1};
@@ -194,7 +192,7 @@ export const EventRightInnerStyles = styled.div`
   }
 `;
 
-export const EventRightElementStyles = styled.div`
+export const EventRightElement = styled.div`
   position: relative;
   margin: ${(props) => props.theme.size2} 0;
   border-radius: 18px;
@@ -224,7 +222,7 @@ export const EventRightElementStyles = styled.div`
   }
 `;
 
-export const PriceStyles = styled.h3`
+export const Price = styled.h3`
   b {
     color: ${(props) => props.theme.orange};
   }

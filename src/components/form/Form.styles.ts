@@ -28,7 +28,7 @@ export const FormStyles = styled.form<{ $bg?: boolean }>`
   padding: ${(props) => props.theme.size4} ${(props) => props.theme.size1};
   background-color: ${(props) => (props.$bg ? "none" : props.theme.primary_light)};
   border: 1px solid ${(props) => (props.$bg ? "none" : props.theme.dark)};
-  border-radius: 24px;
+  border-radius: 8px;
   outline: none;
   @media (min-width: ${(props) => props.theme.breakpoint_small}) {
     margin: ${(props) => (props.$bg ? props.theme.size1 : props.theme.size6)} 0;

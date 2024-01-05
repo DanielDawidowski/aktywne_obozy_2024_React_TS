@@ -6,7 +6,6 @@ import { BsFillBookmarkPlusFill } from "react-icons/bs";
 import propTypes from "prop-types";
 import Input from "../../input/Input";
 import { EventType, EventTypes, IEvent } from "../../../interfaces/event/event.interface";
-
 import Spinner from "../../spinner/Spinner";
 import Button from "../../button/Button";
 import Select from "../../select/Select";
@@ -250,7 +249,7 @@ const EventForm: FC<CreateEventFormProps> = (props): ReactElement => {
 
         {event && (
           <FormItemStyles>
-            <Select label="Status" options={["Aktywny", "Nieaktywny"]} onSelect={(option: string) => setValues({ ...values, status: option })} />
+            <Select label="Status" options={["active", "inactive"]} onSelect={(option: string) => setValues({ ...values, status: option })} />
           </FormItemStyles>
         )}
 

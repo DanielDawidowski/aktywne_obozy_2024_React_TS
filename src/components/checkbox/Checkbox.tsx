@@ -23,7 +23,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, onChange }) => {
 };
 
 Checkbox.propTypes = {
-  label: propTypes.string.isRequired,
+  label: propTypes.string,
   onChange: propTypes.func.isRequired
 };
 
