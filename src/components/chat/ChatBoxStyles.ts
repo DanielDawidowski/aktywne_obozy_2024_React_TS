@@ -61,10 +61,11 @@ export const ChatBoxHeaderStyles = styled(motion.div)`
 export const ChatBoxHeaderConfirm = styled(motion.div)`
   span {
     color: ${(props) => props.theme.white};
+    font-size: ${(props) => props.theme.size3};
   }
   svg {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     padding: 4px;
     border-radius: 4px;
     &:first-child {

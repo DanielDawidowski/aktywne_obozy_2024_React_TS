@@ -1,4 +1,4 @@
-import React, { useState, ReactElement, useCallback } from "react";
+import React, { useState, ReactElement, useCallback, useRef } from "react";
 import type { FC } from "react";
 import PropTypes from "prop-types";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
@@ -29,7 +29,7 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
   const [settings, setSettings] = useState<IChatSettings>({} as IChatSettings);
 
   const { profile } = useAppSelector((state) => state.user);
-
+  const closeRef = useRef<HTMLInputElement>(null);
   const storedUser = useLocalStorage<ISignUpData>("user");
   const user = storedUser.get() as ISignUpData;
 
@@ -61,6 +61,13 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
     dispatch(setOpenChat({ isLoading: false, isOpenChat: false }));
     dispatch(clearUser());
     socketService?.socket.disconnect();
+  };
+
+  const setClose = (): void => {
+    setConfirm(true);
+    if (confirm) {
+      closeRef?.current?.focus();
+    }
   };
 
   useEffectOnce(() => {
@@ -103,10 +110,10 @@ const ChatBox: FC<IChat> = ({ isOpenChat }): ReactElement | null => {
             {!confirm ? (
               <Flex $align="center" $justify="space-between">
                 <span>Chat Online</span>
-                <FaWindowClose onClick={() => setConfirm(true)} />
+                <FaWindowClose onClick={setClose} />
               </Flex>
             ) : (
-              <ChatBoxHeaderConfirm>
+              <ChatBoxHeaderConfirm ref={closeRef}>
                 <Flex $align="center" $justify="space-between">
                   <span>Czy chcesz zamknąć chat ?</span>
                   <Flex $align="center" $justify="space-between">

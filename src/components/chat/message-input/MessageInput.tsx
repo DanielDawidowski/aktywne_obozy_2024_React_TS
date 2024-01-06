@@ -25,7 +25,7 @@ const MessageInput: FC<IMessageInput> = ({ setChatMessage }): ReactElement => {
     if (messageInputRef?.current) {
       messageInputRef.current.focus();
     }
-  }, [setChatMessage]);
+  }, [message]);
 
   return (
     <MessageInputStyles>

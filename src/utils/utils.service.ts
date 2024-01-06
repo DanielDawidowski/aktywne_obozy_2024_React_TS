@@ -26,8 +26,12 @@ export class Utils {
     return message.slice(0, length);
   }
 
-  static getFirstLetter(name: string): string {
-    return name.charAt(0).toUpperCase();
+  static getFirstLetter(name: string | undefined): string {
+    if (typeof name === "string" && name.length > 0) {
+      return name.charAt(0).toUpperCase();
+    } else {
+      return "";
+    }
   }
 
   static checkIfUserIsOnline(username: string | null, onlineUsers: string[] | null): boolean | undefined {
@@ -116,11 +120,6 @@ export const scrollToElement = (id: string, time: number): void => {
     const distance = targetPosition - startPosition - 80;
     const startTime = performance.now();
     const duration = time; // 5 seconds in milliseconds
-    console.log("distance", distance);
-    console.log("startPosition", startPosition);
-    console.log("targetPosition", targetPosition);
-    console.log("startTime", startTime);
-    console.log("duration", duration);
 
     const scrollAnimation = (currentTime: number): void => {
       const elapsedTime = currentTime - startTime;

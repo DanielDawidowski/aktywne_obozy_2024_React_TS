@@ -32,18 +32,15 @@ const AdminChatList: FC = (): ReactElement => {
   useEffect(() => {
     if (rendered) {
       socketService?.socket.on("chat list", (data: IChatListUser) => {
-        if (data.senderId === profile?.authId || data.receiverId === profile?.authId) {
-          const index = findIndex(chatMessageList, ["conversationId", data.conversationId]);
-
-          let clonedChatList: IChatListUser[] = cloneDeep(chatMessageList);
-          if (index > -1) {
-            remove(clonedChatList, (chat) => chat.conversationId === data.conversationId);
-            clonedChatList = [data, ...clonedChatList];
-          } else {
-            clonedChatList = [data, ...clonedChatList];
-          }
-          setChatMessageList(clonedChatList);
+        const index = findIndex(chatMessageList, ["conversationId", data.conversationId]);
+        let clonedChatList: IChatListUser[] = cloneDeep(chatMessageList);
+        if (index > -1) {
+          remove(clonedChatList, (chat) => chat.conversationId === data.conversationId);
+          clonedChatList = [data, ...clonedChatList];
+        } else {
+          clonedChatList = [data, ...clonedChatList];
         }
+        setChatMessageList(clonedChatList);
       });
 
       return () => {

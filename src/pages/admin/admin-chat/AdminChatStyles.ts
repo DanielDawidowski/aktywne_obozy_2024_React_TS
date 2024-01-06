@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Flex, Grid } from "../../../components/globalStyles/global.styles";
+import { Flex } from "../../../components/globalStyles/global.styles";
 
 export const AdminChatStyles = styled.section`
   display: flex;
@@ -34,14 +34,12 @@ export const AdminList = styled.ul`
 export const AdminListItem = styled.li<{ $active: boolean }>`
   display: grid;
   border-radius: 4px;
-  border: 2px solid ${(props) => (props.$active ? props.theme.thirdColor : props.theme.secondaryColor)};
+  border: 4px solid ${(props) => (props.$active ? props.theme.fourthColor : props.theme.secondaryColor)};
   cursor: pointer;
   margin-bottom: ${(props) => props.theme.size1};
   padding: ${(props) => props.theme.size2};
-  background-color: ${(props) => (props.$active ? props.theme.thirdColor : props.theme.secondaryColor)};
-  box-shadow:
-    inset 0 0 4px ${(props) => (props.$active ? props.theme.thirdColor : props.theme.secondaryColor)},
-    1px 0 4px ${(props) => (props.$active ? props.theme.primaryColor : props.theme.text)};
+  background-color: ${(props) => (props.$active ? props.theme.fourthColor : props.theme.secondaryColor)};
+  box-shadow: 1px 0 4px ${(props) => (props.$active ? props.theme.primaryColor : props.theme.text)};
   width: 100%;
   h5 {
     color: ${(props) => (props.$active ? props.theme.dark : props.theme.text)};
@@ -62,10 +60,10 @@ export const AdminListItem = styled.li<{ $active: boolean }>`
 
   &:hover {
     background-color: ${(props) => props.theme.fourthColor};
-    border: 2px solid ${(props) => props.theme.white};
+    border: 2px solid ${(props) => props.theme.fourthColor};
     box-shadow:
-      inset 0 0 4px ${(props) => props.theme.white},
-      1px 0 4px ${(props) => props.theme.white};
+      inset 0 0 4px ${(props) => props.theme.fourthColor},
+      1px 0 4px ${(props) => props.theme.fourthColor};
   }
 `;
 
