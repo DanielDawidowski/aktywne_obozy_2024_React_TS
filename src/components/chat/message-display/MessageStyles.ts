@@ -11,6 +11,8 @@ export const MessageDisplayStyles = styled.div`
   background: url(${ChatBG});
   background-size: cover;
   background-repeat: no-repeat;
+  display: grid;
+  grid-template-rows: auto;
 
   /* Webkit (Safari, Chrome) */
   &::-webkit-scrollbar {
@@ -46,11 +48,17 @@ export const MessageDisplayStyles = styled.div`
   }
 `;
 
+export const Inner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
 export const MessageChatStyles = styled.div`
   padding: ${(props) => props.theme.size1};
 `;
 
-export const MessageChatDateStyles = styled.div`
+export const MessageChatDate = styled.div`
   position: relative;
   font-size: ${(props) => props.theme.size2};
   margin-bottom: ${(props) => props.theme.size2};
@@ -88,7 +96,7 @@ export const MessageStyles = styled.div`
     padding: 8px 18px;
     font-family: BlinkMacSystemFont;
     letter-spacing: 1.1px;
-    color: ${(props) => props.theme.white};
+    color: ${(props) => props.theme.text};
     box-shadow:
       inset 0 0 1px ${(props) => props.theme.body},
       0 1px 2px ${(props) => props.theme.dark};

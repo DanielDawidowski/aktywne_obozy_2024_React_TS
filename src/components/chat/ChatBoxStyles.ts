@@ -29,7 +29,6 @@ export const ChatBoxBigStyles = styled(motion.div)`
   bottom: 20;
   right: 20;
   z-index: 99999;
-  cursor: pointer;
   background-color: ${(props) => props.theme.secondaryColor};
   border: 10px solid ${(props) => props.theme.secondaryColor};
   box-shadow: 1px 0 2px ${(props) => props.theme.text};
@@ -55,6 +54,7 @@ export const ChatBoxHeaderStyles = styled(motion.div)`
     width: 20px;
     height: 20px;
     fill: ${(props) => props.theme.text};
+    cursor: pointer;
   }
 `;
 

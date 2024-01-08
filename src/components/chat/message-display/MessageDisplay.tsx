@@ -7,7 +7,7 @@ import useChatScrollToBottom from "../../../hooks/useChatScrollToBottom";
 import { TimeAgo } from "../../../utils/timeago.utils";
 import RightMessageDisplay from "./right-message/RightMessageDisplay";
 import LeftMessageDisplay from "./left-message/LeftMessageDisplay";
-import { MessageChatDateStyles, MessageChatStyles, MessageDisplayStyles } from "./MessageStyles";
+import { Inner, MessageChatDate, MessageChatStyles, MessageDisplayStyles } from "./MessageStyles";
 import { Grid } from "../../globalStyles/global.styles";
 
 interface IMessageDisplay {
@@ -20,26 +20,28 @@ const MessageDisplay: FC<IMessageDisplay> = ({ messages, profile }): ReactElemen
 
   return (
     <MessageDisplayStyles ref={scrollRef}>
-      {messages.map((message: IChatMessage, index: number) => (
-        <MessageChatStyles key={message._id}>
-          {(index === 0 || TimeAgo.dayMonthYear(message.createdAt as Date) !== TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
-            <MessageChatDateStyles>
-              <Grid>
-                <h5>{TimeAgo?.chatMessageTransform(message?.createdAt as Date)}</h5>
-              </Grid>
-            </MessageChatDateStyles>
-          )}
+      <Inner>
+        {messages.map((message: IChatMessage, index: number) => (
+          <MessageChatStyles key={message._id}>
+            {(index === 0 || TimeAgo.dayMonthYear(message.createdAt as Date) !== TimeAgo.dayMonthYear(messages[index - 1].createdAt as Date)) && (
+              <MessageChatDate>
+                <Grid>
+                  <h5>{TimeAgo?.chatMessageTransform(message?.createdAt as Date)}</h5>
+                </Grid>
+              </MessageChatDate>
+            )}
 
-          {(message.receiverName === profile?.username.toLowerCase() || message.senderName === profile?.username.toLowerCase()) && (
-            <>
-              {message.senderName === profile?.username.toLowerCase() && (
-                <RightMessageDisplay message={message} messages={messages} profile={profile} lastMessage={messages[messages.length - 1]} />
-              )}
-              {message.receiverName === profile?.username.toLowerCase() && <LeftMessageDisplay message={message} />}
-            </>
-          )}
-        </MessageChatStyles>
-      ))}
+            {(message.receiverName === profile?.username.toLowerCase() || message.senderName === profile?.username.toLowerCase()) && (
+              <>
+                {message.senderName === profile?.username.toLowerCase() && (
+                  <RightMessageDisplay message={message} messages={messages} profile={profile} lastMessage={messages[messages.length - 1]} />
+                )}
+                {message.receiverName === profile?.username.toLowerCase() && <LeftMessageDisplay message={message} />}
+              </>
+            )}
+          </MessageChatStyles>
+        ))}
+      </Inner>
     </MessageDisplayStyles>
   );
 };

@@ -73,6 +73,7 @@ const AdminChatList: FC = (): ReactElement => {
       const userId = data.senderId === profile?.authId ? data.receiverId : data.senderId;
       try {
         await chatService.deleteChatUser(data.conversationId, userId as string);
+        navigate(`${location.pathname}`);
         window.location.reload();
       } catch (error) {
         if (axios.isAxiosError<ValidationError, Record<string, unknown>>(error) && error.response) {
