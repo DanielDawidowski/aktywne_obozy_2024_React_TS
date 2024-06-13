@@ -38,7 +38,7 @@ A web application for registering children for various events, with real-time ch
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/event-registration-system.git
+    git clone https://github.com/DanielDawidowski/aktywne_obozy_2024_React_TS
     cd event-registration-system
     ```
 
